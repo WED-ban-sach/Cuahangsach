@@ -1,0 +1,32 @@
+.dangky {
+  width: 350px;
+  height: 420px;
+  border: 2px solid black;
+  background-color: #399797;
+  color: brown;
+  position: fixed;
+  border-radius: 6px;
+
+  padding: 7px;
+
+  display: flex;
+  flex-direction: column; /*chỉnh các thành phần trong khung thành 1 hàng theo chiều dọc*/
+  box-sizing: border-box; /*cố định khung chuẩn*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+input,
+select {
+  border-radius: 10px;
+}
+button {
+  left: 125px;
+  width: 100px;
+  background-color: blue;
+  color: white;
+  margin: 10px;
+}
+button:hover {
+  background-color: rgb(13, 13, 36);
+}
