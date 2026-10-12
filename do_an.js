@@ -1,38 +1,60 @@
-const loginLink = document.querySelector(".menu  a:nth-child(6)");
-const loginBox = document.querySelector(".login");
+/* ===== ĐĂNG NHẬP / ĐĂNG KÝ ===== */
+const overlay = document.getElementById("overlay");
+const panels = {
+  login: document.getElementById("loginPanel"),
+  register: document.getElementById("registerPanel"),
+};
 
-loginLink.addEventListener("click", function (e) {
-  e.preventDefault();
-  e.stopPropagation();
+function closeAll() {
+  Object.values(panels).forEach((p) => {
+    p.classList.remove("open");
+    p.setAttribute("aria-hidden", "true");
+  });
+  overlay.classList.remove("show");
+}
 
-  if (loginBox.style.display === "none" || loginBox.style.display === "") {
-    loginBox.style.display = "flex";
-  } else {
-    loginBox.style.display = "none";
+function togglePanel(name) {
+  const target = panels[name];
+  const isOpen = target.classList.contains("open");
+  closeAll();
+  if (!isOpen) {
+    target.classList.add("open");
+    target.setAttribute("aria-hidden", "false");
+    overlay.classList.add("show");
   }
-});
-document.addEventListener("click", function () {
-  if (loginBox.style.display === "flex") {
-    loginBox.style.display = "none";
-  }
+}
+
+document
+  .getElementById("btnLogin")
+  .addEventListener("click", () => togglePanel("login"));
+document
+  .getElementById("btnRegister")
+  .addEventListener("click", () => togglePanel("register"));
+
+// nút đóng (×)
+document
+  .querySelectorAll("[data-close]")
+  .forEach((b) => b.addEventListener("click", closeAll));
+
+// chuyển qua lại giữa 2 form
+document.querySelectorAll("[data-switch]").forEach((a) => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeAll();
+    togglePanel(a.dataset.switch);
+  });
 });
 
-const dangkyclick = document.querySelector(".menu a:nth-child(7)");
-const dangkybox = document.querySelector(".dangky");
-
-dangkyclick.addEventListener("click", function (k) {
-  k.preventDefault();
-  k.stopPropagation();
-
-  if (dangkybox.style.display === "none" || dangkybox.style.display === "") {
-    dangkybox.style.display = "flex";
-  } else {
-    dangkybox.style.display = "none";
-  }
+// bấm nền tối hoặc nhấn Esc để đóng
+overlay.addEventListener("click", closeAll);
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeAll();
 });
 
-document.addEventListener("click", function () {
-  if (dangkybox.style.display === "flex") {
-    dangkybox.style.display = "none";
-  }
-});
+// tạm thời chặn submit để không bị load lại trang
+document
+  .getElementById("loginForm")
+  .addEventListener("submit", (e) => e.preventDefault());
+document
+  .getElementById("registerForm")
+  .addEventListener("submit", (e) => e.preventDefault());
