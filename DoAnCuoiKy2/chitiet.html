@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chi tiết sách - Nhà sách Xanh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="dau-trang">
+  <div class="khung">
+    <a href="index.html" class="logo">📚 Nhà sách Xanh</a>
+    <nav class="menu"><a href="index.html">Trang chủ</a><a href="#">Giới thiệu</a><a href="#">Tin tức</a><a href="#">Liên hệ</a></nav>
+    <div class="tim-kiem"><input type="text" id="oTimKiem" placeholder="Nhập từ khóa cần tìm..."><button id="nutTim" aria-label="Tìm kiếm">🔍</button></div>
+    <div class="tai-khoan"><a href="#" id="nutDangNhap">Đăng nhập</a><a href="#" id="nutDangKy">Đăng ký</a><a href="#" id="nutGioHang" aria-label="Giỏ hàng">🛒</a></div>
+  </div>
+</header>
+<main class="khung">
+  <a id="quayLai" class="quay-lai" href="index.html">← Quay lại danh sách</a>
+  <section id="chiTiet" class="chi-tiet"></section>
+  <section id="khungLienQuan" hidden>
+    <h2>Sách cùng thể loại</h2>
+    <div id="sachLienQuan" class="luoi"></div>
+    <p class="giua"><a id="xemThem" class="nut nut-do" href="index.html">Xem thêm</a></p>
+  </section>
+</main>
+<footer class="chan-trang">Nhà sách Xanh - Đồ án môn Web 1</footer>
+<script src="js/data.js"></script>
+<script src="js/product.js"></script>
+<script src="js/chitiet.js"></script>
+</body>
+</html>
