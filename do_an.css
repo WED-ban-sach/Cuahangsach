@@ -56,7 +56,7 @@ body {
 }
 .auth-btn:hover {
   background: #14263f;
-  border-color: #14263f;
+  border-color: #086aeb;
   color: #fff;
 }
 .menu .link,
@@ -257,7 +257,7 @@ body {
 }
 .field input:focus,
 .field select:focus {
-  border-color: var(--accent-dark);
+  border-color: #00e5ff;
   box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.2);
 }
 
