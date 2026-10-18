@@ -61,12 +61,17 @@ body {
 }
 .menu .link,
 #nut {
-  padding: 7px 14px;
+  display: inline-flex; /* a và div cư xử giống nhau */
+  align-items: center; /* chữ căn giữa theo chiều dọc */
+  height: 36px; /* cùng một chiều cao */
+  padding: 0 14px;
   text-decoration: none;
   background-color: #fff;
   color: #1b2430;
   border-radius: 10px;
   font-size: 14px;
+  white-space: nowrap; /* không xuống dòng */
+  flex-shrink: 0; /* không bị co lại */
   transition:
     transform 0.25s,
     box-shadow 0.25s;
