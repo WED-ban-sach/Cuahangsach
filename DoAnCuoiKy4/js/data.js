@@ -19,89 +19,79 @@ const DU_LIEU_MAU = [
     loai: "ngoaivan",
     gia: 160000,
     tacGia: "John Hughes, Helen Stephenson, Paul Dummett",
-    hinh: "images/stubook2nd.jpg",
-    moTa: ""
+    hinh: "images/NV01.jpg"
   },
   {
     ma: "NV02",
     ten: "The Little Prince",
     loai: "ngoaivan",
-    gia: 120000,
+    gia: 186000,
     tacGia: "Antoine de Saint-Exupéry",
-    hinh: "images/NV02.jpg",
-    moTa: ""
+    hinh: "images/NV02.jpg"
   },
   {
     ma: "NV03",
     ten: "Harry Potter and the Philosopher's Stone",
     loai: "ngoaivan",
-    gia: 210000,
+    gia: 120000,
     tacGia: "J. K. Rowling",
-    hinh: "images/NV03.jpg",
-    moTa: ""
+    hinh: "images/NV03.jpg"
   },
   {
     ma: "VH01",
     ten: "Dế Mèn Phiêu Lưu Ký",
     loai: "vanhoc",
-    gia: 68000,
+    gia: 50000,
     tacGia: "Tô Hoài",
-    hinh: "images/VH01.jpg",
-    moTa: ""
+    hinh: "images/VH01.jpg"
   },
   {
     ma: "VH02",
-    ten: "Số đỏ",
+    ten: "Số Đỏ",
     loai: "vanhoc",
-    gia: 75000,
+    gia: 54000,
     tacGia: "Vũ Trọng Phụng",
-    hinh: "images/VH02.jpg",
-    moTa: ""
+    hinh: "images/VH02.jpg"
   },
   {
     ma: "VH03",
-    ten: "Tắt đèn",
+    ten: "Tắt Đèn",
     loai: "vanhoc",
-    gia: 55000,
+    gia: 40000,
     tacGia: "Ngô Tất Tố",
-    hinh: "images/VH03.jpg",
-    moTa: ""
+    hinh: "images/VH03.jpg"
   },
   {
     ma: "DS01",
-    ten: "Đắc nhân tâm",
+    ten: "Đắc Nhân Tâm",
     loai: "doisong",
-    gia: 86000,
+    gia: 100000,
     tacGia: "Dale Carnegie",
-    hinh: "images/DS01.jpg",
-    moTa: ""
+    hinh: "images/DS01.jpg"
   },
   {
     ma: "DS02",
-    ten: "Nhà giả kim",
+    ten: "Nhà Giả Kim",
     loai: "doisong",
-    gia: 79000,
+    gia: 60000,
     tacGia: "Paulo Coelho",
-    hinh: "images/DS02.jpg",
-    moTa: ""
+    hinh: "images/DS02.jpg"
   },
   {
     ma: "DS03",
-    ten: "Tuổi trẻ đáng giá bao nhiêu",
+    ten: "Tuổi Trẻ Đáng Giá Bao Nhiêu",
     loai: "doisong",
     gia: 80000,
     tacGia: "Rosie Nguyễn",
-    hinh: "images/DS03.jpg",
-    moTa: ""
+    hinh: "images/DS03.jpg"
   },
   {
     ma: "XH01",
-    ten: "Sapiens: Lược sử loài người",
+    ten: "Sapiens: Lược Sử Loài Người",
     loai: "khxh",
     gia: 189000,
     tacGia: "Yuval Noah Harari",
-    hinh: "images/XH01.jpg",
-    moTa: ""
+    hinh: "images/XH01.jpg"
   },
   {
     ma: "XH02",
@@ -109,8 +99,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 140000,
     tacGia: "Trần Trọng Kim",
-    hinh: "images/vnsl.jpg",
-    moTa: ""
+    hinh: "images/XH02.jpg"
   },
   {
     ma: "XH03",
@@ -118,8 +107,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 530000,
     tacGia: "Trần Trọng Kim",
-    hinh: "images/vnsldb.jpg",
-    moTa: ""
+    hinh: "images/XH03.jpg"
   },
   {
     ma: "XH04",
@@ -127,71 +115,79 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 90000,
     tacGia: "Phạm Hy Tùng",
-    hinh: "images/chbd.jpg",
-    moTa: ""
+    hinh: "images/XH04.jpg"
+  },
+  {
+    ma: "XH05",
+    ten: "Các Mác và Tư Bản - Trích tác phẩm kinh điển",
+    loai: "khxh",
+    gia: 112000,
+    tacGia: "Phạm Đức Hải",
+    hinh: "images/XH05.jpg"
+  },
+  {
+    ma: "XH06",
+    ten: "Hải Cảng Biển Đông",
+    loai: "khxh",
+    gia: 187000,
+    tacGia: "Dr A. Benoist De La Grandière",
+    hinh: "images/XH06.jpg"
   },
   {
     ma: "TN01",
-    ten: "Lược sử thời gian",
+    ten: "Lược Sử Thời Gian",
     loai: "khtn",
-    gia: 110000,
+    gia: 98000,
     tacGia: "Stephen Hawking",
-    hinh: "images/TN01.jpg",
-    moTa: ""
+    hinh: "images/TN01.jpg"
   },
   {
     ma: "TN02",
-    ten: "Vũ trụ trong vỏ hạt dẻ",
+    ten: "Vũ Trụ Trong Vỏ Hạt Dẻ",
     loai: "khtn",
-    gia: 135000,
+    gia: 98000,
     tacGia: "Stephen Hawking",
     hinh: "images/TN02.jpg",
-    moTa: ""
   },
   {
     ma: "TN03",
-    ten: "Nguồn gốc các loài",
+    ten: "Nguồn Gốc Các Loài",
     loai: "khtn",
-    gia: 150000,
+    gia: 156000,
     tacGia: "Charles Darwin",
     hinh: "images/TN03.jpg",
-    moTa: ""
   },
   {
-    ma: "NH01",
+    ma: "TT01",
     ten: "Doraemon - Tập 1",
     loai: "thieunhi",
-    gia: 25000,
+    gia: 23000,
     tacGia: "Fujiko F. Fujio",
-    hinh: "images/NH01.jpg",
-    moTa: ""
+    hinh: "images/TT01.jpg",
   },
   {
-    ma: "NH02",
-    ten: "Truyện cổ Grimm",
+    ma: "TT02",
+    ten: "Truyện Cổ Grimm",
     loai: "thieunhi",
     gia: 90000,
     tacGia: "Anh em nhà Grimm",
-    hinh: "images/NH02.jpg",
-    moTa: ""
+    hinh: "images/TT02.jpg",
   },
   {
-    ma: "NH03",
-    ten: "Cho tôi xin một vé đi tuổi thơ",
+    ma: "TT03",
+    ten: "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
     loai: "thieunhi",
-    gia: 85000,
+    gia: 82000,
     tacGia: "Nguyễn Nhật Ánh",
-    hinh: "images/NH03.jpg",
-    moTa: ""
+    hinh: "images/TT03.jpg",
   },
   {
     ma: "GK01",
     ten: "Toán 12 - Tập 1",
     loai: "giaokhoa",
-    gia: 22000,
+    gia: 20000,
     tacGia: "Bộ Giáo dục và Đào tạo",
     hinh: "images/GK01.jpg",
-    moTa: ""
   },
   {
     ma: "GK02",
@@ -200,6 +196,5 @@ const DU_LIEU_MAU = [
     gia: 20000,
     tacGia: "Bộ Giáo dục và Đào tạo",
     hinh: "images/GK02.jpg",
-    moTa: ""
   }
 ];

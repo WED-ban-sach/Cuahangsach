@@ -174,7 +174,9 @@ function hienThiNutPhanTrang(tongTrang) {
     }
     khung.appendChild(nutSo);
   }
-  khung.appendChild(taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang));
+  khung.appendChild(
+    taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang),
+  );
 }
 
 // ---------- 5. THỂ LOẠI TRÊN THANH MENU ----------

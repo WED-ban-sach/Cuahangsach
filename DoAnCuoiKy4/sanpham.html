@@ -22,13 +22,21 @@
         </div>
 
         <a class="link" href="doan.html">Trang chủ</a>
-        <a class="link" href="#">Sản phẩm</a>
-        <a class="link" href="#">Admin</a>
+        <a class="link" href="sanpham.html">Sản phẩm</a>
+        
 
         <div id="nut">
           Thể loại ▾
-          <ul id="theloai"></ul>
-          <!-- product.js tự thêm các thể loại lấy từ data.js -->
+          <ul id="theloai">
+            <li>Tất cả các sách</li>
+            <li>Sách Ngoại Văn</li>
+            <li>Sách Văn Học</li>
+            <li>Sách Đời Sống</li>
+            <li>Sách Khoa Học Xã Hội</li>
+            <li>Sách Khoa Học Tự Nhiên</li>
+            <li>Sách Thiếu Nhi</li>
+            <li>Sách Giáo Khoa</li>
+          </ul>
         </div>
 
         <div id="search">
@@ -37,6 +45,81 @@
         </div>
       </nav>
     </header>
+
+    <div id="overlay"></div>
+
+    <!-- ĐĂNG NHẬP -->
+    <aside class="panel" id="loginPanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Chào mừng trở lại</h2>
+      <p class="sub">Đăng nhập để tiếp tục khám phá sách hay.</p>
+
+      <form class="form" id="loginForm">
+        <div class="field">
+          <label for="login-user">Tên đăng nhập</label>
+          <input
+            type="text"
+            id="login-user"
+            placeholder="Nhập tên đăng nhập"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="login-pass">Mật khẩu</label>
+          <input
+            type="password"
+            id="login-pass"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+        <button type="submit" class="submit">Đăng nhập</button>
+        <p class="switch">
+          Chưa có tài khoản? <a href="#" data-switch="register">Đăng ký ngay</a>
+        </p>
+      </form>
+    </aside>
+
+    <!-- ĐĂNG KÝ -->
+    <aside class="panel" id="registerPanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Tạo tài khoản</h2>
+      <p class="sub">Chỉ mất vài giây để tham gia VNBook.</p>
+
+      <form class="form" id="registerForm">
+        <div class="field">
+          <label for="hoten">Họ và tên</label>
+          <input
+            id="hoten"
+            type="text"
+            placeholder="Nguyen Tuan Kiet"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="reg-pass">Mật khẩu</label>
+          <input
+            id="reg-pass"
+            type="password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="ban@example.com"
+            required
+          />
+        </div>
+        <button type="submit" class="submit">Đăng ký</button>
+        <p class="switch">
+          Đã có tài khoản? <a href="#" data-switch="login">Đăng nhập</a>
+        </p>
+      </form>
+    </aside>
     <main class="khung">
       <section>
         <h2 id="tieuDe">Tất cả sách</h2>
@@ -113,5 +196,6 @@
 
     <script src="js/data.js"></script>
     <script src="js/product.js"></script>
+    <script src="do_an.js"></script>
   </body>
 </html>
