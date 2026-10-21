@@ -2,9 +2,9 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Danh Mục Sách</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VNBook</title>
+    <link rel="stylesheet" href="css/do_an.css" />
     <link rel="stylesheet" href="css/cart.css" />
   </head>
   <body>
@@ -21,6 +21,7 @@
             Đăng ký
           </button>
         </div>
+        
         <details class="cart-control" hidden>
           <summary id="btnCart" class="cart-trigger" aria-label="Mở giỏ hàng">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -39,18 +40,26 @@
               <span>Tổng cộng</span>
               <strong id="cartTotal">0 đ</strong>
             </div>
-            <a class="cart-continue" href="#dsSanPham">Tiếp tục mua sắm</a>
+            <a class="cart-continue" href="sanpham.html">Tiếp tục mua sắm</a>
           </aside>
         </details>
-
+      
         <a class="link" href="doan.html">Trang chủ</a>
-        <a class="link" href="#">Sản phẩm</a>
-        <a class="link" href="#">Admin</a>
-
+        <a class="link" href="sanpham.html">Sản phẩm</a>
+        <a class="link" href="admin.html">Admin</a>
+        
         <div id="nut">
           Thể loại ▾
-          <ul id="theloai"></ul>
-          <!-- product.js tự thêm các thể loại lấy từ data.js -->
+          <ul id="theloai">
+            <li>Tất cả các sách</li>
+            <li>Sách Ngoại Văn</li>
+            <li>Sách Văn Học</li>
+            <li>Sách Đời Sống</li>
+            <li>Sách Khoa Học Xã Hội</li>
+            <li>Sách Khoa Học Tự Nhiên</li>
+            <li>Sách Thiếu Nhi</li>
+            <li>Sách Giáo Khoa</li>
+          </ul>
         </div>
 
         <div id="search">
@@ -59,12 +68,104 @@
         </div>
       </nav>
     </header>
-    <main class="khung">
-      <section>
-        <h2 id="tieuDe">Tất cả sách</h2>
-        <div id="dsSanPham" class="luoi-sach"></div>
-        <div id="phanTrang" class="phan-trang"></div>
-      </section>
+
+    <div id="overlay"></div>
+
+    <!-- ĐĂNG NHẬP -->
+    <aside class="panel" id="loginPanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Chào mừng trở lại</h2>
+      <p class="sub">Đăng nhập để tiếp tục khám phá sách hay.</p>
+
+      <form class="form" id="loginForm">
+        <div class="field">
+          <label for="login-user">Tên đăng nhập</label>
+          <input
+            type="text"
+            id="login-user"
+            placeholder="Nhập tên đăng nhập"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="login-pass">Mật khẩu</label>
+          <input
+            type="password"
+            id="login-pass"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+        <p id="loginMessage" class="login-message" role="status" aria-live="polite"></p>
+        <button type="submit" class="submit">Đăng nhập</button>
+        <p class="switch">
+          Chưa có tài khoản? <a href="#" data-switch="register">Đăng ký ngay</a>
+        </p>
+      </form>
+    </aside>
+
+    <!-- ĐĂNG KÝ -->
+    <aside class="panel" id="registerPanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Tạo tài khoản</h2>
+      <p class="sub">Chỉ mất vài giây để tham gia VNBook.</p>
+
+      <form class="form" id="registerForm">
+        <div class="field">
+          <label for="hoten">Họ và tên</label>
+          <input
+            id="hoten"
+            type="text"
+            placeholder="Nguyen Tuan Kiet"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="reg-pass">Mật khẩu</label>
+          <input
+            id="reg-pass"
+            type="password"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="ban@example.com"
+            required
+          />
+        </div>
+        <button type="submit" class="submit">Đăng ký</button>
+        <p class="switch">
+          Đã có tài khoản? <a href="#" data-switch="login">Đăng nhập</a>
+        </p>
+      </form>
+    </aside>
+
+    <main>
+      <div id="anhnen">
+        <img id="anh" src="img_book/anh3.jpg" alt="Banner sách" />
+      </div>
+
+      <div id="sachnb"><h1>Sách nổi bật</h1></div>
+
+      <div id="noibat">
+        <div>
+          <img src="img_book/anhnoibat.jpg" alt="" />
+          <p>Cựu hoàng đế Bảo Đại qua một số tư liệu chưa công bố</p>
+        </div>
+        <div>
+          <img src="img_book/anhnoibat2.jpg" alt="" />
+          <p>Các Mác và tư bản - Trích tác phẩm kinh điển</p>
+        </div>
+        <div>
+          <img src="img_book/anhnoibat3.jpg" alt="" />
+          <p>Hải cảng biển Đông</p>
+        </div>
+      </div>
     </main>
     <footer class="footer">
       <div class="footer-inner">
@@ -133,9 +234,8 @@
       </div>
     </footer>
 
-    <script src="js/data.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/product.js"></script>
+    <script src="js/do_an.js"></script>
     <script src="js/cart-visibility.js"></script>
   </body>
 </html>
