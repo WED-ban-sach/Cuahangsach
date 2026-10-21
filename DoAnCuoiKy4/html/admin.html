@@ -4,8 +4,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Quản trị - VNBook</title>
-		<link rel="stylesheet" href="css/style.css">
-		<link rel="stylesheet" href="css/admin-auth.css">
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/admin-auth.css">
 	</head>
 	<body>
 		<section id="view-login" class="admin-view active">
@@ -16,7 +16,7 @@
 						<div class="brand-logo">VN<span>Book</span></div>
 						<p class="brand-sub">DKP1251 - SGU<br>Trang quản trị dành cho Admin</p>
 						<div class="brand-cover">
-							<img src="images/NV01.jpg" alt="bia" onerror="this.style.display='none'">
+							<img src="../image/NV01.jpg" alt="bia" onerror="this.style.display='none'">
 							<div class="brand-cover-fallback">VNBook<br></div>
 						</div>
 						<div class="brand-test">
@@ -28,7 +28,7 @@
 					
 					<div class="auth-form-wrap">
 						<h1 class="auth-title">Đăng nhập Quản trị</h1>
-						<p class="auth-desc">Chỉ <b>admin</b> mới vào được. Khách đăng nhập ở <a href="index.html">trang chủ</a>.</p>
+						<p class="auth-desc">Chỉ <b>admin</b> mới vào được. Khách đăng nhập ở <a href="doan.html">trang chủ</a>.</p>
 						<form id="formAdminLogin" novalidate>
 							<label class="lb">Tên đăng nhập</label>
 							<input id="adminUser" type="text" placeholder="vd: admin" autocomplete="username">
@@ -66,7 +66,7 @@
 						<p class="auth-desc" id="moTaDk">Mặc định đã seed <b>admin/admin123</b>.</p>
 							<div class="auth-links">
 								<a href="#" id="linkToLogin">Đã có tài khoản? Đăng nhập</a><span>·</span>
-								<a href="index.html">← Về trang khách</a>
+								<a href="doan.html">← Về trang khách</a>
 							</div>
 						</form>
 					</div>
@@ -86,7 +86,7 @@
 						<button data-tab="tab-user" class="nav-btn">👥 Người dùng (I.2)</button>
 					</nav>
 					<div class="sidebar-bottom">
-						<a href="index.html" class="btn-phu">← Trang khách</a>
+						<a href="doan.html" class="btn-phu">← Trang khách</a>
 						<button id="btnDangXuat" class="btn-phu btn-danger">Đăng xuất</button>
 					</div>
 				</aside>
@@ -223,7 +223,7 @@
 			</div>
 		</dialog>
 
-		<script src="js/auth.js"></script>
-		<script src="js/admin.js"></script>
+		<script src="../js/auth.js"></script>
+		<script src="../js/admin.js"></script>
 	</body>
 </html>

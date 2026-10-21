@@ -1,6 +1,6 @@
 // ===== DỮ LIỆU SÁCH =====
 // THE_LOAI: danh sách thể loại (id gắn cho từng sách, ten hiển thị trên menu).
-// DU_LIEU_MAU: danh sách sách. Ảnh bìa để trong thư mục images, dùng đường dẫn tương đối (vd: "images/vnsl.jpg").
+// DU_LIEU_MAU: danh sách sách. Ảnh bìa đặt trong thư mục image.
 
 const THE_LOAI = [
   { id: "ngoaivan", ten: "Sách Ngoại Văn" },
@@ -19,7 +19,7 @@ const DU_LIEU_MAU = [
     loai: "ngoaivan",
     gia: 160000,
     tacGia: "John Hughes, Helen Stephenson, Paul Dummett",
-    hinh: "images/NV01.jpg"
+    hinh: "../image/NV01.jpg"
   },
   {
     ma: "NV02",
@@ -27,7 +27,7 @@ const DU_LIEU_MAU = [
     loai: "ngoaivan",
     gia: 186000,
     tacGia: "Antoine de Saint-Exupéry",
-    hinh: "images/NV02.jpg"
+    hinh: "../image/NV02.jpg"
   },
   {
     ma: "NV03",
@@ -35,7 +35,7 @@ const DU_LIEU_MAU = [
     loai: "ngoaivan",
     gia: 120000,
     tacGia: "J. K. Rowling",
-    hinh: "images/NV03.jpg"
+    hinh: "../image/NV03.jpg"
   },
   {
     ma: "VH01",
@@ -43,7 +43,7 @@ const DU_LIEU_MAU = [
     loai: "vanhoc",
     gia: 50000,
     tacGia: "Tô Hoài",
-    hinh: "images/VH01.jpg"
+    hinh: "../image/VH01.jpg"
   },
   {
     ma: "VH02",
@@ -51,7 +51,7 @@ const DU_LIEU_MAU = [
     loai: "vanhoc",
     gia: 54000,
     tacGia: "Vũ Trọng Phụng",
-    hinh: "images/VH02.jpg"
+    hinh: "../image/VH02.jpg"
   },
   {
     ma: "VH03",
@@ -59,7 +59,7 @@ const DU_LIEU_MAU = [
     loai: "vanhoc",
     gia: 40000,
     tacGia: "Ngô Tất Tố",
-    hinh: "images/VH03.jpg"
+    hinh: "../image/VH03.jpg"
   },
   {
     ma: "DS01",
@@ -67,7 +67,7 @@ const DU_LIEU_MAU = [
     loai: "doisong",
     gia: 100000,
     tacGia: "Dale Carnegie",
-    hinh: "images/DS01.jpg"
+    hinh: "../image/DS01.jpg"
   },
   {
     ma: "DS02",
@@ -75,7 +75,7 @@ const DU_LIEU_MAU = [
     loai: "doisong",
     gia: 60000,
     tacGia: "Paulo Coelho",
-    hinh: "images/DS02.jpg"
+    hinh: "../image/DS02.jpg"
   },
   {
     ma: "DS03",
@@ -83,7 +83,7 @@ const DU_LIEU_MAU = [
     loai: "doisong",
     gia: 80000,
     tacGia: "Rosie Nguyễn",
-    hinh: "images/DS03.jpg"
+    hinh: "../image/DS03.jpg"
   },
   {
     ma: "XH01",
@@ -91,7 +91,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 189000,
     tacGia: "Yuval Noah Harari",
-    hinh: "images/XH01.jpg"
+    hinh: "../image/XH01.jpg"
   },
   {
     ma: "XH02",
@@ -99,7 +99,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 140000,
     tacGia: "Trần Trọng Kim",
-    hinh: "images/XH02.jpg"
+    hinh: "../image/XH02.jpg"
   },
   {
     ma: "XH03",
@@ -107,7 +107,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 530000,
     tacGia: "Trần Trọng Kim",
-    hinh: "images/XH03.jpg"
+    hinh: "../image/XH03.jpg"
   },
   {
     ma: "XH04",
@@ -115,7 +115,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 90000,
     tacGia: "Phạm Hy Tùng",
-    hinh: "images/XH04.jpg"
+    hinh: "../image/XH04.jpg"
   },
   {
     ma: "XH05",
@@ -123,7 +123,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 112000,
     tacGia: "Phạm Đức Hải",
-    hinh: "images/XH05.jpg"
+    hinh: "../image/XH05.jpg"
   },
   {
     ma: "XH06",
@@ -131,7 +131,7 @@ const DU_LIEU_MAU = [
     loai: "khxh",
     gia: 187000,
     tacGia: "Dr A. Benoist De La Grandière",
-    hinh: "images/XH06.jpg"
+    hinh: "../image/XH06.jpg"
   },
   {
     ma: "TN01",
@@ -139,7 +139,7 @@ const DU_LIEU_MAU = [
     loai: "khtn",
     gia: 98000,
     tacGia: "Stephen Hawking",
-    hinh: "images/TN01.jpg"
+    hinh: "../image/TN01.jpg"
   },
   {
     ma: "TN02",
@@ -147,7 +147,7 @@ const DU_LIEU_MAU = [
     loai: "khtn",
     gia: 98000,
     tacGia: "Stephen Hawking",
-    hinh: "images/TN02.jpg",
+    hinh: "../image/TN02.jpg",
   },
   {
     ma: "TN03",
@@ -155,7 +155,7 @@ const DU_LIEU_MAU = [
     loai: "khtn",
     gia: 156000,
     tacGia: "Charles Darwin",
-    hinh: "images/TN03.jpg",
+    hinh: "../image/TN03.jpg",
   },
   {
     ma: "TT01",
@@ -163,7 +163,7 @@ const DU_LIEU_MAU = [
     loai: "thieunhi",
     gia: 23000,
     tacGia: "Fujiko F. Fujio",
-    hinh: "images/TT01.jpg",
+    hinh: "../image/TT01.jpg",
   },
   {
     ma: "TT02",
@@ -171,7 +171,7 @@ const DU_LIEU_MAU = [
     loai: "thieunhi",
     gia: 90000,
     tacGia: "Anh em nhà Grimm",
-    hinh: "images/TT02.jpg",
+    hinh: "../image/TT02.jpg",
   },
   {
     ma: "TT03",
@@ -179,7 +179,7 @@ const DU_LIEU_MAU = [
     loai: "thieunhi",
     gia: 82000,
     tacGia: "Nguyễn Nhật Ánh",
-    hinh: "images/TT03.jpg",
+    hinh: "../image/TT03.jpg",
   },
   {
     ma: "GK01",
@@ -187,7 +187,7 @@ const DU_LIEU_MAU = [
     loai: "giaokhoa",
     gia: 20000,
     tacGia: "Bộ Giáo dục và Đào tạo",
-    hinh: "images/GK01.jpg",
+    hinh: "../image/GK01.jpg",
   },
   {
     ma: "GK02",
@@ -195,6 +195,6 @@ const DU_LIEU_MAU = [
     loai: "giaokhoa",
     gia: 20000,
     tacGia: "Bộ Giáo dục và Đào tạo",
-    hinh: "images/GK02.jpg",
+    hinh: "../image/GK02.jpg",
   }
 ];

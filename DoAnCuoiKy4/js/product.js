@@ -87,7 +87,7 @@ function taoTheSach(sach) {
   // Nếu không tìm thấy file ảnh thì dùng ảnh mặc định
   anh.onerror = function () {
     anh.onerror = null;
-    anh.src = "images/khong-co-anh.svg";
+    anh.src = "../image/khong-co-anh.svg";
   };
 
   const ten = document.createElement("h3");
