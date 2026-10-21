@@ -26,7 +26,20 @@ function laySachThemMoi() {
 
 // Tất cả sách = sách trong data.js + sách thêm mới
 function layDanhSach() {
-  return DU_LIEU_MAU.concat(laySachThemMoi());
+  // Nếu admin đã quản lý sách (khoá "dsSach") thì dùng danh sách đó, chưa có thì dùng data.js
+  let tatCaSach = DU_LIEU_MAU.concat(laySachThemMoi());
+  const chuoi = localStorage.getItem("dsSach");
+  if (chuoi !== null) {
+    tatCaSach = JSON.parse(chuoi);
+  }
+  // Bỏ các sách admin đã ẩn
+  const sachDangBan = [];
+  for (let i = 0; i < tatCaSach.length; i++) {
+    if (!tatCaSach[i].an) {
+      sachDangBan.push(tatCaSach[i]);
+    }
+  }
+  return sachDangBan;
 }
 
 // Thêm một sách mới. Trả về false nếu mã sách đã tồn tại
