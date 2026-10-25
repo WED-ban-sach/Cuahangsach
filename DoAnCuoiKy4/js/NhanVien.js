@@ -21,8 +21,8 @@ var cacTrang = document.querySelectorAll(".TRANG");
 
 for ( var i = 0; i < tabmenu.length; i++ ) {
 
-    tabmenu[i].addEventListener("click", function(event) {
-        event.preventDefault();
+    tabmenu[i].addEventListener("click", function(e) {
+        e.preventDefault();
 
         var namePage = this.getAttribute("name");
 

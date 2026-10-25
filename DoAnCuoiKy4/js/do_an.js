@@ -3,6 +3,7 @@ const overlay = document.getElementById("overlay");
 const panels = {
   login: document.getElementById("loginPanel"),
   register: document.getElementById("registerPanel"),
+  profile: document.getElementById("profilePanel"),
 };
 
 function closeAll() {
