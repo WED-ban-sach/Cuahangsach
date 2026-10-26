@@ -61,7 +61,16 @@ function themSanPham(sachMoi) {
 
 // 160000 -> "160.000 đ"
 function dinhDangGia(gia) {
-  return gia.toLocaleString("vi-VN") + " đ";
+  if (gia === null || gia === undefined || gia === "") {
+    return "Chưa cập nhật giá";
+  }
+
+  const giaSo = Number(gia);
+  if (!Number.isFinite(giaSo)) {
+    return "Chưa cập nhật giá";
+  }
+
+  return giaSo.toLocaleString("vi-VN") + " đ";
 }
 
 // Đổi id thể loại (vd "khxh") thành tên thể loại để hiển thị
@@ -82,7 +91,7 @@ function taoTheSach(sach) {
 
   const anh = document.createElement("img");
   anh.className = "anh-sach";
-  anh.src = sach.hinh;
+  anh.src = sach.hinh || "../image/khong-co-anh.svg";
   anh.alt = sach.ten;
   // Nếu không tìm thấy file ảnh thì dùng ảnh mặc định
   anh.onerror = function () {

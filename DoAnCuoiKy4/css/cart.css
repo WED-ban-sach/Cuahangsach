@@ -1,3 +1,4 @@
+/*==== Gio hang ====*/
 .cart-control {
   position: relative;
 }
@@ -139,6 +140,7 @@
   background: #14263f;
 }
 
+/*==== Thong tin nguoi dung ====*/
 .user-control {
   position: relative;
   flex-shrink: 0;

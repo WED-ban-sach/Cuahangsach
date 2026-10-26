@@ -1,3 +1,4 @@
+// Cập nhật nút đăng nhập, giỏ hàng và thông tin tài khoản theo trạng thái khách hàng.
 function updateCustomerHeader() {
   const current = layCurrent();
   const isCustomer = Boolean(current && current.role === "customer");
@@ -20,12 +21,15 @@ function updateCustomerHeader() {
   }
 }
 
+// Làm mới giao diện khi trạng thái đăng nhập thay đổi hoặc trang được mở lại.
 updateCustomerHeader();
 window.addEventListener("storage", (e) => {
   if (e.key === KEY_CURRENT) updateCustomerHeader();
 });
 window.addEventListener("authchange", updateCustomerHeader);
 window.addEventListener("pageshow", updateCustomerHeader);
+
+// Đóng menu tài khoản khi nhấn Escape hoặc bấm ra ngoài menu.
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     document.getElementById("userControl").open = false;
@@ -36,6 +40,7 @@ document.addEventListener("click", (e) => {
   if (!userControl.contains(e.target)) userControl.open = false;
 });
 
+// Mở biểu mẫu chỉnh sửa với thông tin hiện tại của khách hàng.
 document.getElementById("btnEditProfile").addEventListener("click", () => {
   const current = layCurrent();
   if (!current || current.role !== "customer") return;
@@ -54,6 +59,7 @@ document.getElementById("btnEditProfile").addEventListener("click", () => {
   togglePanel("profile");
 });
 
+// Lưu thông tin hồ sơ khách hàng và cập nhật trạng thái đăng nhập.
 document.getElementById("profileForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const message = document.getElementById("profileMessage");
@@ -99,6 +105,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
   }
 });
 
+// Đăng xuất khách hàng và cập nhật lại giao diện.
 document.getElementById("btnLogout").addEventListener("click", () => {
   try {
     luuCurrent(null);
@@ -111,6 +118,7 @@ document.getElementById("btnLogout").addEventListener("click", () => {
   window.dispatchEvent(new Event("authchange"));
 });
 
+// Kiểm tra thông tin đăng nhập khách hàng và lưu phiên đăng nhập.
 const loginForm = document.getElementById("loginForm");
 if (loginForm) {
   loginForm.addEventListener("submit", (e) => {
@@ -122,12 +130,25 @@ if (loginForm) {
     const password = document.getElementById("login-pass").value;
     const user = layUsers().find(
       (candidate) =>
-        candidate.username &&
+        candidate &&
+        typeof candidate.username === "string" &&
         candidate.username.toLowerCase() === username.toLowerCase(),
     );
 
-    if (!user || user.password !== password || user.role !== "customer" || user.locked) {
-      message.textContent = "Thông tin đăng nhập không hợp lệ.";
+    if (!user) {
+      message.textContent = "Không tìm thấy tài khoản. Dữ liệu users có thể đã cũ.";
+      return;
+    }
+    if (user.locked) {
+      message.textContent = "Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.";
+      return;
+    }
+    if (user.password !== password) {
+      message.textContent = "Sai mật khẩu.";
+      return;
+    }
+    if (user.role !== "customer") {
+      message.textContent = "Đây không phải tài khoản khách. Admin đăng nhập ở trang quản trị.";
       return;
     }
 
@@ -151,6 +172,7 @@ if (loginForm) {
     window.dispatchEvent(new Event("authchange"));
   });
 } else {
+  // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
   document.getElementById("btnLogin").addEventListener("click", () => {
     window.location.href = "doan.html";
   });

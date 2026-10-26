@@ -66,6 +66,22 @@
           <input type="text" placeholder="Nhập từ khóa cần tìm..." />
           <button type="button">🔍</button>
         </div>
+
+        <details class="user-control" id="userControl" hidden>
+          <summary class="user-trigger">👤 Tài khoản</summary>
+          <div class="user-menu">
+            <h2>Tài khoản của bạn</h2>
+            <p><strong>Họ tên:</strong> <span id="userFullName"></span></p>
+            <p><strong>Tên đăng nhập:</strong> <span id="userName"></span></p>
+            <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <button type="button" class="user-menu-action" id="btnEditProfile">
+              Sửa thông tin
+            </button>
+            <button type="button" class="user-menu-action logout" id="btnLogout">
+              Đăng xuất
+            </button>
+          </div>
+        </details>
       </nav>
     </header>
 
@@ -144,6 +160,40 @@
         </p>
       </form>
     </aside>
+
+    <!-- THÔNG TIN TÀI KHOẢN -->
+    <aside class="panel" id="profilePanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Sửa thông tin</h2>
+      <p class="sub">Cập nhật thông tin tài khoản của bạn.</p>
+
+      <form class="form" id="profileForm">
+        <div class="field">
+          <label for="profile-username">Tên đăng nhập</label>
+          <input id="profile-username" type="text" readonly />
+        </div>
+        <div class="field">
+          <label for="profile-name">Họ và tên</label>
+          <input id="profile-name" type="text" required />
+        </div>
+        <div class="field">
+          <label for="profile-email">Email</label>
+          <input id="profile-email" type="email" required />
+        </div>
+        <div class="field">
+          <label for="profile-password">Mật khẩu mới</label>
+          <input
+            id="profile-password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Để trống nếu không muốn đổi"
+          />
+        </div>
+        <p id="profileMessage" class="login-message" role="status" aria-live="polite"></p>
+        <button type="submit" class="submit">Lưu thay đổi</button>
+      </form>
+    </aside>
+
     <main class="khung">
       <section>
         <h2 id="tieuDe">Tất cả sách</h2>
@@ -218,8 +268,9 @@
       </div>
     </footer>
 
-    <script src="../js/auth.js"></script>
+    <script src="../data/users.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/auth.js"></script>
     <script src="../js/product.js"></script>
     <script src="../js/do_an.js"></script>
     <script src="../js/cart-visibility.js"></script>

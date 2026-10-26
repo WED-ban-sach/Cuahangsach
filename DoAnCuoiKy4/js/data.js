@@ -198,3 +198,8 @@ const DU_LIEU_MAU = [
     hinh: "../image/GK02.jpg",
   }
 ];
+
+// LocalStorage chưa có data thì seed
+if (localStorage.getItem("dsSach") === null) {
+  localStorage.setItem("dsSach", JSON.stringify(DU_LIEU_MAU));
+}

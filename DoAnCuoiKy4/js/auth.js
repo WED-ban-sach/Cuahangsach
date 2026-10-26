@@ -1,6 +1,16 @@
 const KEY_USERS = "users";
 const KEY_CURRENT = "currentUser";
 
+// Nạp tài khoản mẫu vào localStorage khi chưa có danh sách tài khoản.
+function seedUsers() {
+  const users = layUsers();
+  if (users.length > 0) return users;
+
+  luuUsers(SEED_USERS);
+  return SEED_USERS;
+}
+
+// Đọc danh sách tài khoản đã lưu trong localStorage.
 function layUsers() {
   const raw = localStorage.getItem(KEY_USERS);
   if (raw === null) return [];
@@ -15,11 +25,13 @@ function layUsers() {
   }
 }
 
+// Lưu danh sách tài khoản vào localStorage.
 function luuUsers(users) {
   if (!Array.isArray(users)) throw new TypeError("Danh sách tài khoản phải là một mảng.");
   localStorage.setItem(KEY_USERS, JSON.stringify(users));
 }
 
+// Đọc thông tin tài khoản đang đăng nhập.
 function layCurrent() {
   const raw = localStorage.getItem(KEY_CURRENT);
   if (raw === null) return null;
@@ -33,11 +45,13 @@ function layCurrent() {
   }
 }
 
+// Lưu hoặc xóa thông tin tài khoản đang đăng nhập.
 function luuCurrent(user) {
   if (user) localStorage.setItem(KEY_CURRENT, JSON.stringify(user));
   else localStorage.removeItem(KEY_CURRENT);
 }
 
+// Mã hóa ký tự HTML đặc biệt trước khi hiển thị nội dung động.
 function esc(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({
     "&": "&amp;",
@@ -48,49 +62,10 @@ function esc(value) {
   })[character]);
 }
 
-function seedUsers() {
-  const users = layUsers();
-  if (users.length > 0) return users;
-
-  const seededUsers = [
-    {
-      id: "U001",
-      username: "admin",
-      password: "admin123",
-      hoTen: "Quản trị viên",
-      email: "admin@sgu.edu.vn",
-      role: "admin",
-      locked: false,
-      createdAt: "2026-10-01",
-    },
-    {
-      id: "U002",
-      username: "customer01",
-      password: "123456",
-      hoTen: "Nguyễn Văn A",
-      email: "a@gmail.com",
-      role: "customer",
-      locked: false,
-      createdAt: "2026-10-05",
-    },
-    {
-      id: "U003",
-      username: "customer02",
-      password: "123456",
-      hoTen: "Trần Thị B",
-      email: "b@gmail.com",
-      role: "customer",
-      locked: false,
-      createdAt: "2026-10-06",
-    },
-  ];
-
-  luuUsers(seededUsers);
-  return seededUsers;
-}
-
+// Khởi tạo dữ liệu mẫu trước khi dùng các chức năng xác thực.
 seedUsers();
 
+// Chuyển giữa màn hình đăng nhập và giao diện quản trị.
 function showAdminView(id) {
   ["view-login", "view-admin"].forEach((viewId) => {
     const view = document.getElementById(viewId);
@@ -98,6 +73,7 @@ function showAdminView(id) {
   });
 }
 
+// Thiết lập đăng nhập, đăng xuất và các thao tác phụ cho trang quản trị.
 function initAdminAuthentication() {
   const form = document.getElementById("formAdminLogin");
   if (!form) return;
@@ -202,4 +178,5 @@ function initAdminAuthentication() {
   }
 }
 
+// Gắn các sự kiện xác thực sau khi cấu trúc trang đã được tải.
 document.addEventListener("DOMContentLoaded", initAdminAuthentication);
