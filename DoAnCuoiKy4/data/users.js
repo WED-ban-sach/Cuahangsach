@@ -31,7 +31,3 @@ var SEED_USERS = [
       createdAt: "2026-10-06",
     },
   ];
-// localStorage chưa có data users thì seed
-if (localStorage.getItem("users") === null) {
-  localStorage.setItem("users", JSON.stringify(SEED_USERS));
-}  

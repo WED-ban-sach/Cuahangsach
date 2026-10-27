@@ -186,6 +186,90 @@ if (loginForm) {
     window.location.href = "doan.html";
   });
 }
+
+// Lấy id khách lớn nhất
+function taoIdUser(users) {
+  let max = 0;
+  for (const user of users) {
+    // "U001" - > "001"
+    const so = Number(String(user.id).slice(1));
+    if (so > max) max = so;
+  }
+  const soMoi = max + 1;
+  // 13 -> "013" -> "U013"
+  return "U" + String(soMoi).padStart(3, "0");
+}
+// Đăng ký tài khoản khách hàng
+const registerForm = document.getElementById("registerForm");
+if (registerForm){
+registerForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const message = document.getElementById("registerMessage");
+      message.textContent = "";
+
+      const hoTen = document.getElementById("hoten").value.trim();
+      const username = document.getElementById("reg-user").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("reg-pass").value;
+
+      if (!username || !hoTen || !email || !password) {
+        message.textContent = "Vui lòng nhập đầy đủ thông tin.";
+        return;
+      }
+      if (password.length < 6) {
+        message.textContent = "Mật khẩu phải có ít nhất 6 ký tự.";
+        return;
+      }
+      const users = layUsers();
+      const trungUsername = users.some(
+        (user) => user.username.toLowerCase() === username.toLowerCase(),
+      );
+      if (trungUsername) {
+        message.textContent = "Tên đăng nhập đã tồn tại.";
+        return;
+      }
+      const trungEmail = users.some( (user) => 
+        (user.email || "").toLowerCase() === email.toLowerCase(),
+        );
+      if (trungEmail) {
+        message.textContent = "Email đã được sử dụng.";
+        return;
+      }
+      const newUser = {
+        id: taoIdUser(users),
+        username,
+        password,
+        hoTen,
+        email,
+        role: "customer",
+        locked: false,
+        createdAt: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
+      };
+      try {
+        luuUsers([...users, newUser]);
+        luuCurrent({ username, hoTen, email, role: "customer" });
+      } catch (error) {
+        console.error("Không thể lưu tài khoản mới.", error);
+        message.textContent = "Không thể đăng ký. Vui lòng thử lại.";
+        return;
+      }
+
+      registerForm.reset();
+      closeAll();
+      document.getElementById("registerPanel").classList.remove("open");
+      document.getElementById("registerPanel").setAttribute("aria-hidden", "true");
+      document.getElementById("overlay").classList.remove("show");
+      window.dispatchEvent(new Event("authchange"));
+    });
+  } else {
+  // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
+  document.getElementById("btnLogin").addEventListener("click", () => {
+    window.location.href = "doan.html";
+  });
+  document.getElementById("btnRegister").addEventListener("click", () => {
+    window.location.href = "doan.html";
+  });
+}
 //3 4
 // ===== CART.JS - Quản lý giỏ hàng VNBook =====
 
