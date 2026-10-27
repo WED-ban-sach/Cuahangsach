@@ -600,7 +600,8 @@ body {
 #QLY_LOAISP_THEM_LOAI,
 #QLY_DANHMUC_THEM,
 #QLY_NHAPSP_THEM,
-#QLY_DONDATHANG_THEM {
+#QLY_DONDATHANG_THEM,
+#XACNHAN_XOA {
   display: none;
 
   position: fixed;

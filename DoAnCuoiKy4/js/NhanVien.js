@@ -88,7 +88,7 @@ var btn_resetmk = document.querySelectorAll(".BTN_RESETMK");
 
 var tb_xacnhan = document.getElementById("QLY_NGUOIDUNG_THONGBAOXACNHAN");
 var tb_thanhcong = document.getElementById("QLY_NGUOIDUNG_XACNHANTHANHCONG");
-var tb_resetmk = document.getElementById("QLY_NGUOIDUNG_RESETMK");
+// var tb_resetmk = document.getElementById("QLY_NGUOIDUNG_RESETMK");
 
 
 var nutDongY = tb_xacnhan.querySelector(".ND_DONGY");
@@ -97,8 +97,8 @@ var nutHuy = tb_xacnhan.querySelector(".ND_HUY");
 var nutDong = tb_thanhcong.querySelector(".ND_DONGY");
 
 
-var nutXacNhanReset = tb_resetmk.querySelector(".ND_DONGY");
-var nutHuyReset = tb_resetmk.querySelector(".ND_HUY");
+// var nutXacNhanReset = tb_resetmk.querySelector(".ND_DONGY");
+// var nutHuyReset = tb_resetmk.querySelector(".ND_HUY");
 
 var oMatKhauMoi = document.getElementById("RESETMK_MOI");
 var thaoTacHienTai = "";
@@ -169,19 +169,19 @@ nutDong.addEventListener("click", function() {
 });
 
 
-var cacNutResetMK = document.querySelectorAll(".BTN_RESETMK");
+// var cacNutResetMK = document.querySelectorAll(".BTN_RESETMK");
 
-cacNutResetMK.forEach(function(nut) {
+// cacNutResetMK.forEach(function(nut) {
 
-    nut.addEventListener("click", function() {
+//     nut.addEventListener("click", function() {
 
-        oMatKhauMoi.value = "";
+//         oMatKhauMoi.value = "";
 
-        tb_resetmk.style.display = "flex";
+//         tb_resetmk.style.display = "flex";
 
-    });
+//     });
 
-});
+// });
 
 
 

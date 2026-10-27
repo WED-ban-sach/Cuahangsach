@@ -335,21 +335,21 @@
                       <tr>
                         <th>Mã KH</th>
                         <th>Họ tên</th>
+                        <th>Tên đăng nhập</th>
                         <th>Email</th>
-                        <th>SĐT</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
                       </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id = "QLY_NGUOIDUNG_BODY">
                       <tr>
-                        <td>KH001</td>
-                        <td>nguyen van a</td>
-                        <td>hihi@gmail.com</td>
-                        <td>0909090</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>
-                          <span class="TRANGTHAI BIKHOA">Đã khóa</span>
+                          
                         </td>
 
                         <td>
@@ -367,7 +367,7 @@
                         <td></td>
                         <td></td>
                         <td>
-                          <span class="TRANGTHAI HOATDONG">Hoạt động</span>
+                          
                         </td>
 
                         <td>
@@ -385,7 +385,7 @@
                         <td></td>
                         <td></td>
                         <td>
-                          <span class="TRANGTHAI BIKHOA">Đã khóa</span>
+                          
                         </td>
 
                         <td>
@@ -403,7 +403,7 @@
                         <td></td>
                         <td></td>
                         <td>
-                          <span class="TRANGTHAI HOATDONG">Hoạt động</span>
+                          
                         </td>
 
                         <td>
@@ -421,7 +421,7 @@
                         <td></td>
                         <td></td>
                         <td>
-                          <span class="TRANGTHAI HOATDONG">Hoạt động</span>
+                          
                         </td>
 
                         <td>
@@ -469,21 +469,13 @@
 
               <div id="QLY_NGUOIDUNG_RESETMK">
                 <div class="HOPTHOAI_ND">
-                  <h3>Đặt lại mật khẩu</h3>
+                  <h3>Reset mật khẩu về mặc định (123456) </h3>
 
                   <p>
                     Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản này
                     không?
                   </p>
 
-                  <div class="RESETMK_TRUONG">
-                    <label for="RESETMK_MOI">Mật khẩu mới</label>
-                    <input
-                      type="password"
-                      id="RESETMK_MOI"
-                      placeholder="Nhập mật khẩu mới"
-                    />
-                  </div>
 
                   <div class="NUT_XACNHAN_ND">
                     <button class="ND_HUY">Hủy</button>
@@ -540,16 +532,16 @@
                       </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id = "LOAISP_BODY">
                       <tr>
-                        <td>L01</td>
+                        <td></td>
 
-                        <td>Văn học</td>
+                        <td></td>
 
-                        <td>25</td>
+                        <td></td>
 
                         <td>
-                          <span class="TRANGTHAI HOATDONG"> Hoạt động </span>
+                          
                         </td>
 
                         <td>
@@ -566,14 +558,14 @@
                       </tr>
 
                       <tr>
-                        <td>L02</td>
+                        <td></td>
 
-                        <td>Kinh tế</td>
+                        <td></td>
 
-                        <td>18</td>
+                        <td></td>
 
                         <td>
-                          <span class="TRANGTHAI HOATDONG"> Hoạt động </span>
+                          
                         </td>
 
                         <td>
@@ -590,14 +582,14 @@
                       </tr>
 
                       <tr>
-                        <td>L03</td>
+                        <td></td>
 
-                        <td>Kỹ năng sống</td>
+                        <td></td>
 
-                        <td>12</td>
+                        <td></td>
 
                         <td>
-                          <span class="TRANGTHAI HOATDONG"> Hoạt động </span>
+                          
                         </td>
 
                         <td>
@@ -614,14 +606,14 @@
                       </tr>
 
                       <tr>
-                        <td>L04</td>
+                        <td></td>
 
-                        <td>Thiếu nhi</td>
+                        <td></td>
 
-                        <td>30</td>
+                        <td></td>
 
                         <td>
-                          <span class="TRANGTHAI BIKHOA"> Đã ẩn </span>
+                          
                         </td>
 
                         <td>
@@ -1594,6 +1586,24 @@
               </div>
             </div>
           </div>
+
+          <div id = "XACNHAN_XOA">
+            <div class = "HOPTHOAI_ND">
+
+              <h3></h3>
+
+              <p></p>
+
+              <div class ="NUT_XACNHAN_ND">
+                <button class = "ND_HUY">Hủy</button>
+                <button class = "ND_DONGY">Xác nhận</button>
+              </div>
+
+            </div> 
+
+          </div>
+
+
         </div>
       </div>
     </div>
@@ -1603,5 +1613,7 @@
     <script src="../js/data.js"></script>
     <script src="../js/NhanVien.js"></script>
     <script src="../js/QuanLySach.js"></script>
+    <script src ="../js/QuanLyLoai.js"></script>
+    <script src = "../js/QuanLyNguoiDung.js"></script>
   </body>
 </html>
