@@ -6,6 +6,7 @@
     <title>Danh Mục Sách</title>
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/cart.css" />
+    <link rel="stylesheet" href="../css/checkout.css" />
   </head>
   <body>
     <header>
@@ -40,7 +41,10 @@
               <span>Tổng cộng</span>
               <strong id="cartTotal">0 đ</strong>
             </div>
-            <a class="cart-continue" href="sanpham.html">Tiếp tục mua sắm</a>
+            <div class="cart-actions">
+  <a class="cart-continue" href="sanpham.html">Tiếp tục mua sắm</a>
+  <button type="button" id="btnOpenCheckout" class="cart-checkout">Thanh toán</button>
+</div>
           </aside>
         </details>
 
@@ -51,14 +55,7 @@
         <div id="nut">
           Thể loại ▾
           <ul id="theloai">
-            <li>Tất cả các sách</li>
-            <li>Sách Ngoại Văn</li>
-            <li>Sách Văn Học</li>
-            <li>Sách Đời Sống</li>
-            <li>Sách Khoa Học Xã Hội</li>
-            <li>Sách Khoa Học Tự Nhiên</li>
-            <li>Sách Thiếu Nhi</li>
-            <li>Sách Giáo Khoa</li>
+            
           </ul>
         </div>
 
@@ -193,6 +190,55 @@
         <button type="submit" class="submit">Lưu thay đổi</button>
       </form>
     </aside>
+    <!-- THANH TOÁN TRỰC TIẾP TRÊN TRANG CHỦ -->
+    <aside class="panel" id="checkoutPanel" aria-hidden="true">
+      <button type="button" class="close" data-close>&times;</button>
+      <h2>Thanh toán đơn hàng</h2>
+      <p class="sub">Xác nhận thông tin giao hàng và thanh toán của bạn.</p>
+
+      <form class="form" id="checkoutFormInline">
+        <!-- 1. Địa chỉ nhận hàng -->
+        <div class="checkout-group">
+          <label class="group-title">1. Địa chỉ nhận hàng</label>
+          <div style="margin-bottom: 6px;">
+            <label><input type="radio" name="addressTypeInline" value="account" checked id="useAccAddrInline"> Sử dụng địa chỉ mặc định trong tài khoản</label>
+            <p id="accAddrTextInline" class="checkout-subtext"></p>
+          </div>
+          <div>
+            <label><input type="radio" name="addressTypeInline" value="new" id="useNewAddrInline"> Nhập địa chỉ giao hàng mới khác</label>
+          </div>
+          <div id="newAddrBoxInline" class="new-address-box">
+            <input type="text" id="newReceiverInline" placeholder="Họ tên người nhận" />
+            <input type="text" id="newPhoneInline" placeholder="Số điện thoại" />
+            <input type="text" id="newAddressInline" placeholder="Địa chỉ chi tiết (Số nhà, đường, phường/xã...)" />
+          </div>
+        </div>
+
+        <!-- 2. Phương thức thanh toán -->
+        <div class="checkout-group">
+          <label class="group-title">2. Phương thức thanh toán</label>
+          <div class="payment-options">
+            <label><input type="radio" name="paymentInline" value="COD" checked> Thanh toán tiền mặt khi nhận hàng (COD - Mặc định)</label>
+            <label><input type="radio" name="paymentInline" value="BankTransfer"> Chuyển khoản ngân hàng</label>
+            <label><input type="radio" name="paymentInline" value="Online"> Thanh toán trực tuyến</label>
+          </div>
+        </div>
+
+        <!-- 3. Xem lại tóm tắt đơn hàng -->
+        <div class="checkout-group" style="border-bottom: none; padding-bottom: 0;">
+          <label class="group-title">3. Tóm tắt sản phẩm đặt mua</label>
+          <div id="checkoutSummaryInline" class="checkout-summary-box">
+            <!-- Render danh sách sản phẩm bằng JS -->
+          </div>
+          <div class="checkout-total-row">
+            <span>Tổng cộng:</span>
+            <span id="checkoutTotalInline">0 đ</span>
+          </div>
+        </div>
+
+        <button type="submit" class="submit" style="margin-top: 16px;">Xác nhận đặt hàng</button>
+      </form>
+    </aside>
 
     <main class="khung">
       <section>
@@ -274,5 +320,6 @@
     <script src="../js/product.js"></script>
     <script src="../js/do_an.js"></script>
     <script src="../js/cart-visibility.js"></script>
+    <script src="../js/checkout.js"></script>
   </body>
 </html>

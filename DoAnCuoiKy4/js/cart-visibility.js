@@ -3,7 +3,10 @@ function updateCustomerHeader() {
   const current = layCurrent();
   const isCustomer = Boolean(current && current.role === "customer");
   const account = isCustomer
-    ? layUsers().find((user) => user.username === current.username && user.role === "customer")
+    ? layUsers().find(
+        (user) =>
+          user.username === current.username && user.role === "customer",
+      )
     : null;
 
   document.querySelector(".auth").hidden = isCustomer;
@@ -136,11 +139,13 @@ if (loginForm) {
     );
 
     if (!user) {
-      message.textContent = "Không tìm thấy tài khoản. Dữ liệu users có thể đã cũ.";
+      message.textContent =
+        "Không tìm thấy tài khoản. Dữ liệu users có thể đã cũ.";
       return;
     }
     if (user.locked) {
-      message.textContent = "Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.";
+      message.textContent =
+        "Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên.";
       return;
     }
     if (user.password !== password) {
@@ -148,7 +153,8 @@ if (loginForm) {
       return;
     }
     if (user.role !== "customer") {
-      message.textContent = "Đây không phải tài khoản khách. Admin đăng nhập ở trang quản trị.";
+      message.textContent =
+        "Đây không phải tài khoản khách. Admin đăng nhập ở trang quản trị.";
       return;
     }
 
@@ -180,3 +186,167 @@ if (loginForm) {
     window.location.href = "doan.html";
   });
 }
+//3 4
+// ===== CART.JS - Quản lý giỏ hàng VNBook =====
+
+// Lấy key giỏ hàng riêng theo tài khoản đăng nhập hiện tại để tránh nhầm lẫn giữa các user
+function layKeyGioHang() {
+  const current = layCurrent();
+  if (!current || !current.username) return null;
+  return "gioHang_" + current.username;
+}
+
+// Lấy danh sách sản phẩm trong giỏ hàng
+function layGioHang() {
+  const key = layKeyGioHang();
+  if (!key) return [];
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : [];
+}
+
+// Lưu danh sách giỏ hàng
+function luuGioHang(gioHang) {
+  const key = layKeyGioHang();
+  if (!key) return;
+  localStorage.setItem(key, JSON.stringify(gioHang));
+  capNhatSoLuongGioHang();
+}
+
+// Cập nhật số lượng hiển thị trên icon giỏ hàng ở header
+function capNhatSoLuongGioHang() {
+  const gioHang = layGioHang();
+  let tongSoLuong = 0;
+  for (let i = 0; i < gioHang.length; i++) {
+    tongSoLuong += gioHang[i].soLuong;
+  }
+  const badge = document.getElementById("cartCount");
+  if (badge) {
+    badge.textContent = tongSoLuong;
+  }
+}
+
+// Thêm sản phẩm vào giỏ hàng (Gọi từ nút "Mua" ở trang sản phẩm hoặc chi tiết)
+function themVaoGioHang(maSach) {
+  const current = layCurrent();
+  if (!current || current.role !== "customer") {
+    alert(
+      "Vui lòng đăng nhập tài khoản khách hàng để sử dụng chức năng giỏ hàng!",
+    );
+    // Mở panel đăng nhập nếu có
+    const loginPanel = document.getElementById("loginPanel");
+    const overlay = document.getElementById("overlay");
+    if (loginPanel && overlay) {
+      loginPanel.classList.add("open");
+      loginPanel.setAttribute("aria-hidden", "false");
+      overlay.classList.add("show");
+    }
+    return;
+  }
+
+  // Lấy thông tin sách từ danh sách chung (dùng hàm layDanhSach() từ product.js)
+  const tatCaSach = typeof layDanhSach === "function" ? layDanhSach() : [];
+  const sach = tatCaSach.find((s) => s.ma === maSach);
+  if (!sach) {
+    alert("Không tìm thấy sản phẩm!");
+    return;
+  }
+
+  let gioHang = layGioHang();
+  let index = gioHang.findIndex((item) => item.ma === maSach);
+
+  if (index >= 0) {
+    gioHang[index].soLuong += 1;
+  } else {
+    gioHang.push({
+      ma: sach.ma,
+      ten: sach.ten,
+      gia: sach.gia,
+      hinh: sach.hinh,
+      soLuong: 1,
+    });
+  }
+
+  luuGioHang(gioHang);
+  hienThiGioHangPanel();
+  alert("Đã thêm sách vào giỏ hàng thành công!");
+}
+
+// Thay đổi số lượng sản phẩm trong giỏ hàng (+1 hoặc -1)
+function thayDoiSoLuong(maSach, delta) {
+  let gioHang = layGioHang();
+  let index = gioHang.findIndex((item) => item.ma === maSach);
+  if (index >= 0) {
+    gioHang[index].soLuong += delta;
+    if (gioHang[index].soLuong <= 0) {
+      gioHang.splice(index, 1); // Xóa luôn nếu số lượng về 0 hoặc âm
+    }
+    luuGioHang(gioHang);
+    hienThiGioHangPanel();
+  }
+}
+
+// Hiển thị danh sách sản phẩm trong khung/panel giỏ hàng
+function hienThiGioHangPanel() {
+  const container = document.getElementById("cartItems");
+  const totalContainer = document.getElementById("cartTotal");
+  if (!container) return;
+
+  const gioHang = layGioHang();
+  if (gioHang.length === 0) {
+    container.innerHTML = `<p class="cart-empty">Giỏ hàng của bạn đang trống.</p>`;
+    if (totalContainer) totalContainer.textContent = "0 đ";
+    return;
+  }
+
+  let html = "";
+  let tongTien = 0;
+
+  for (let i = 0; i < gioHang.length; i++) {
+    const item = gioHang[i];
+    const thanhTien = item.gia * item.soLuong;
+    tongTien += thanhTien;
+
+    html += `
+      <div class="cart-item">
+        <img src="${item.hinh || "../image/khong-co-anh.svg"}" alt="${item.ten}">
+        <div class="cart-item-info">
+          <p><strong>${item.ten}</strong></p>
+          <p>${typeof dinhDangGia === "function" ? dinhDangGia(item.gia) : item.gia + " đ"}</p>
+          <div style="display: flex; align-items: center; gap: 6px; margin-top: 4px;">
+            <button type="button" onclick="thayDoiSoLuong('${item.ma}', -1)" style="padding: 2px 6px;">-</button>
+            <span>${item.soLuong}</span>
+            <button type="button" onclick="thayDoiSoLuong('${item.ma}', 1)" style="padding: 2px 6px;">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+  if (totalContainer) {
+    totalContainer.textContent =
+      typeof dinhDangGia === "function"
+        ? dinhDangGia(tongTien)
+        : tongTien + " đ";
+  }
+}
+
+// Gắn sự kiện click tự động cho các nút "Mua" trên toàn trang
+document.addEventListener("click", function (e) {
+  if (e.target && e.target.classList.contains("btn-mua")) {
+    const maSach = e.target.dataset.ma;
+    if (maSach) {
+      themVaoGioHang(maSach);
+    }
+  }
+});
+
+// Khởi chạy khi tải trang
+document.addEventListener("DOMContentLoaded", () => {
+  capNhatSoLuongGioHang();
+  hienThiGioHangPanel();
+});
+window.addEventListener("authchange", () => {
+  capNhatSoLuongGioHang();
+  hienThiGioHangPanel();
+});
