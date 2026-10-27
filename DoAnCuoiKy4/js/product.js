@@ -26,7 +26,20 @@ function laySachThemMoi() {
 
 // Tất cả sách = sách trong data.js + sách thêm mới
 function layDanhSach() {
-  return DU_LIEU_MAU.concat(laySachThemMoi());
+  // Nếu admin đã quản lý sách (khoá "dsSach") thì dùng danh sách đó, chưa có thì dùng data.js
+  let tatCaSach = DU_LIEU_MAU.concat(laySachThemMoi());
+  const chuoi = localStorage.getItem("dsSach");
+  if (chuoi !== null) {
+    tatCaSach = JSON.parse(chuoi);
+  }
+  // Bỏ các sách admin đã ẩn
+  const sachDangBan = [];
+  for (let i = 0; i < tatCaSach.length; i++) {
+    if (!tatCaSach[i].an) {
+      sachDangBan.push(tatCaSach[i]);
+    }
+  }
+  return sachDangBan;
 }
 
 // Thêm một sách mới. Trả về false nếu mã sách đã tồn tại
@@ -48,7 +61,16 @@ function themSanPham(sachMoi) {
 
 // 160000 -> "160.000 đ"
 function dinhDangGia(gia) {
-  return gia.toLocaleString("vi-VN") + " đ";
+  if (gia === null || gia === undefined || gia === "") {
+    return "Chưa cập nhật giá";
+  }
+
+  const giaSo = Number(gia);
+  if (!Number.isFinite(giaSo)) {
+    return "Chưa cập nhật giá";
+  }
+
+  return giaSo.toLocaleString("vi-VN") + " đ";
 }
 
 // Đổi id thể loại (vd "khxh") thành tên thể loại để hiển thị
@@ -69,12 +91,12 @@ function taoTheSach(sach) {
 
   const anh = document.createElement("img");
   anh.className = "anh-sach";
-  anh.src = sach.hinh;
+  anh.src = sach.hinh || "../image/khong-co-anh.svg";
   anh.alt = sach.ten;
   // Nếu không tìm thấy file ảnh thì dùng ảnh mặc định
   anh.onerror = function () {
     anh.onerror = null;
-    anh.src = "images/khong-co-anh.svg";
+    anh.src = "../image/khong-co-anh.svg";
   };
 
   const ten = document.createElement("h3");
@@ -174,7 +196,9 @@ function hienThiNutPhanTrang(tongTrang) {
     }
     khung.appendChild(nutSo);
   }
-  khung.appendChild(taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang));
+  khung.appendChild(
+    taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang),
+  );
 }
 
 // ---------- 5. THỂ LOẠI TRÊN THANH MENU ----------
