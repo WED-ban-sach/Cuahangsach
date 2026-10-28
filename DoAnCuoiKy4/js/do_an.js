@@ -52,7 +52,20 @@ overlay.addEventListener("click", closeAll);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") closeAll();
 });
-
+//Ô tìm kiếm trên header: ở trang sản phẩm thì tìm luôn, ở trang khác thì chuyển sang trang sản phẩm
+function xuLyTimKiem() {
+  const tuKhoa = document.getElementById("oTimKiem").value.trim();
+  // kiểm tra có phải hàm kh, đúng thì tìm, sai thì chuyển về trang sản phẩm
+  if (typeof timCoBan === "function") {
+    timCoBan(tuKhoa);
+  } else {
+    window.location.href = "sanpham.html?q=" + encodeURIComponent(tuKhoa);
+  }
+}
+document.getElementById("nutTimKiem").addEventListener("click", xuLyTimKiem);
+document.getElementById("oTimKiem").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") xuLyTimKiem();
+});
 // tạm thời chặn submit để không bị load lại trang
 document
   .getElementById("loginForm")

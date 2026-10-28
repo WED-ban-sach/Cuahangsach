@@ -63,6 +63,7 @@
                 <td>${user.hoTen}</td>
                 <td>${user.username}</td>
                 <td>${user.email}</td>
+                <td>${user.diaChi}</td>
                 <td>
                     <span class = "TRANGTHAI ${user.locked ? "BIKHOA" : "HOATDONG"}"> 
                         ${user.locked ? "Đã khóa" : "Hoạt động"}

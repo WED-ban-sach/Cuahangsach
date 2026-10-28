@@ -56,6 +56,8 @@ document.getElementById("btnEditProfile").addEventListener("click", () => {
     (account && account.hoTen) || current.hoTen || "";
   document.getElementById("profile-email").value =
     (account && account.email) || current.email || "";
+  document.getElementById("profile-diaChi").value =
+    (account && account.diaChi) || current.diaChi || "";
   document.getElementById("profile-password").value = "";
   document.getElementById("profileMessage").textContent = "";
   document.getElementById("userControl").open = false;
@@ -74,6 +76,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
 
   const hoTen = document.getElementById("profile-name").value.trim();
   const email = document.getElementById("profile-email").value.trim();
+  const diaChi = document.getElementById("profile-diachi").value.trim();
   const password = document.getElementById("profile-password").value;
   if (!hoTen || !email) {
     message.textContent = "Vui lòng nhập họ tên và email.";
@@ -94,6 +97,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
       ...users[userIndex],
       hoTen,
       email,
+      diaChi,
       ...(password ? { password } : {}),
     };
     luuUsers(users);
@@ -242,6 +246,7 @@ registerForm.addEventListener("submit", (e) => {
         hoTen,
         email,
         role: "customer",
+        diaChi: "",
         locked: false,
         createdAt: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
       };
