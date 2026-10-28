@@ -953,8 +953,10 @@
                     <div id="QLY_DANHMUC_CHON">
                       <select id="QLY_NHAPSP_TRANGTHAI">
                         <option value="all">Trạng thái: tất cả</option>
-                        <option value="active">Hoàn thành</option>
-                        <option value="locked">Chưa hoàn thành</option>
+                        <option value="moidat">Mới đặt</option>
+                        <option value="daxuly">Đã xử lý</option>
+                        <option value="dagiao">Đã giao</option>
+                        <option value="huy">Đã hủy</option>
                       </select>
                     </div>
 
@@ -964,10 +966,6 @@
 
                       <label for="NHAPSP_DENNGAY"></label>
                       <input type="date" id="NHAPSP_DENNGAY" />
-                    </div>
-
-                    <div>
-                      <button class="BTN_THEM_PHIEU">+ Thêm</button>
                     </div>
                   </div>
 
@@ -1435,58 +1433,6 @@
             </div>
           </div>
 
-          <div id="QLY_DONDATHANG_THEM">
-            <div class="HOPTHOAI_ND">
-              <h3>Thêm đơn đặt hàng</h3>
-
-              <div class="THEM_LOAI_TRUONG">
-                <label for="MA_DON_MOI">Mã đơn</label>
-                <input type="text" id="MA_DON_MOI" placeholder="Ví dụ: DH001" />
-              </div>
-
-              <div class="THEM_LOAI_TRUONG">
-                <label for="KHACHHANG_DON_MOI">Khách hàng</label>
-                <input
-                  type="text"
-                  id="KHACHHANG_DON_MOI"
-                  placeholder="Tên khách hàng"
-                />
-              </div>
-
-              <div class="THEM_LOAI_TRUONG">
-                <label for="NGAYDAT_DON_MOI">Ngày đặt</label>
-                <input type="date" id="NGAYDAT_DON_MOI" />
-              </div>
-
-              <div class="THEM_LOAI_TRUONG">
-                <label for="SOLUONG_DON_MOI">Số lượng sách</label>
-                <input
-                  type="number"
-                  id="SOLUONG_DON_MOI"
-                  min="1"
-                  step="1"
-                  placeholder="1"
-                />
-              </div>
-
-              <div class="THEM_LOAI_TRUONG">
-                <label for="TONGTIEN_DON_MOI">Tổng tiền</label>
-                <input
-                  type="number"
-                  id="TONGTIEN_DON_MOI"
-                  min="0"
-                  step="1"
-                  placeholder="500000"
-                />
-              </div>
-
-              <div class="NUT_XACNHAN_ND">
-                <button type="button" id="HUY_THEM_DON">Hủy</button>
-                <button type="button" id="XACNHAN_THEM_DON">Xác nhận</button>
-              </div>
-            </div>
-          </div>
-
           <div id="MODAL_LOINHUAN_CHUNG" class="MODAL_LOINHUAN">
             <div class="FORM_LOINHUAN">
               <h3 id="LOINHUAN_TIEUDE">Chỉnh % lợi nhuận</h3>
@@ -1531,12 +1477,12 @@
               <div class="TK_NGAY">
                 <div class="TK_NGAY_TRUONG">
                   <label for="TK_TUNGAY">Từ ngày</label>
-                  <input type="date" id="TK_TUNGAY" value="2026-09-01" />
+                  <input type="date" id="TK_TUNGAY" />
                 </div>
 
                 <div class="TK_NGAY_TRUONG">
                   <label for="TK_DENNGAY">Đến ngày</label>
-                  <input type="date" id="TK_DENNGAY" value="2026-10-19" />
+                  <input type="date" id="TK_DENNGAY" />
                 </div>
               </div>
 
@@ -1611,9 +1557,11 @@
     <script src="../data/users.js"></script>
     <script src="../js/auth.js"></script>
     <script src="../js/data.js"></script>
+    <script src="../js/kho.js"></script>
     <script src="../js/NhanVien.js"></script>
     <script src="../js/QuanLySach.js"></script>
     <script src ="../js/QuanLyLoai.js"></script>
     <script src = "../js/QuanLyNguoiDung.js"></script>
+    <script src="../js/QuanLyDonHang.js"></script>
   </body>
 </html>

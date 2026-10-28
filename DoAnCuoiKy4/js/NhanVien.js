@@ -185,6 +185,7 @@ nutDong.addEventListener("click", function() {
 
 
 
+/*
 nutXacNhanReset.addEventListener("click", function() {
 
     if (oMatKhauMoi.value.trim() === "") {
@@ -211,6 +212,7 @@ nutHuyReset.addEventListener("click", function() {
 
     tb_resetmk.style.display = "none";
 });
+*/
 
 
 
@@ -333,6 +335,7 @@ nut_chiTietDong.addEventListener("click", function() {
 
 
 
+/*
 var capnhattinhtrangdon = document.getElementById("CAPNHATTINHTRANGDON");
 var btn_capnhattinhtrangdon = document.querySelectorAll(".BTN_DONDATHANG_CAPNHATTINHTRANG");
 var capnhattinhtrangdon_huy = capnhattinhtrangdon.querySelector(".ND_HUY");
@@ -350,33 +353,6 @@ btn_capnhattinhtrangdon.forEach( function(nut) {
 capnhattinhtrangdon_huy.addEventListener("click", function() {
     capnhattinhtrangdon.style.display = "none";
 })
-
-
-
-var qly_dondathang_them = document.getElementById("QLY_DONDATHANG_THEM");
-var btn_dondathang_them = document.querySelector("#QLY_DONDATHANG .BTN_THEM_PHIEU");
-
-
-var dondathang_huy = document.getElementById("HUY_THEM_DON");
-var dondathang_dongy = document.getElementById("XACNHAN_THEM_DON");
-
-btn_dondathang_them.addEventListener("click", function() {
-    qly_dondathang_them.style.display = "flex";
-})
-
-
-
-dondathang_huy.addEventListener("click", function() {
-    qly_dondathang_them.style.display = "none";
-})
-
-
-dondathang_dongy.addEventListener("click", function() {
-    qly_dondathang_them.style.display = "none";
-
-    hienThongBaoThanhCong("Thành công ! ", "Thêm đơn đặt hàng mới thành công!");
-})
-
 
 // bangChiTiet_chung noiDungChiTiet nut_chiTietDong
 
@@ -400,6 +376,7 @@ btn_dondathang_chitiet.forEach( function(nut) {
 
     })
 })
+*/
 
 
 
@@ -407,6 +384,7 @@ btn_dondathang_chitiet.forEach( function(nut) {
 // ------------------------- quan ly gia ban: xem QuanLySach.js
 
 
+/*
 var tk_modal = document.getElementById("TK_MODAL");
 var btn_chitiet_tonkho = document.querySelectorAll(".BTN_CHITIET_TONKHO");
 
@@ -423,3 +401,4 @@ btn_chitiet_tonkho.forEach(function(nut) {
 tk_dong.addEventListener("click", function() {
     tk_modal.style.display = "none";
 })
+*/

@@ -4,26 +4,7 @@
 // các nút trong bảng dùng 1 sự kiện click trên tbody (Bài 4), kiểm tra form (Bài 5), tìm kiếm bằng sự kiện input (Bài 6).
 
 // ---------- 1. DỮ LIỆU VÀ HÀM HỖ TRỢ ----------
-function layDsSach() {
-  var chuoi = localStorage.getItem("dsSach");
-  if (chuoi === null) {
-    return DU_LIEU_MAU.slice(); // lần đầu: lấy sách từ data.js
-  }
-  return JSON.parse(chuoi);
-}
-function luuDsSach(ds) {
-  localStorage.setItem("dsSach", JSON.stringify(ds));
-}
-function layDsPhieu() {
-  var chuoi = localStorage.getItem("dsPhieuNhap");
-  if (chuoi === null) {
-    return [];
-  }
-  return JSON.parse(chuoi);
-}
-function luuDsPhieu(ds) {
-  localStorage.setItem("dsPhieuNhap", JSON.stringify(ds));
-}
+// Hàm đọc/ghi dữ liệu và tính tồn nằm trong kho.js".
 // Tìm vị trí của phần tử có mã "ma" trong mảng, không thấy trả về -1
 function timViTri(ds, ma) {
   for (var i = 0; i < ds.length; i++) {
@@ -59,21 +40,7 @@ function layGiaVon(maSach) {
   }
   return giaVon;
 }
-// Số sách còn = tổng số lượng nhập của các phiếu đã hoàn thành
-function laySoLuong(maSach) {
-  var dsPhieu = layDsPhieu();
-  var tong = 0;
-  for (var i = 0; i < dsPhieu.length; i++) {
-    if (dsPhieu[i].hoanThanh) {
-      for (var j = 0; j < dsPhieu[i].dong.length; j++) {
-        if (dsPhieu[i].dong[j].ma === maSach) {
-          tong = tong + dsPhieu[i].dong[j].sl;
-        }
-      }
-    }
-  }
-  return tong;
-}
+
 // Giá bán = giá vốn + % lợi nhuận (chỉ tính khi sách đã có giá vốn và % lợi nhuận)
 function tinhGiaBan(sach) {
   var giaVon = layGiaVon(sach.ma);
