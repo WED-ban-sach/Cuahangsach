@@ -4,6 +4,7 @@ const panels = {
   login: document.getElementById("loginPanel"),
   register: document.getElementById("registerPanel"),
   profile: document.getElementById("profilePanel"),
+  orders: document.getElementById("ordersPanel"),
 };
 
 function closeAll() {
