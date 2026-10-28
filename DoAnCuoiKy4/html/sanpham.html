@@ -260,6 +260,18 @@
 
     <main class="khung">
       <section>
+        <details class="tim-nang-cao">
+          <summary>Tìm kiếm nâng cao</summary>
+          <form id="formTimNangCao">
+            <input type="text" id="tnTen" placeholder="Tên sách" />
+            <select id="tnLoai"></select>
+            <input type="number" id="tnGiaTu" min="0" step="1000" placeholder="Giá từ" />
+            <input type="number" id="tnGiaDen" min="0" step="1000" placeholder="Giá đến" />
+            <button type="submit">Tìm</button>
+            <button type="reset">Xoá lọc</button>
+            <p id="tnThongBao"></p>
+          </form>
+        </details>
         <h2 id="tieuDe">Tất cả sách</h2>
         <div id="dsSanPham" class="luoi-sach"></div>
         <div id="phanTrang" class="phan-trang"></div>

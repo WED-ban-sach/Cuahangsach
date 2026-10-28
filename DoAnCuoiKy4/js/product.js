@@ -94,6 +94,36 @@ function timCoBan(tuKhoa) {
     'Kết quả tìm "' + tuKhoa + '" (' + ketQua.length + " sách)";
   hienThi(ketQua, 1, "Không tìm thấy sách phù hợp.");
 }
+const formTimNangCao = document.getElementById("formTimNangCao");
+formTimNangCao.addEventListener("submit", function (e) {
+  e.preventDefault(); 
+  const giaTu = document.getElementById("tnGiaTu").value;
+  const giaDen = document.getElementById("tnGiaDen").value;
+  const ten = document.getElementById("tnTen").value;
+  const loai = document.getElementById("tnLoai").value;
+  if (giaTu !== "" && giaDen !== "" && Number(giaTu) > Number(giaDen)) {
+    document.getElementById("tnThongBao").textContent = "Giá từ không được lớn hơn giá đến.";
+    return;
+  }
+  const ketQua = timSach(ten, loai, giaTu, giaDen);
+  document.getElementById("tieuDe").textContent =
+    "Kết quả tìm kiếm nâng cao (" + ketQua.length + " sách)";
+  hienThi(ketQua, 1, "Không tìm thấy sách phù hợp.");
+});
+formTimNangCao.addEventListener("reset", function () {
+  document.getElementById("tnThongBao").textContent = "";
+  locTheoTheLoai("all"); // Xoá lọc thì hiện lại tất cả sách
+});
+
+// Đổ thể loại vào ô chọn của tìm nâng cao
+function hienThiSelectTheLoai() {
+  const oChon = document.getElementById("tnLoai");
+  const dsLoai = layDanhSachLoai();
+  oChon.appendChild(new Option("Tất cả thể loại", "all"));
+  for (let i = 0; i < dsLoai.length; i++) {
+    oChon.appendChild(new Option(dsLoai[i].ten, dsLoai[i].id));
+  }
+}
 // ---------- 2. HÀM HỖ TRỢ ----------
 
 // 160000 -> "160.000 đ"
@@ -253,6 +283,7 @@ function hienThiNutPhanTrang(tongTrang) {
   );
 }
 
+
 // ---------- 5. THỂ LOẠI TRÊN THANH MENU ----------
 
 // Hiển thị sách của 1 thể loại (idTheLoai = "all" thì hiển thị tất cả)
@@ -297,6 +328,7 @@ function hienThiMenuTheLoai() {
 
 // ---------- 6. CHẠY KHI MỞ TRANG ----------
 hienThiMenuTheLoai();
+hienThiSelectTheLoai();
 //lấy phần sau dấu ? trên URL, để đọc được giá trị q =
 const thamSo = new URLSearchParams(window.location.search);
 // Đến từ ô tìm kiếm ở trang khác -> hiện kết quả tìm
