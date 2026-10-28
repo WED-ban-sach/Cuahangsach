@@ -492,3 +492,44 @@ body {
 .switch a:hover {
   text-decoration: underline;
 }
+
+/* ordered */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.orders-empty {
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+.order-item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.order-item summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.order-status {
+  color: #1a73e8;
+}
+.order-total {
+  font-weight: bold;
+  margin-left: auto;
+}
+.order-detail {
+  margin-top: 8px;
+  font-size: 14px;
+}
+.order-detail ul {
+  padding-left: 18px;
+  margin: 6px 0 0;
+}

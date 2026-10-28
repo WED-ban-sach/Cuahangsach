@@ -198,8 +198,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Cập nhật lại giao diện giỏ hàng trống
-      if (typeof hienThiGioHangPanel === "function") {
-        hienThiGioHangPanel();
+      // Xóa giỏ hàng hiện tại sau khi đặt thành công
+      if (typeof luuGioHang === "function") {
+        luuGioHang([]); // lưu giỏ rỗng và tự gọi capNhatSoLuongGioHang() => badge về 0
       }
     });
   }

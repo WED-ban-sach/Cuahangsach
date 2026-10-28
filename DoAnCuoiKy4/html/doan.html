@@ -66,6 +66,9 @@
             <p><strong>Họ tên:</strong> <span id="userFullName"></span></p>
             <p><strong>Tên đăng nhập:</strong> <span id="userName"></span></p>
             <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <button type="button" class="user-menu-action" id="btnOrderHistory">
+  Lịch sử đơn hàng
+</button>
             <button type="button" class="user-menu-action" id="btnEditProfile">
               Sửa thông tin
             </button>
@@ -221,6 +224,7 @@
             <input type="text" id="newAddressInline" placeholder="Địa chỉ chi tiết (Số nhà, đường, phường/xã...)" />
           </div>
         </div>
+        
 
         <!-- 2. Phương thức thanh toán -->
         <div class="checkout-group">
@@ -244,9 +248,16 @@
           </div>
         </div>
 
-        <button type="submit" class="submit" style="margin-top: 16px;">Xác nhận đặt hàng</button>
+        <button id="confirm" type="submit" class="submit" style="margin-top: 16px;">Xác nhận đặt hàng</button>
       </form>
     </aside>
+    <!-- LỊCH SỬ ĐƠN HÀNG -->
+<aside class="panel" id="ordersPanel" aria-hidden="true">
+  <button type="button" class="close" data-close>&times;</button>
+  <h2>Lịch sử đơn hàng</h2>
+  <p class="sub">Các đơn hàng bạn đã đặt.</p>
+  <div id="ordersList" class="orders-list"></div>
+</aside>
 
     <main>
       <div id="anhnen">
@@ -343,6 +354,7 @@
     <script src="../js/do_an.js"></script>
     <script src="../js/cart-visibility.js"></script>
     <script src="../js/checkout.js"></script>
+    <script src="../js/order.js"></script>
     <script src="../js/chitiet.js"></script>
   </body>
 </html>
