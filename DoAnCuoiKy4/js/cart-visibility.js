@@ -19,6 +19,8 @@ function updateCustomerHeader() {
     document.getElementById("userName").textContent = current.username || "";
     document.getElementById("userEmail").textContent =
       (account && account.email) || current.email || "";
+    document.getElementById("userAddress").textContent =
+      (account && account.diaChi) || current.diaChi || "Chưa cập nhật";
   } else {
     document.getElementById("userControl").open = false;
   }
@@ -76,7 +78,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
 
   const hoTen = document.getElementById("profile-name").value.trim();
   const email = document.getElementById("profile-email").value.trim();
-  const diaChi = document.getElementById("profile-diachi").value.trim();
+  const diaChi = document.getElementById("profile-diaChi").value.trim();
   const password = document.getElementById("profile-password").value;
   if (!hoTen || !email) {
     message.textContent = "Vui lòng nhập họ tên và email.";
@@ -102,7 +104,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
     };
     luuUsers(users);
 
-    const updatedCurrent = { ...current, hoTen, email };
+    const updatedCurrent = { ...current, hoTen, email, diaChi };
     luuCurrent(updatedCurrent);
     window.dispatchEvent(new Event("authchange"));
     closeAll();
@@ -167,6 +169,7 @@ if (loginForm) {
         username: user.username,
         hoTen: user.hoTen,
         email: user.email,
+        diaChi: user.diaChi || "",
         role: user.role,
       });
     } catch (error) {
@@ -252,7 +255,7 @@ registerForm.addEventListener("submit", (e) => {
       };
       try {
         luuUsers([...users, newUser]);
-        luuCurrent({ username, hoTen, email, role: "customer" });
+        luuCurrent({ username, hoTen, email, diaChi: "", role: "customer" });
       } catch (error) {
         console.error("Không thể lưu tài khoản mới.", error);
         message.textContent = "Không thể đăng ký. Vui lòng thử lại.";
