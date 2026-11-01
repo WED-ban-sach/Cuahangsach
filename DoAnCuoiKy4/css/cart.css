@@ -256,3 +256,17 @@
     right: 8px;
   }
 }
+/* Tìm kiếm nằm sau Trang chủ / Sản phẩm, đẩy giỏ hàng + tài khoản sang phải */
+#search {
+  order: 1;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.cart-control {
+  order: 2;
+}
+
+.user-control {
+  order: 3;
+}
