@@ -1,14 +1,96 @@
+// var menu = document.getElementById("MENU");
+// var left = document.getElementById("LEFT");
+// var container = document.getElementById("CONTAINER");
+
+
+// menu.addEventListener("click", function() {
+//     left.classList.toggle("hide");
+
+//     container.classList.toggle("full");
+
+// });
+
+// --------------xoa tren day---------------
+
+// ------------------THEM ( FIX LOI MAN HINH NHO )------------
+
+
 var menu = document.getElementById("MENU");
 var left = document.getElementById("LEFT");
 var container = document.getElementById("CONTAINER");
+ 
+var MOBILE_MAX = 768; 
 
+var overlay = document.createElement("div");
+overlay.id = "OVERLAY";
+document.body.appendChild(overlay);
+ 
+function laManHinhNho() {
+    return window.innerWidth <= MOBILE_MAX;
+}
+ 
+function capNhatOverlay() {
+    var dangMo = !left.classList.contains("hide");
+    if (laManHinhNho() && dangMo) {
+        overlay.classList.add("show");
+    } else {
+        overlay.classList.remove("show");
+    }
+}
+ 
 
+function dongMenuManHinhNho() {
+    if (laManHinhNho()) {
+        left.classList.add("hide");
+        capNhatOverlay();
+    }
+}
+ 
+
+if (laManHinhNho()) {
+    left.classList.add("hide");
+}
+ 
 menu.addEventListener("click", function() {
     left.classList.toggle("hide");
+ 
 
     container.classList.toggle("full");
-
+ 
+    capNhatOverlay();
 });
+ 
+
+overlay.addEventListener("click", function() {
+    left.classList.add("hide");
+    container.classList.add("full");
+    capNhatOverlay();
+});
+ 
+
+var tungLaManHinhNho = laManHinhNho();
+ 
+window.addEventListener("resize", function() {
+    var bayGio = laManHinhNho();
+ 
+    if (bayGio !== tungLaManHinhNho) {
+        if (bayGio) {
+
+            left.classList.add("hide");
+            container.classList.add("full");
+        } else {
+
+            left.classList.remove("hide");
+            container.classList.remove("full");
+        }
+        tungLaManHinhNho = bayGio;
+    }
+ 
+    capNhatOverlay();
+});
+ 
+//  -----------------------------------------------
+
 
 
 
