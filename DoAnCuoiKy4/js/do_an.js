@@ -73,3 +73,23 @@ document
 document
   .getElementById("registerForm")
   .addEventListener("submit", (e) => e.preventDefault());
+
+function dongPanel() {
+  document.querySelectorAll(".panel.open").forEach(function (p) {
+    p.classList.remove("open");
+  });
+  overlay.classList.remove("show");
+}
+
+window.addEventListener(
+  "scroll",
+  function () {
+    if (document.querySelector(".panel.open")) {
+      dongPanel();
+    }
+  },
+  { passive: true },
+);
+
+overlay.addEventListener("wheel", dongPanel, { passive: true });
+overlay.addEventListener("touchmove", dongPanel, { passive: true });
