@@ -157,6 +157,25 @@ document.addEventListener("DOMContentLoaded", () => {
         : "COD";
 
       const gioHang = typeof layGioHang === "function" ? layGioHang() : [];
+      // Kiểm tra lại tồn kho trước khi tạo đơn
+      for (let i = 0; i < gioHang.length; i++) {
+        const ton =
+          typeof laySoTonKho === "function"
+            ? laySoTonKho(gioHang[i].ma)
+            : Infinity;
+        if (gioHang[i].soLuong > ton) {
+          alert(
+            'Sách "' +
+              gioHang[i].ten +
+              '" chỉ còn ' +
+              Math.max(ton, 0) +
+              " cuốn, bạn đang đặt " +
+              gioHang[i].soLuong +
+              ". Vui lòng giảm số lượng trong giỏ hàng!",
+          );
+          return;
+        }
+      }
       let tongTien = 0;
       for (let i = 0; i < gioHang.length; i++) {
         tongTien += gioHang[i].gia * gioHang[i].soLuong;

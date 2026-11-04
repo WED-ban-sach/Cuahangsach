@@ -187,10 +187,10 @@ if (loginForm) {
 } else {
   // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
   document.getElementById("btnLogin").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
   document.getElementById("btnRegister").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
 }
 
@@ -208,16 +208,16 @@ function taoIdUser(users) {
 }
 // Đăng ký tài khoản khách hàng
 const registerForm = document.getElementById("registerForm");
-if (registerForm){
-registerForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const message = document.getElementById("registerMessage");
-      message.textContent = "";
+if (registerForm) {
+  registerForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const message = document.getElementById("registerMessage");
+    message.textContent = "";
 
-      const hoTen = document.getElementById("hoten").value.trim();
-      const username = document.getElementById("reg-user").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("reg-pass").value;
+    const hoTen = document.getElementById("hoten").value.trim();
+    const username = document.getElementById("reg-user").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("reg-pass").value;
 
       if (!username || !hoTen || !email || !password) {
         message.textContent = "Vui lòng nhập đầy đủ thông tin.";
@@ -262,20 +262,22 @@ registerForm.addEventListener("submit", (e) => {
         return;
       }
 
-      registerForm.reset();
-      closeAll();
-      document.getElementById("registerPanel").classList.remove("open");
-      document.getElementById("registerPanel").setAttribute("aria-hidden", "true");
-      document.getElementById("overlay").classList.remove("show");
-      window.dispatchEvent(new Event("authchange"));
-    });
-  } else {
+    registerForm.reset();
+    closeAll();
+    document.getElementById("registerPanel").classList.remove("open");
+    document
+      .getElementById("registerPanel")
+      .setAttribute("aria-hidden", "true");
+    document.getElementById("overlay").classList.remove("show");
+    window.dispatchEvent(new Event("authchange"));
+  });
+} else {
   // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
   document.getElementById("btnLogin").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
   document.getElementById("btnRegister").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
 }
 //3 4
@@ -318,13 +320,17 @@ function capNhatSoLuongGioHang() {
 }
 
 // Thêm sản phẩm vào giỏ hàng (Gọi từ nút "Mua" ở trang sản phẩm hoặc chi tiết)
+// Lấy số tồn của 1 sách. Nếu trang chưa nạp kho.js thì coi như không giới hạn.
+function laySoTonKho(maSach) {
+  return typeof laySoLuong === "function" ? laySoLuong(maSach) : Infinity;
+}
+
 function themVaoGioHang(maSach) {
   const current = layCurrent();
   if (!current || current.role !== "customer") {
     alert(
       "Vui lòng đăng nhập tài khoản khách hàng để sử dụng chức năng giỏ hàng!",
     );
-    // Mở panel đăng nhập nếu có
     const loginPanel = document.getElementById("loginPanel");
     const overlay = document.getElementById("overlay");
     if (loginPanel && overlay) {
@@ -335,7 +341,6 @@ function themVaoGioHang(maSach) {
     return;
   }
 
-  // Lấy thông tin sách từ danh sách chung (dùng hàm layDanhSach() từ product.js)
   const tatCaSach = typeof layDanhSach === "function" ? layDanhSach() : [];
   const sach = tatCaSach.find((s) => s.ma === maSach);
   if (!sach) {
@@ -345,6 +350,27 @@ function themVaoGioHang(maSach) {
 
   let gioHang = layGioHang();
   let index = gioHang.findIndex((item) => item.ma === maSach);
+  const soLuongTrongGio = index >= 0 ? gioHang[index].soLuong : 0;
+
+  // ===== KIỂM TRA TỒN KHO =====
+  const tonKho = laySoTonKho(maSach);
+  if (tonKho <= 0) {
+    alert('Sách "' + sach.ten + '" đã hết hàng!');
+    return;
+  }
+  if (soLuongTrongGio + 1 > tonKho) {
+    alert(
+      "Kho chỉ còn " +
+        tonKho +
+        ' cuốn "' +
+        sach.ten +
+        '", bạn đã có ' +
+        soLuongTrongGio +
+        " cuốn trong giỏ!",
+    );
+    return;
+  }
+  // ===== HẾT KIỂM TRA =====
 
   if (index >= 0) {
     gioHang[index].soLuong += 1;
@@ -367,14 +393,23 @@ function themVaoGioHang(maSach) {
 function thayDoiSoLuong(maSach, delta) {
   let gioHang = layGioHang();
   let index = gioHang.findIndex((item) => item.ma === maSach);
-  if (index >= 0) {
-    gioHang[index].soLuong += delta;
-    if (gioHang[index].soLuong <= 0) {
-      gioHang.splice(index, 1); // Xóa luôn nếu số lượng về 0 hoặc âm
+  if (index < 0) return;
+
+  // Chỉ kiểm tra khi tăng số lượng
+  if (delta > 0) {
+    const tonKho = laySoTonKho(maSach);
+    if (gioHang[index].soLuong + delta > tonKho) {
+      alert("Kho chỉ còn " + tonKho + " cuốn, không thể thêm nữa!");
+      return;
     }
-    luuGioHang(gioHang);
-    hienThiGioHangPanel();
   }
+
+  gioHang[index].soLuong += delta;
+  if (gioHang[index].soLuong <= 0) {
+    gioHang.splice(index, 1);
+  }
+  luuGioHang(gioHang);
+  hienThiGioHangPanel();
 }
 
 // Hiển thị danh sách sản phẩm trong khung/panel giỏ hàng
