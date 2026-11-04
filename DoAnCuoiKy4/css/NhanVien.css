@@ -2177,3 +2177,23 @@ img {
 #NHAPSP_DONG select:focus {
   border-color: #2878d0;
 }
+
+/* Khung thêm/sửa phiếu nhập: thêm nhiều sách thì khung cuộn, không kéo dài hết màn hình */
+#QLY_NHAPSP_THEM .HOPTHOAI_ND {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+#NHAPSP_DONG {
+  max-height: 260px;
+  overflow-y: auto;
+}
+/* mỗi sách 1 khối gọn: ô chọn sách ở trên, giá nhập - số lượng - nút Xóa nằm cùng 1 hàng */
+#NHAPSP_DONG .THEM_LOAI_TRUONG {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+#NHAPSP_DONG select {
+  grid-column: 1 / -1;
+}

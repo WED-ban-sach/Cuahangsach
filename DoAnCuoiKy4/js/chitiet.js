@@ -1,14 +1,29 @@
 // ===== CHITIET.JS =====
-// Gồm 3 phần, dùng cho trang chủ, trang sản phẩm và trang chi tiết:
-//  1. Popup thông tin sách khi di chuột vào card sách
-//  2. Bấm vào card sách thì mở trang chi tiết (chitiet.html?ma=<mã sách>)
-//  3. Trang chi tiết sách (chỉ chạy khi trang có #chiTiet, tức là chitiet.html)
+// Dùng cho trang chủ, trang sản phẩm và trang chi tiết:
+//  1. Bấm vào card sách thì mở trang chi tiết (chitiet.html?ma=<mã sách>)
+//  2. Trang chi tiết sách (chỉ chạy khi trang có #chiTiet, tức là chitiet.html)
 // Cần nạp SAU data.js (dùng biến DU_LIEU_MAU và THE_LOAI).
 
 var CHON_CARD = ".the-sach, #noibat > div"; // các card sách (trang sản phẩm, trang chủ, sách cùng thể loại)
 var CHON_TEN = ".ten-sach, p"; // phần tử chứa tên sách bên trong card
 
-// ---------- 1. HÀM DÙNG CHUNG ----------
+// ---------- HÀM DÙNG CHUNG ----------
+
+// Danh sách id các loại đang hiển thị (loại bị ẩn thì sách của loại đó cũng không bán)
+function ctLayIdLoaiHienThi() {
+  var dsLoai = THE_LOAI;
+  var chuoi = localStorage.getItem("danhSachLoai");
+  if (chuoi !== null) {
+    dsLoai = JSON.parse(chuoi);
+  }
+  var ketQua = [];
+  for (var i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].trangThai !== "locked") {
+      ketQua.push(dsLoai[i].id);
+    }
+  }
+  return ketQua;
+}
 
 // Danh sách sách đang bán: lấy từ admin (khoá "dsSach"), bỏ các sách đã ẩn
 function ctLayDanhSach() {
@@ -17,9 +32,10 @@ function ctLayDanhSach() {
   if (chuoi !== null) {
     tatCaSach = JSON.parse(chuoi);
   }
+  var idLoaiHienThi = ctLayIdLoaiHienThi();
   var sachDangBan = [];
   for (var i = 0; i < tatCaSach.length; i++) {
-    if (!tatCaSach[i].an) {
+    if (!tatCaSach[i].an && idLoaiHienThi.indexOf(tatCaSach[i].loai) !== -1) {
       sachDangBan.push(tatCaSach[i]);
     }
   }
@@ -88,88 +104,7 @@ if (typeof dinhDangGia !== "function") {
   window.dinhDangGia = ctDinhDangGia;
 }
 
-// ---------- 2. POPUP KHI DI CHUỘT VÀO CARD ----------
-var popupKhung = document.createElement("div");
-popupKhung.id = "popupChiTiet";
-document.body.appendChild(popupKhung);
-var popupCardDangXem = null; // card đang hiện popup
-
-// Thêm 1 dòng "Nhãn: nội dung" vào popup
-function popupThemDong(nhan, noiDung) {
-  var p = document.createElement("p");
-  var chuDam = document.createElement("strong");
-  chuDam.textContent = nhan + ": ";
-  p.appendChild(chuDam);
-  p.appendChild(document.createTextNode(noiDung));
-  popupKhung.appendChild(p);
-}
-
-// Điền thông tin sách vào popup rồi đặt popup cạnh card
-function popupHienThi(card) {
-  var ten = ctLayTenCard(card);
-  if (ten === "") {
-    return;
-  }
-  var sach = ctTimSachTheoTen(ten);
-
-  popupKhung.innerHTML = "";
-  var tieuDe = document.createElement("h3");
-  tieuDe.textContent = ten;
-  popupKhung.appendChild(tieuDe);
-
-  if (sach === null) {
-    popupThemDong("Thông tin", "Chưa có thông tin chi tiết");
-  } else {
-    popupThemDong("Mã sách", sach.ma);
-    popupThemDong("Thể loại", ctTenTheLoai(sach.loai));
-    if (sach.tacGia) {
-      popupThemDong("Tác giả", sach.tacGia.trim());
-    }
-    popupThemDong("Giá", ctDinhDangGia(sach.gia));
-    if (sach.moTa) {
-      popupThemDong("Mô tả", sach.moTa);
-    }
-  }
-
-  // đặt popup bên phải card, hết chỗ thì đặt bên trái
-  popupKhung.style.display = "block";
-  var viTri = card.getBoundingClientRect();
-  var trai = viTri.right + 12;
-  if (trai + popupKhung.offsetWidth > window.innerWidth) {
-    trai = viTri.left - popupKhung.offsetWidth - 12;
-  }
-  var tren = viTri.top;
-  if (tren + popupKhung.offsetHeight > window.innerHeight) {
-    tren = window.innerHeight - popupKhung.offsetHeight - 12;
-  }
-  if (tren < 12) {
-    tren = 12;
-  }
-  popupKhung.style.left = trai + "px";
-  popupKhung.style.top = tren + "px";
-}
-
-// Một sự kiện cho cả trang (card trang sản phẩm được vẽ lại khi chuyển trang nên không gắn riêng từng card)
-document.addEventListener("mouseover", function (e) {
-  var card = e.target.closest(CHON_CARD);
-  if (card === popupCardDangXem) {
-    return; // vẫn đang ở trong card cũ
-  }
-  popupCardDangXem = card;
-  if (card === null) {
-    popupKhung.style.display = "none";
-  } else {
-    popupHienThi(card);
-  }
-});
-
-// Cuộn trang thì ẩn popup
-window.addEventListener("scroll", function () {
-  popupKhung.style.display = "none";
-  popupCardDangXem = null;
-});
-
-// ---------- 3. BẤM VÀO CARD ĐỂ MỞ TRANG CHI TIẾT ----------
+// ---------- 1. BẤM VÀO CARD ĐỂ MỞ TRANG CHI TIẾT ----------
 document.addEventListener("click", function (e) {
   if (e.target.closest("button") !== null) {
     return; // bấm nút Mua thì để giỏ hàng xử lý
@@ -184,7 +119,7 @@ document.addEventListener("click", function (e) {
   }
 });
 
-// ---------- 4. TRANG CHI TIẾT SÁCH (chitiet.html) ----------
+// ---------- 2. TRANG CHI TIẾT SÁCH (chitiet.html) ----------
 
 // Tạo 1 dòng "Nhãn | Giá trị" cho bảng thông tin
 function ctTaoDong(nhan, giaTri) {

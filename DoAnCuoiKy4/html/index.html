@@ -24,7 +24,7 @@
           </button>
         </div>
         
-        <details class="cart-control" hidden>
+        <details class="cart-control" id="cartControl" hidden>
           <summary id="btnCart" class="cart-trigger" aria-label="Mở giỏ hàng">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 3h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 7H6" />
@@ -66,6 +66,7 @@
             <p><strong>Họ tên:</strong> <span id="userFullName"></span></p>
             <p><strong>Tên đăng nhập:</strong> <span id="userName"></span></p>
             <p><strong>Email:</strong> <span id="userEmail"></span></p>
+            <P><strong>Địa chỉ:</strong> <span id="userAddress"></span></P>
             <button type="button" class="user-menu-action" id="btnOrderHistory">
   Lịch sử đơn hàng
 </button>
@@ -89,7 +90,7 @@
       <h2>Chào mừng trở lại</h2>
       <p class="sub">Đăng nhập để tiếp tục khám phá sách hay.</p>
 
-      <form class="form" id="loginForm">
+      <form class="form" id="loginForm" novalidate>
         <div class="field">
           <label for="login-user">Tên đăng nhập</label>
           <input
@@ -113,6 +114,7 @@
         <p class="switch">
           Chưa có tài khoản? <a href="#" data-switch="register">Đăng ký ngay</a>
         </p>
+        <a href="admin.html" class="switch">Chuyển qua admin</a>
       </form>
     </aside>
 
@@ -122,7 +124,7 @@
       <h2>Tạo tài khoản</h2>
       <p class="sub">Chỉ mất vài giây để tham gia VNBook.</p>
 
-      <form class="form" id="registerForm">
+      <form class="form" id="registerForm" novalidate>
         <div class="field">
           <label for="hoten">Họ và tên</label>
           <input
@@ -159,7 +161,7 @@
             required
           />
         </div>
-        <p id="registerMessage" class="form-message" role="status" aria-live="polite"></p>
+        <p id="registerMessage" class="login-message" role="status" aria-live="polite"></p>
         <button type="submit" class="submit">Đăng ký</button>
         <p class="switch">
           Đã có tài khoản? <a href="#" data-switch="login">Đăng nhập</a>
@@ -190,7 +192,7 @@
         </div>
         <div class="field">
           <label for="profile-diaChi">Địa chỉ</label>
-          <input id="profile-diaChi" type="text" required />
+          <input id="profile-diaChi" type="text"/>
         </div>
         <div class="field">
           <label for="profile-password">Mật khẩu mới</label>
@@ -281,7 +283,7 @@
         </div>
         <div>
           <img src="../image/anhnoibat3.jpg" alt="" />
-          <p>Hải cảng Viển Đông</p>
+          <p>Hải cảng biển Đông</p>
         </div>
       </div>
     </main>
@@ -355,6 +357,7 @@
     <script src="../data/users.js"></script>
     <script src="../js/data.js"></script>
     <script src="../js/auth.js"></script>
+    <script src="../js/kho.js"></script>
     <script src="../js/do_an.js"></script>
     <script src="../js/cart-visibility.js"></script>
     <script src="../js/checkout.js"></script>

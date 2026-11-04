@@ -32,26 +32,35 @@ function layDanhSach() {
   if (chuoi !== null) {
     tatCaSach = JSON.parse(chuoi);
   }
-  // Bỏ các sách admin đã ẩn
+  // Bỏ các sách admin đã ẩn và các sách thuộc loại đã bị ẩn
+  const dsLoaiHienThi = layDanhSachLoai();
   const sachDangBan = [];
   for (let i = 0; i < tatCaSach.length; i++) {
-    if (!tatCaSach[i].an) {
+    if (!tatCaSach[i].an && coLoaiHienThi(dsLoaiHienThi, tatCaSach[i].loai)) {
       sachDangBan.push(tatCaSach[i]);
     }
   }
   return sachDangBan;
 }
+// Kiểm tra loại có nằm trong danh sách loại đang hiển thị không
+function coLoaiHienThi(dsLoai, idLoai) {
+  for (let i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].id === idLoai) {
+      return true;
+    }
+  }
+  return false;
+}
 // Lấy thể loại sách, bỏ qua sách ẩn
-function layDanhSachLoai(){
+function layDanhSachLoai() {
   const chuoi = localStorage.getItem("danhSachLoai");
   if (chuoi === null) {
     return THE_LOAI;
   }
   const dsLoai = JSON.parse(chuoi);
   const ketQua = [];
-  for (let i = 0; i < dsLoai.length; i++){
-    if (dsLoai[i].trangThai !== "locked") 
-      ketQua.push(dsLoai[i]);
+  for (let i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].trangThai !== "locked") ketQua.push(dsLoai[i]);
   }
   return ketQua;
 }
@@ -75,10 +84,10 @@ function timSach(tuKhoa, idTheLoai, giaTu, giaDen) {
   const tatCaSach = layDanhSach();
   const tuKhoaChuan = chuanHoa(tuKhoa);
   const ketQua = [];
-  for (let i = 0; i < tatCaSach.length; i++){
+  for (let i = 0; i < tatCaSach.length; i++) {
     const sach = tatCaSach[i];
     const gia = Number(sach.gia) || 0;
-    if (tuKhoaChuan !== "" && chuanHoa(sach.ten).indexOf(tuKhoaChuan) === -1) 
+    if (tuKhoaChuan !== "" && chuanHoa(sach.ten).indexOf(tuKhoaChuan) === -1)
       continue;
     if (idTheLoai !== "all" && sach.loai != idTheLoai) continue;
     if (giaTu !== "" && gia < Number(giaTu)) continue;
@@ -96,13 +105,14 @@ function timCoBan(tuKhoa) {
 }
 const formTimNangCao = document.getElementById("formTimNangCao");
 formTimNangCao.addEventListener("submit", function (e) {
-  e.preventDefault(); 
+  e.preventDefault();
   const giaTu = document.getElementById("tnGiaTu").value;
   const giaDen = document.getElementById("tnGiaDen").value;
   const ten = document.getElementById("tnTen").value;
   const loai = document.getElementById("tnLoai").value;
   if (giaTu !== "" && giaDen !== "" && Number(giaTu) > Number(giaDen)) {
-    document.getElementById("tnThongBao").textContent = "Giá từ không được lớn hơn giá đến.";
+    document.getElementById("tnThongBao").textContent =
+      "Giá từ không được lớn hơn giá đến.";
     return;
   }
   const ketQua = timSach(ten, loai, giaTu, giaDen);
@@ -196,7 +206,13 @@ function taoTheSach(sach) {
   const nutMua = document.createElement("button");
   nutMua.className = "btn-mua";
   nutMua.textContent = "Mua";
-  nutMua.dataset.ma = sach.ma; // lưu mã sách trên nút để biết đang mua cuốn nào
+  nutMua.dataset.ma = sach.ma;
+  // Hết hàng thì khóa nút Mua
+  if (typeof laySoLuong === "function" && laySoLuong(sach.ma) <= 0) {
+    nutMua.textContent = "Hết hàng";
+    nutMua.disabled = true;
+  }
+  // lưu mã sách trên nút để biết đang mua cuốn nào
 
   the.appendChild(anh);
   the.appendChild(ten);
@@ -282,7 +298,6 @@ function hienThiNutPhanTrang(tongTrang) {
     taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang),
   );
 }
-
 
 // ---------- 5. THỂ LOẠI TRÊN THANH MENU ----------
 

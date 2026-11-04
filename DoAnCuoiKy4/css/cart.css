@@ -86,6 +86,7 @@
 .cart-items {
   max-height: 300px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .cart-empty {

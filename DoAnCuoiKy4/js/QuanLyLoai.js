@@ -23,10 +23,38 @@ function layDsSachLoai() {
 
 function luuDsSachLoai() {
     localStorage.setItem("danhSachLoai", JSON.stringify(danhSachLoai));
+
+    // loại thay đổi thì các ô chọn loại ở mục sách, giá bán cũng phải đổi theo (hàm nằm trong QuanLySach.js)
+    if (typeof capNhatOChonLoai === "function") {
+        capNhatOChonLoai();
+    }
 }
 
 
 var danhSachLoai = layDsSachLoai();
+
+// Đếm số sách đang thuộc 1 loại
+function demSachCuaLoai(idLoai) {
+    var dsSach = layDsSach();
+    var dem = 0;
+    for (var i = 0; i < dsSach.length; i++) {
+        if (dsSach[i].loai === idLoai) {
+            dem++;
+        }
+    }
+    return dem;
+}
+
+// Đổi mã loại thì các sách của loại đó cũng đổi sang mã mới
+function doiMaLoaiCuaSach(maCu, maMoi) {
+    var dsSach = layDsSach();
+    for (var i = 0; i < dsSach.length; i++) {
+        if (dsSach[i].loai === maCu) {
+            dsSach[i].loai = maMoi;
+        }
+    }
+    luuDsSach(dsSach);
+}
 
 
 
@@ -49,6 +77,14 @@ xacNhanXoa_huy.addEventListener("click", function() {
 
 xacNhanXoa_dongY.addEventListener("click", function() {
     
+    // Loại còn sách thì không cho xóa (xóa thì các sách của loại này sẽ mất loại)
+    var soSachCuaLoai = demSachCuaLoai(danhSachLoai[viTriXoa].id);
+    if (soSachCuaLoai > 0) {
+        xacNhanXoa.style.display = "none";
+        hienThongBao("Lỗi ! ", "Loại này còn " + soSachCuaLoai + " sách, hãy chuyển hoặc xóa các sách đó trước!");
+        return;
+    }
+
     danhSachLoai.splice(viTriXoa, 1);
     hienThiDanhSachLoai();
     luuDsSachLoai();
@@ -83,11 +119,9 @@ var viTriXoa = -1;
 //--TIM KIEM
 var oTimKiemLoai = document.querySelector("#QLY_LOAISP_INPUT_TIMKIEM");
 var locTrangThaiLoai = document.querySelector("#QLY_LOAISP_TRANGTHAI");
-var trangLoai = 1; // trang đang xem của bảng loại
 
 oTimKiemLoai.addEventListener("input", function() {
 
-    trangLoai = 1; // đổi bộ lọc thì về trang 1
     hienThiDanhSachLoai();
 
 });
@@ -95,7 +129,6 @@ oTimKiemLoai.addEventListener("input", function() {
 
 locTrangThaiLoai.addEventListener("input", function() {
 
-    trangLoai = 1; // đổi bộ lọc thì về trang 1
     hienThiDanhSachLoai();
 
 });
@@ -119,15 +152,8 @@ function hienThiDanhSachLoai() {
     } )
  
 
-    // chỉ lấy các loại của trang hiện tại (tối đa 4 loại)
-    var tongTrang = tinhTongTrang(danhSachLoc.length);
-    if (trangLoai > tongTrang) {
-        trangLoai = tongTrang;
-    }
-    var danhSachTrang = layDongCuaTrang(danhSachLoc, trangLoai);
-
-    for ( let i = 0 ; i < danhSachTrang.length; i++) {
-        var loai = danhSachTrang[i];
+    for ( let i = 0 ; i < danhSachLoc.length; i++) {
+        let loai = danhSachLoc[i];
         var soSach = 0;
         let viTriGoc = danhSachLoai.indexOf(loai);
 
@@ -241,11 +267,7 @@ function hienThiDanhSachLoai() {
 
         })
     }
-
-    veKhungPhanTrang("QLY_LOAISP", danhSachLoc.length, trangLoai, "loại", function(trang) {
-        trangLoai = trang;
-        hienThiDanhSachLoai();
-    });
+    phanTrangBang(cacTrang[2]);
 }
 
 
@@ -265,6 +287,26 @@ var viTriSua = -1;
 
         var maMoi = document.getElementById("SUA_MA").value.trim();
         var tenMoi = document.getElementById("SUA_TEN").value.trim();
+
+        var maCu = danhSachLoai[viTriSua].id;
+
+        if (maMoi === "" || tenMoi === "") {
+            hienThongBao("Lỗi ! ", "Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
+
+        // mã loại mới không được trùng với loại khác
+        for (var k = 0; k < danhSachLoai.length; k++) {
+            if (k !== viTriSua && danhSachLoai[k].id === maMoi) {
+                hienThongBao("Lỗi ! ", "Mã loại đã tồn tại!");
+                return;
+            }
+        }
+
+        // đổi mã loại thì các sách của loại này đổi theo mã mới
+        if (maMoi !== maCu) {
+            doiMaLoaiCuaSach(maCu, maMoi);
+        }
 
         danhSachLoai[viTriSua].id = maMoi;
         danhSachLoai[viTriSua].ten = tenMoi;
