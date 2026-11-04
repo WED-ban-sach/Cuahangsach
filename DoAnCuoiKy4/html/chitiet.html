@@ -130,6 +130,15 @@
           />
         </div>
         <div class="field">
+          <label for="reg-user">Tên đăng nhập</label>
+          <input
+            id="reg-user"
+            type="text"
+            placeholder="nguyenvana"
+            required
+          />
+        </div>
+        <div class="field">
           <label for="reg-pass">Mật khẩu</label>
           <input
             id="reg-pass"
@@ -147,10 +156,12 @@
             required
           />
         </div>
+        <p id="registerMessage" class="login-message" role="status" aria-live="polite"></p>
         <button type="submit" class="submit">Đăng ký</button>
         <p class="switch">
           Đã có tài khoản? <a href="#" data-switch="login">Đăng nhập</a>
         </p>
+        <a href="admin.html" class="switch">Chuyển qua admin</a>
       </form>
     </aside>
 
