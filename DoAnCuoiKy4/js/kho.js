@@ -86,9 +86,20 @@ if (localStorage.getItem("danhSachDonHang") === null) {
       { ma: "VH01", ten: "Dế Mèn Phiêu Lưu Ký", gia: 50000, soLuong: 2 },
     ]),
     taoDonMau("DH002", "customer02", "14:30:00 25/10/2026", "Đã giao", "BankTransfer", [
-      { ma: "DS01", ten: "Đắc Nhân Tâm", gia: 100000, soLuong: 1 },
-      { ma: "TT03", ten: "Tôi Thấy Hoa Vàng Trên Cỏ Xanh", gia: 82000, soLuong: 1 },
-    ]),
+        { ma: "DS01", ten: "Đắc Nhân Tâm", gia: 100000, soLuong: 1 },
+        { ma: "TT03", ten: "Tôi Thấy Hoa Vàng Trên Cỏ Xanh", gia: 82000, soLuong: 1, },
+      ],
+    ),
+  ]);
+}
+// Chưa có phiếu nhập nào thì tạo 1 phiếu nhập mẫu (đã hoàn thành) cho toàn bộ sách
+if (localStorage.getItem("dsPhieuNhap") === null) {
+  const dongNhap = [];
+  for (let i = 0; i < DU_LIEU_MAU.length; i++) {
+    dongNhap.push({ ma: DU_LIEU_MAU[i].ma, gia: 0, sl: 50 });
+  }
+  luuDsPhieu([
+    { ma: "PN001", ngay: "2026-10-01", dong: dongNhap, hoanThanh: true },
   ]);
 }
 
@@ -106,7 +117,13 @@ function layNgayDon(don) {
 function ngayTruoc(ngay) {
   const p = ngay.split("-");
   const d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]) - 1);
-  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  return (
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(d.getDate()).padStart(2, "0")
+  );
 }
 
 // "2026-10-28" -> "28/10/2026" để hiển thị
@@ -151,7 +168,11 @@ function layLichSuKho(maSach, tuNgay, denNgay) {
     }
     for (let j = 0; j < phieu.dong.length; j++) {
       if (phieu.dong[j].ma === maSach) {
-        ketQua.push({ ngay: phieu.ngay, loai: "Nhập (" + phieu.ma + ")", sl: phieu.dong[j].sl });
+        ketQua.push({
+          ngay: phieu.ngay,
+          loai: "Nhập (" + phieu.ma + ")",
+          sl: phieu.dong[j].sl,
+        });
       }
     }
   }
@@ -160,13 +181,20 @@ function layLichSuKho(maSach, tuNgay, denNgay) {
   for (let k = 0; k < dsDon.length; k++) {
     const don = dsDon[k];
     const ngayDon = layNgayDon(don);
-    if (layTrangThaiDon(don) === TEN_TRANG_THAI.huy || !trongKhoang(ngayDon, tuNgay, denNgay)) {
+    if (
+      layTrangThaiDon(don) === TEN_TRANG_THAI.huy ||
+      !trongKhoang(ngayDon, tuNgay, denNgay)
+    ) {
       continue;
     }
     const dsSp = don.danhSachSanPham || [];
     for (let m = 0; m < dsSp.length; m++) {
       if (dsSp[m].ma === maSach) {
-        ketQua.push({ ngay: ngayDon, loai: "Xuất (" + don.maDonHang + ")", sl: -dsSp[m].soLuong });
+        ketQua.push({
+          ngay: ngayDon,
+          loai: "Xuất (" + don.maDonHang + ")",
+          sl: -dsSp[m].soLuong,
+        });
       }
     }
   }
