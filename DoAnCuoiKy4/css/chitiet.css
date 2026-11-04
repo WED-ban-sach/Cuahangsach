@@ -1,0 +1,23 @@
+/* ===== POPUP CHI TIẾT SÁCH (hiện khi di chuột vào card) ===== */
+#popupChiTiet {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  width: 280px;
+  padding: 14px 16px;
+  background-color: #fff;
+  color: #1b2430;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  line-height: 1.5;
+  pointer-events: none; /* chuột đi xuyên qua popup nên popup không bị nhấp nháy */
+}
+#popupChiTiet h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #1e3a5f;
+}
+#popupChiTiet p {
+  margin: 4px 0;
+}
