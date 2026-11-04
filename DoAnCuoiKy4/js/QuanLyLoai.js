@@ -231,6 +231,7 @@ function hienThiDanhSachLoai() {
 
         })
     }
+    phanTrangBang(cacTrang[2]);
 }
 
 
