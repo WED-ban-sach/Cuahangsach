@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Quản trị - VNBook</title>
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/admin-auth.css">
+    <link rel="stylesheet" href="../css/NhanVien.css" />
+	</head>
+    
+  <body>
+    
+    <section id="view-login" class="admin-view active">
+			<div class="auth-wrapper">
+				<div class="auth-card">
+					
+					<div class="auth-brand">
+						<div class="brand-logo">VN<span>Book</span></div>
+						<p class="brand-sub">DKP1251 - SGU<br>Trang quản trị dành cho Admin</p>
+						<div class="brand-cover">
+							<img src="../image/NV01.jpg" alt="bia" onerror="this.style.display='none'">
+							<div class="brand-cover-fallback">VNBook<br></div>
+						</div>
+						<div class="brand-test">
+							<b>Tài khoản test GV:</b><br>
+							admin / admin123 (admin)<br>
+							customer01 / 123456 (khách - không vào được)
+						</div>
+					</div>
+					
+					<div class="auth-form-wrap">
+						<h1 class="auth-title">Đăng nhập Quản trị</h1>
+						<p class="auth-desc">Chỉ <b>admin</b> mới vào được. Khách đăng nhập ở <a href="doan.html">trang chủ</a>.</p>
+						<form id="formAdminLogin" novalidate>
+							<label class="lb">Tên đăng nhập</label>
+							<input id="adminUser" type="text" placeholder="vd: admin" autocomplete="username">
+							<p class="loi" id="loiUser"></p>
+							<label class="lb">Mật khẩu</label>
+							<div class="input-pass">
+								<input id="adminPass" type="password" placeholder="••••••" autocomplete="current-password">
+								<button type="button" class="btn-mat" id="btnMat">👁</button>
+							</div>
+							<p class="loi" id="loiPass"></p>
+							<label class="ghi-nho"><input type="checkbox" id="ghiNho" checked> Ghi nhớ đăng nhập</label>
+							<p class="thong-bao" id="thongBao"></p>
+							<button type="submit" class="btn-chinh btn-full">Đăng nhập</button>
+							<div class="auth-links">
+								<a href="#" id="quenMk">Quên mật khẩu?</a><span>·</span>
+								<a href="doan.html">← Về trang khách</a>
+							</div>
+						</form>
+					
+					</div>
+				</div>
+			</div>
+		</section>
+
+    <div id="view-admin" class="admin-view">
+      <div id="WRAPPER">
+        <div id="LEFT">
+          <div class="LOGO">
+            <a id="logo" href="#">
+              <h2>VN<span>Book</span></h2>
+            </a>
+            <p>Khu vực dành cho quản trị viên</p>
+          </div>
+
+          <hr />
+
+          <ul>
+            <li name="TRANG_TONGQUAN"><a href="#">Tổng quan</a></li>
+            <li name="TRANG_QLY_NGUOIDUNG"><a href="#">Quản lý người dùng</a></li>
+            <li name="TRANG_QLY_LOAISP"><a href="#">Quản lý loại sản phẩm</a></li>
+            <li name="TRANG_QLY_DANHMUCSP">
+              <a href="#">Quản lý danh mục sản phẩm</a>
+            </li>
+            <li name="TRANG_QLY_NHAPSP"><a href="#">Quản lý nhập sản phẩm</a></li>
+            <li name="TRANG_QLY_GIABAN"><a href="#">Quản lý giá bán</a></li>
+            <li name="TRANG_QLY_DONDATHANG">
+              <a href="#">Quản lý đơn đặt hàng</a>
+            </li>
+            <li name="TRANG_QLY_SOLUONGTONSP"><a href="#">Quản lý tồn kho</a></li>
+          </ul>
+
+          <div class="DANGXUAT">
+            <img src="../image/dangxuat.jpg" />
+            <span>Đăng xuất</span>
+          </div>
+        </div>
+
+        <div id="CONTAINER">
+          <div id="TABMENU">
+            <div id="MENU">
+              <img src="../image/tabmenu.png" alt="menu" />
+            </div>
+
+            <div id="NHANVIEN">
+              <img src="../image/adminpicture.webp" alt="Avata admin" />
+
+              <div id="NHANVIEN_CHITIET">
+                <span>NHAN VIEN 1</span>
+                <span>ADMIN</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="CONTENT">
+            <div id="TONGQUAN" class="TRANG">
+              <div id="CHAOMUNG">
+                <p>Chào mừng !</p>
+                <p>Chúc bạn làm việc hiệu quả !</p>
+              </div>
+
+              <div id="THONGTIN_HIENTAI">
+                <div>
+                  <img src="../image/giohang.png" alt="Đơn hàng hôm nay" />
+
+                  <div class="THONGTIN_HIENTAI_CHITIET">
+                    <span>Đơn hàng hôm nay</span>
+                    <span>5</span>
+                  </div>
+                </div>
+
+                <div>
+                  <img
+                    src="../image/sanphamdangban.jpeg"
+                    alt="Sản phẩm đang bán"
+                  />
+
+                  <div class="THONGTIN_HIENTAI_CHITIET">
+                    <span>Sản phẩm đang bán</span>
+                    <span>120</span>
+                  </div>
+                </div>
+
+                <div>
+                  <img src="../image/khachhangmoi.jpeg" alt="Khách hàng mới" />
+
+                  <div class="THONGTIN_HIENTAI_CHITIET">
+                    <span>Khách mới</span>
+                    <span>3</span>
+                  </div>
+                </div>
+
+                <div>
+                  <img
+                    src="../image/sanphamsaphethang.jpeg"
+                    alt="Sản phẩm sắp hết hàng"
+                  />
+
+                  <div class="THONGTIN_HIENTAI_CHITIET">
+                    <span>Sắp hết hàng</span>
+                    <span>4</span>
+                  </div>
+                </div>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <h3>Đơn hàng gần đây</h3>
+
+                  <br />
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>001</td>
+
+                        <td>nguyen van a</td>
+
+                        <td>16/07/2007</td>
+
+                        <td>
+                          <span class="TRANGTHAI DANGXULY">Đang xử lý</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          <span class="TRANGTHAI DAXULY">Đã xử lý</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          <span class="TRANGTHAI DAHUY">Đã hủy</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          <span class="TRANGTHAI DANGXULY">Đang xử lý</span>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          <span class="TRANGTHAI DAXULY">Đã xử lý</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- /************************************************/ -->
+
+                <div class="BANG">
+                  <h3>Sản phẩm sắp hết hàng</h3>
+
+                  <br />
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã SP</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng tồn</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>BOOK</td>
+
+                        <td>2</td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY NGUOI DUNG----------------------------- -->
+
+            <div id="QLY_NGUOIDUNG" class="TRANG">
+              <div id="QLY_NGUOIDUNG_TIEUDE">
+                <p>Quản lý người dùng</p>
+                <p>Danh sách và quản lý thông tin người dùng trong hệ thống</p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <h3>Danh sách khách hàng</h3>
+
+                  <br />
+
+                  <div id="QLY_NGUOIDUNG_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_NGUOIDUNG_INPUT_TIMKIEM"
+                        placeholder="Tìm theo tên, email.."
+                      />
+                    </div>
+
+                    <div>
+                      <select id="QLY_NGUOIDUNG_TRANGTHAI">
+                        <option value="all">Trạng thái: tất cả</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Đã khóa</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã KH</th>
+                        <th>Họ tên</th>
+                        <th>Tên đăng nhập</th>
+                        <th>Email</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id = "QLY_NGUOIDUNG_BODY">
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_KHOA">Khóa</button>
+                            <button class="BTN_MOKHOA">Mở khóa</button>
+                            <button class="BTN_RESETMK">Reset MK</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_KHOA">Khóa</button>
+                            <button class="BTN_MOKHOA">Mở khóa</button>
+                            <button class="BTN_RESETMK">Reset MK</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_KHOA">Khóa</button>
+                            <button class="BTN_MOKHOA">Mở khóa</button>
+                            <button class="BTN_RESETMK">Reset MK</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_KHOA">Khóa</button>
+                            <button class="BTN_MOKHOA">Mở khóa</button>
+                            <button class="BTN_RESETMK">Reset MK</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_KHOA">Khóa</button>
+                            <button class="BTN_MOKHOA">Mở khóa</button>
+                            <button class="BTN_RESETMK">Reset MK</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div id="PHANTRANG_NGUOIDUNG">
+                    <span id="THONGTIN_TRANG"
+                      >Hiển thị 1–5 trong 23 khách hàng</span
+                    >
+
+                    <div id="CAC_TRANG">
+                      <button id="TRANG_TRUOC">‹</button>
+
+                      <div id="DANHSACH_TRANG">
+                        <button class="SO_TRANG DANG_CHON">1</button>
+                        <button class="SO_TRANG">2</button>
+                      </div>
+
+                      <button id="TRANG_SAU">›</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="QLY_NGUOIDUNG_THONGBAOXACNHAN">
+                <div class="HOPTHOAI_ND">
+                  <h3>Xác nhận thao tác</h3>
+
+                  <p>Bạn có chắc chắn muốn thực hiện thao tác này không?</p>
+
+                  <div class="NUT_XACNHAN_ND">
+                    <button class="ND_HUY">Hủy</button>
+                    <button class="ND_DONGY">Xác nhận</button>
+                  </div>
+                </div>
+              </div>
+
+              <div id="QLY_NGUOIDUNG_RESETMK">
+                <div class="HOPTHOAI_ND">
+                  <h3>Reset mật khẩu về mặc định (123456) </h3>
+
+                  <p>
+                    Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản này
+                    không?
+                  </p>
+
+
+                  <div class="NUT_XACNHAN_ND">
+                    <button class="ND_HUY">Hủy</button>
+                    <button class="ND_DONGY">Xác nhận reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY LOAI SP----------------------------- -->
+
+            <div id="QLY_LOAISP" class="TRANG">
+              <div id="QLY_LOAISP_TIEUDE">
+                <p>Quản lý loại sản phẩm</p>
+                <p>Quản lý các loại sách trong cửa hàng</p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Mã, tên loại sách"
+                      />
+                    </div>
+
+                    <div>
+                      <select id="QLY_LOAISP_TRANGTHAI">
+                        <option value="all">Trạng thái: tất cả</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Đã ẩn</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <button class="BTN_THEM_LOAI">+ Thêm loại</button>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã loại</th>
+
+                        <th>Tên loại sách</th>
+
+                        <th>Số sách</th>
+
+                        <th>Trạng thái</th>
+
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id = "LOAISP_BODY">
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_SUA_LOAI">Sửa</button>
+
+                            <button class="BTN_AN_LOAI">Ẩn</button>
+
+                            <button class="BTN_HIEN_LOAI">Hiện</button>
+
+                            <button class="BTN_XOA_LOAI">Xóa</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_SUA_LOAI">Sửa</button>
+
+                            <button class="BTN_AN_LOAI">Ẩn</button>
+
+                            <button class="BTN_HIEN_LOAI">Hiện</button>
+
+                            <button class="BTN_XOA_LOAI">Xóa</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_SUA_LOAI">Sửa</button>
+
+                            <button class="BTN_AN_LOAI">Ẩn</button>
+
+                            <button class="BTN_HIEN_LOAI">Hiện</button>
+
+                            <button class="BTN_XOA_LOAI">Xóa</button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td></td>
+
+                        <td></td>
+
+                        <td></td>
+
+                        <td>
+                          
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_SUA_LOAI">Sửa</button>
+
+                            <button class="BTN_AN_LOAI">Ẩn</button>
+
+                            <button class="BTN_HIEN_LOAI">Hiện</button>
+
+                            <button class="BTN_XOA_LOAI">Xóa</button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"> </span>
+
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–4 trong 10 loại</span>
+
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="QLY_LOAISP_THEM_LOAI">
+                    <div class="HOPTHOAI_ND">
+                      <h3>Thêm loại sản phẩm</h3>
+
+                      <div class="THEM_LOAI_TRUONG">
+                        <label for="MA_LOAI_MOI">Mã loại</label>
+                        <input
+                          type="text"
+                          id="MA_LOAI_MOI"
+                          placeholder="Ví dụ: L05"
+                        />
+                      </div>
+
+                      <div class="THEM_LOAI_TRUONG">
+                        <label for="TEN_LOAI_MOI">Tên loại sản phẩm</label>
+                        <input
+                          type="text"
+                          id="TEN_LOAI_MOI"
+                          placeholder="Nhập tên loại sản phẩm"
+                        />
+                      </div>
+
+                      <div class="NUT_XACNHAN_ND">
+                        <button class="ND_HUY">Hủy</button>
+                        <button class="ND_DONGY">Xác nhận</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY DANH MUC SP----------------------------- -->
+
+            <div id="QLY_DANHMUCSP" class="TRANG">
+              <div id="QLY_DANHMUC_TIEUDE">
+                <p>Quản lý danh mục sản phẩm</p>
+                <p>Quản lý thông tin sách trong cửa hàng</p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Mã, tên sách"
+                      />
+                    </div>
+
+                    <div id="QLY_DANHMUC_CHON">
+                      <select id="QLY_DANHMUCSP_LOAI">
+                        <option value="all">Loại: tất cả</option>
+                        <option value="vanhoc">Văn học</option>
+                        <option value="kinhte">Kinh tế</option>
+                        <option value="kynangsong">Kỹ năng sống</option>
+                        <option value="thieunhi">Thiếu nhi</option>
+                      </select>
+                      <select id="QLY_LOAISP_TRANGTHAI">
+                        <option value="all">Trạng thái: tất cả</option>
+                        <option value="active">Hoạt động</option>
+                        <option value="locked">Đã ẩn</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <button class="BTN_THEM_SACH">+ Thêm sách</button>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã sách</th>
+                        <th>Thể loại</th>
+                        <th>Tên sách</th>
+                        <th>Số sách còn</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+                    <tbody id="DANHMUC_TBODY"></tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"></span>
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–3 trong 10 sách</span>
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="QLY_NGUOIDUNG_THONGBAOXACNHAN">
+                <div class="HOPTHOAI_ND">
+                  <h3>Xác nhận thao tác</h3>
+
+                  <p>Bạn có chắc chắn muốn thực hiện thao tác này không?</p>
+
+                  <div class="NUT_XACNHAN_ND">
+                    <button class="ND_HUY">Hủy</button>
+                    <button class="ND_DONGY">Xác nhận</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -------------------------QUAN LY NHAP SP---------------------------- -->
+            <div id="QLY_NHAPSP" class="TRANG">
+              <div id="QLY_NHAPSP_TIEUDE">
+                <p>Quản lý nhập sản phẩm</p>
+                <p>Phiếu nhập chỉ sửa được khi chưa hoàn thành.</p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Tìm mã phiếu "
+                      />
+                    </div>
+
+                    <div id="QLY_DANHMUC_CHON">
+                      <select id="QLY_NHAPSP_TRANGTHAI">
+                        <option value="all">Trạng thái: tất cả</option>
+                        <option value="active">Hoàn thành</option>
+                        <option value="locked">Chưa hoàn thành</option>
+                      </select>
+                    </div>
+
+                    <div class="NHAPSP_TIMKIEM_NGAY">
+                      <label for="NHAPSP_TUNGAY"></label>
+                      <input type="date" id="NHAPSP_TUNGAY" />
+
+                      <label for="NHAPSP_DENNGAY"></label>
+                      <input type="date" id="NHAPSP_DENNGAY" />
+                    </div>
+
+                    <div>
+                      <button class="BTN_THEM_PHIEU">+ Thêm phiếu</button>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã phiếu</th>
+
+                        <th>Ngày nhập</th>
+
+                        <th>Số SP</th>
+
+                        <th>Tổng tiền nhập</th>
+
+                        <th>Trạng thái</th>
+
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="NHAPSP_TBODY"></tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"> </span>
+
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–4 trong 10 trang</span>
+
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY GIA BAN----------------------------- -->
+
+            <div id="QLY_GIABAN" class="TRANG">
+              <div id="QLY_GIABAN_TIEUDE">
+                <p>Quản lý giá bán</p>
+                <p>Thiết lập tỷ lệ lợi nhuận và tra cứu giá bán sản phẩm</p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Tra cứu mã, tên sản phẩm "
+                      />
+                    </div>
+
+                    <div id="QLY_DANHMUC_CHON">
+                      <select id="QLY_GIABAN_LOAI">
+                        <option value="all">Loại: tất cả</option>
+                        <option value="vanhoc">Văn học</option>
+                        <option value="kinhte">Kinh tế</option>
+                        <option value="kynangsong">Kỹ năng sống</option>
+                        <option value="thieunhi">Thiếu nhi</option>
+                      </select>
+                    </div>
+
+                    <div class="NHAPSP_TIMKIEM_NGAY"></div>
+
+                    <div>
+                      <button class="BTN_DATTHEOLOAI_GIABAN">
+                        Đặt % theo loại
+                      </button>
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã SP</th>
+
+                        <th>Tên sản phẩm</th>
+
+                        <th>Loại</th>
+
+                        <th>Giá vốn</th>
+
+                        <th>% lợi nhuận</th>
+
+                        <th>Giá bán</th>
+
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody id="GIABAN_TBODY"></tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"> </span>
+
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–4 trong 10 trang</span>
+
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY DON DAT HANG----------------------------- -->
+
+            <div id="QLY_DONDATHANG" class="TRANG">
+              <div id="QLY_DONDATHANG_TIEUDE">
+                <p>Quản lý đơn đặt hàng</p>
+                <p>
+                  Tra cứu, theo dõi và cập nhật trạng thái đơn hàng của khách hàng
+                </p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Tìm mã phiếu "
+                      />
+                    </div>
+
+                    <div id="QLY_DANHMUC_CHON">
+                      <select id="QLY_NHAPSP_TRANGTHAI">
+                        <option value="all">Trạng thái: tất cả</option>
+                        <option value="moidat">Mới đặt</option>
+                        <option value="daxuly">Đã xử lý</option>
+                        <option value="dagiao">Đã giao</option>
+                        <option value="huy">Đã hủy</option>
+                      </select>
+                    </div>
+
+                    <div class="NHAPSP_TIMKIEM_NGAY">
+                      <label for="NHAPSP_TUNGAY"></label>
+                      <input type="date" id="NHAPSP_TUNGAY" />
+
+                      <label for="NHAPSP_DENNGAY"></label>
+                      <input type="date" id="NHAPSP_DENNGAY" />
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã đơn</th>
+                        <th>Khách hàng</th>
+                        <th>Ngày đặt</th>
+                        <th>Số lượng sách</th>
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>Văn học</td>
+
+                        <td>HELLO</td>
+
+                        <td>25</td>
+
+                        <td>500 000</td>
+
+                        <td>
+                          <span class="TRANGTHAI HOANTHANH"> Hoàn thành </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_DONDATHANG_CHITIET">
+                              Chi tiết
+                            </button>
+
+                            <button class="BTN_DONDATHANG_CAPNHATTINHTRANG">
+                              Cập nhật tình trạng đơn
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>Văn học</td>
+
+                        <td>HELLO</td>
+
+                        <td>25</td>
+                        <td>500 000</td>
+
+                        <td>
+                          <span class="TRANGTHAI HOANTHANH"> Hoàn thành </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_DONDATHANG_CHITIET">
+                              Chi tiết
+                            </button>
+
+                            <button class="BTN_DONDATHANG_CAPNHATTINHTRANG">
+                              Cập nhật tình trạng đơn
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>Văn học</td>
+
+                        <td>HELLO</td>
+
+                        <td>25</td>
+
+                        <td>500 000</td>
+
+                        <td>
+                          <span class="TRANGTHAI CHUAHOANTHANH">
+                            Chưa hoàn thành
+                          </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_DONDATHANG_CHITIET">
+                              Chi tiết
+                            </button>
+
+                            <button class="BTN_DONDATHANG_CAPNHATTINHTRANG">
+                              Cập nhật tình trạng đơn
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>Văn học</td>
+
+                        <td>HELLO</td>
+
+                        <td>25</td>
+
+                        <td>500 000</td>
+
+                        <td>
+                          <span class="TRANGTHAI HOANTHANH"> Hoàn thành </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_DONDATHANG_CHITIET">
+                              Chi tiết
+                            </button>
+
+                            <button class="BTN_DONDATHANG_CAPNHATTINHTRANG">
+                              Cập nhật tình trạng đơn
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"> </span>
+
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–4 trong 10 trang</span>
+
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- -----------------------QUAN LY TON KHO----------------------------- -->
+
+            <div id="QLY_SOLUONGTONSP" class="TRANG">
+              <div id="QLY_SOLUONGTONSP_TIEUDE">
+                <p>Quản lý tồn kho sản phẩm</p>
+                <p>
+                  Tra cứu tồn theo loại, cảnh báo sắp hết hàng và xem nhập – xuất
+                  – tồn của sản phẩm
+                </p>
+              </div>
+
+              <div id="BANGTONG">
+                <div class="BANG">
+                  <div id="QLY_LOAISP_TIMKIEM">
+                    <div id="QLY">
+                      <input
+                        type="text"
+                        id="QLY_LOAISP_INPUT_TIMKIEM"
+                        placeholder="Tìm mã, tên sản phẩm "
+                      />
+                    </div>
+
+                    <div id="QLY_DANHMUC_CHON">
+                      <select id="QLY_GIABAN_LOAI">
+                        <option value="all">Loại: tất cả</option>
+                        <option value="vanhoc">Văn học</option>
+                        <option value="kinhte">Kinh tế</option>
+                        <option value="kynangsong">Kỹ năng sống</option>
+                        <option value="thieunhi">Thiếu nhi</option>
+                      </select>
+                    </div>
+
+                    <div class="NHAPSP_TIMKIEM_NGAY">
+                      <label for="NHAPSP_TUNGAY"></label>
+                      <input type="date" id="NHAPSP_TUNGAY" />
+
+                      <label for="NHAPSP_DENNGAY"></label>
+                      <input type="date" id="NHAPSP_DENNGAY" />
+                    </div>
+                  </div>
+
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Mã SP</th>
+                        <th>Tên sách</th>
+                        <th>Loại</th>
+                        <th>Số lượng tồn</th>
+
+                        <th>
+                          <select id="QLY_TONKHO_TINHTRANG">
+                            <option value="all">Tình trạng: tất cả</option>
+                            <option value="saphet">Sắp hết hàng</option>
+                            <option value="hethang">Hết hàng</option>
+                            <option value="conhang">Còn hàng</option>
+                          </select>
+                        </th>
+
+                        <th>Thao tác</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>CHOISAN</td>
+
+                        <td>Văn học</td>
+
+                        <td>2</td>
+
+                        <td>
+                          <span class="TRANGTHAI SAPHET"> Sắp hết </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_CHITIET_TONKHO">
+                              Thông tin chi tiết
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>CHOISAN</td>
+
+                        <td>Văn học</td>
+
+                        <td>2</td>
+
+                        <td>
+                          <span class="TRANGTHAI HETHANG"> Hết hàng </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_CHITIET_TONKHO">
+                              Thông tin chi tiết
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>CHOISAN</td>
+
+                        <td>Văn học</td>
+
+                        <td>2</td>
+
+                        <td>
+                          <span class="TRANGTHAI SAPHET"> Sắp hết </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_CHITIET_TONKHO">
+                              Thông tin chi tiết
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>SP001</td>
+
+                        <td>CHOISAN</td>
+
+                        <td>Văn học</td>
+
+                        <td>2</td>
+
+                        <td>
+                          <span class="TRANGTHAI CONHANG"> Còn hàng </span>
+                        </td>
+
+                        <td>
+                          <div class="THAOTAC">
+                            <button class="BTN_CHITIET_TONKHO">
+                              Thông tin chi tiết
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <div id="PHANTRANG_LOAISP">
+                    <span id="THONGTIN_TRANG_LOAISP"> </span>
+
+                    <div id="PHANTRANG_NGUOIDUNG">
+                      <span id="THONGTIN_TRANG">Hiển thị 1–4 trong 10 trang</span>
+
+                      <div id="CAC_TRANG">
+                        <button id="TRANG_TRUOC">‹</button>
+
+                        <div id="DANHSACH_TRANG">
+                          <button class="SO_TRANG DANG_CHON">1</button>
+                          <button class="SO_TRANG">2</button>
+                        </div>
+
+                        <button id="TRANG_SAU">›</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- </div>
+              </div>
+
+          </div> -->
+          </div>
+
+          <div id="QLY_NGUOIDUNG_XACNHANTHANHCONG">
+            <div class="HOPTHOAI_ND">
+              <h3>Thành công!</h3>
+
+              <p>Thao tác đã được thực hiện thành công.</p>
+
+              <div class="NUT_XACNHAN_ND">
+                <button class="ND_DONGY">Đóng</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="QLY_DANHMUC_THEM">
+            <div class="HOPTHOAI_ND">
+              <h3 id="DANHMUC_FORM_TIEUDE">Thêm sản phẩm</h3>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="MA_LOAI">Loại sách</label
+                ><select id="MA_LOAI"></select>
+              </div>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="MA_SACH_MOI">Mã sách</label
+                ><input type="text" id="MA_SACH_MOI" placeholder="Ví dụ: SP001" />
+              </div>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="TEN_SACH_MOI">Tên sách</label
+                ><input type="text" id="TEN_SACH_MOI" placeholder="VNBOOK" />
+              </div>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="HINH_SACH_MOI">Hình (đường dẫn)</label
+                ><input
+                  type="text"
+                  id="HINH_SACH_MOI"
+                  placeholder="../image/NV01.jpg"
+                />
+              </div>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="MOTA_SACH_MOI">Mô tả</label
+                ><input type="text" id="MOTA_SACH_MOI" />
+              </div>
+              <p id="DANHMUC_THONGBAO" class="LOINHUAN_THONGBAO"></p>
+              <div class="NUT_XACNHAN_ND">
+                <button class="ND_HUY">Hủy</button>
+                <button class="ND_DONGY">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="QLY_SUA_CHUNG">
+            <div class="HOPTHOAI_ND HOPTHOAI_SUA">
+              <h3 id="SUA_TIEUDE">Sửa thông tin</h3>
+
+              <div id="SUA_CAC_TRUONG"></div>
+
+              <div class="NUT_XACNHAN_ND">
+                <button type="button" class="ND_HUY">Hủy</button>
+                <button type="button" class="ND_DONGY">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="QLY_NHAPSP_THEM">
+            <div class="HOPTHOAI_ND">
+              <h3 id="NHAPSP_FORM_TIEUDE">Thêm phiếu nhập</h3>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="MA_PHIEU_MOI">Mã phiếu:</label
+                ><input
+                  type="text"
+                  id="MA_PHIEU_MOI"
+                  placeholder="Ví dụ: PN001"
+                />
+              </div>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="NGAYNHAP_PHIEU_MOI">Ngày nhập:</label
+                ><input type="date" id="NGAYNHAP_PHIEU_MOI" />
+              </div>
+              <div id="NHAPSP_DONG"></div>
+              <button type="button" id="NHAPSP_THEM_DONG">+ Thêm sản phẩm</button>
+              <div class="THEM_LOAI_TRUONG">
+                <label for="TONGTIENNHAP_PHIEU_MOI">Tổng tiền nhập:</label
+                ><input type="number" id="TONGTIENNHAP_PHIEU_MOI" readonly />
+              </div>
+              <p id="NHAPSP_THONGBAO" class="LOINHUAN_THONGBAO"></p>
+              <div class="NUT_XACNHAN_ND">
+                <button type="button" class="ND_HUY">Hủy</button>
+                <button type="button" class="ND_DONGY">Xác nhận</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="BANG_CHI_TIET">
+            <div class="KHUNG_CHI_TIET">
+              <h2>Chi tiết đơn hàng</h2>
+
+              <div id="NOI_DUNG_CHI_TIET"></div>
+
+              <button class="CHI_TIET_CUOI">Đóng</button>
+            </div>
+          </div>
+
+          <div id="CAPNHATTINHTRANGDON">
+            <div class="KHUNG_CAPNHAT_DON">
+              <h3>Cập nhật tình trạng đơn hàng</h3>
+
+              <p>Chọn tình trạng mới cho đơn hàng</p>
+
+              <div class="CAPNHAT_TRUONG">
+                <label for="TINHTRANG_DON_MOI"> Tình trạng đơn hàng </label>
+
+                <select id="TINHTRANG_DON_MOI">
+                  <option value="moidat">Mới đặt</option>
+                  <option value="daxuly">Đã xử lý</option>
+                  <option value="dagiao">Đã giao</option>
+                  <option value="huy">Đã hủy</option>
+                </select>
+              </div>
+
+              <div class="NUT_XACNHAN_ND">
+                <button type="button" class="ND_HUY" id="BTN_HUY_CAPNHAT_DON">
+                  Hủy
+                </button>
+
+                <button
+                  type="button"
+                  class="ND_DONGY"
+                  id="BTN_XACNHAN_CAPNHAT_DON"
+                >
+                  Xác nhận
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="MODAL_LOINHUAN_CHUNG" class="MODAL_LOINHUAN">
+            <div class="FORM_LOINHUAN">
+              <h3 id="LOINHUAN_TIEUDE">Chỉnh % lợi nhuận</h3>
+
+              <div class="LOINHUAN_TRUONG" id="LOINHUAN_DONG_LOAI">
+                <label for="LOINHUAN_LOAI">Loại sản phẩm</label>
+                <select id="LOINHUAN_LOAI">
+                  <option value="sachgiaokhoa">Sách giáo khoa</option>
+                  <option value="vanhoc">Văn học</option>
+                  <option value="kinhte">Kinh tế</option>
+                  <option value="kynangsong">Kỹ năng sống</option>
+                  <option value="thieunhi">Thiếu nhi</option>
+                </select>
+              </div>
+
+              <div class="LOINHUAN_TRUONG">
+                <label for="LOINHUAN_PHANTRAM">% lợi nhuận</label>
+                <input
+                  type="number"
+                  id="LOINHUAN_PHANTRAM"
+                  min="0"
+                  max="1000"
+                  step="0.1"
+                  value="20"
+                  placeholder="Nhập % lợi nhuận"
+                />
+              </div>
+
+              <div class="LOINHUAN_THONGBAO" id="LOINHUAN_THONGBAO"></div>
+
+              <div class="LOINHUAN_NUT">
+                <button type="button" id="LOINHUAN_HUY">Hủy</button>
+                <button type="button" id="LOINHUAN_LUU">Lưu</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="TK_MODAL">
+            <div class="TK_FORM">
+              <h2>Nhập – xuất – tồn</h2>
+
+              <div class="TK_NGAY">
+                <div class="TK_NGAY_TRUONG">
+                  <label for="TK_TUNGAY">Từ ngày</label>
+                  <input type="date" id="TK_TUNGAY" />
+                </div>
+
+                <div class="TK_NGAY_TRUONG">
+                  <label for="TK_DENNGAY">Đến ngày</label>
+                  <input type="date" id="TK_DENNGAY" />
+                </div>
+              </div>
+
+              <div class="TK_THONGKE">
+                <div class="TK_THONGKE_ITEM">
+                  <span>Nhập</span>
+                  <strong id="TK_TONG_NHAP">100</strong>
+                </div>
+
+                <div class="TK_THONGKE_ITEM">
+                  <span>Xuất</span>
+                  <strong id="TK_TONG_XUAT">98</strong>
+                </div>
+
+                <div class="TK_THONGKE_ITEM">
+                  <span>Tồn</span>
+                  <strong id="TK_TONG_TON">2</strong>
+                </div>
+              </div>
+
+              <div class="TK_BANG_WRAPPER">
+                <table class="TK_BANG">
+                  <thead>
+                    <tr>
+                      <th>Ngày</th>
+                      <th>Loại</th>
+                      <th>Số lượng</th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="TK_DANHSACH">
+                    <tr>
+                      <td colspan="3" class="TK_TRONG"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="TK_TRONG"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" class="TK_TRONG"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="TK_CUOI">
+                <button type="button" id="TK_DONG">Đóng</button>
+              </div>
+            </div>
+          </div>
+
+          <div id = "XACNHAN_XOA">
+            <div class = "HOPTHOAI_ND">
+
+              <h3></h3>
+
+              <p></p>
+
+              <div class ="NUT_XACNHAN_ND">
+                <button class = "ND_HUY">Hủy</button>
+                <button class = "ND_DONGY">Xác nhận</button>
+              </div>
+
+            </div> 
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    <script src="../data/users.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/data.js"></script>
+    <script src="../js/kho.js"></script>
+    <script src="../js/NhanVien.js"></script>
+    <script src="../js/QuanLySach.js"></script>
+    <script src ="../js/QuanLyLoai.js"></script>
+    <script src = "../js/QuanLyNguoiDung.js"></script>
+    <script src="../js/QuanLyDonHang.js"></script>
+  </body>
+</html>

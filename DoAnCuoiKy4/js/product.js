@@ -26,9 +26,35 @@ function laySachThemMoi() {
 
 // Tất cả sách = sách trong data.js + sách thêm mới
 function layDanhSach() {
-  return DU_LIEU_MAU.concat(laySachThemMoi());
+  // Nếu admin đã quản lý sách (khoá "dsSach") thì dùng danh sách đó, chưa có thì dùng data.js
+  let tatCaSach = DU_LIEU_MAU.concat(laySachThemMoi());
+  const chuoi = localStorage.getItem("dsSach");
+  if (chuoi !== null) {
+    tatCaSach = JSON.parse(chuoi);
+  }
+  // Bỏ các sách admin đã ẩn
+  const sachDangBan = [];
+  for (let i = 0; i < tatCaSach.length; i++) {
+    if (!tatCaSach[i].an) {
+      sachDangBan.push(tatCaSach[i]);
+    }
+  }
+  return sachDangBan;
 }
-
+// Lấy thể loại sách, bỏ qua sách ẩn
+function layDanhSachLoai(){
+  const chuoi = localStorage.getItem("danhSachLoai");
+  if (chuoi === null) {
+    return THE_LOAI;
+  }
+  const dsLoai = JSON.parse(chuoi);
+  const ketQua = [];
+  for (let i = 0; i < dsLoai.length; i++){
+    if (dsLoai[i].trangThai !== "locked") 
+      ketQua.push(dsLoai[i]);
+  }
+  return ketQua;
+}
 // Thêm một sách mới. Trả về false nếu mã sách đã tồn tại
 function themSanPham(sachMoi) {
   const tatCaSach = layDanhSach();
@@ -44,23 +70,101 @@ function themSanPham(sachMoi) {
   return true;
 }
 
+// Lọc sách theo nhiều tiêu chí cùng lúc
+function timSach(tuKhoa, idTheLoai, giaTu, giaDen) {
+  const tatCaSach = layDanhSach();
+  const tuKhoaChuan = chuanHoa(tuKhoa);
+  const ketQua = [];
+  for (let i = 0; i < tatCaSach.length; i++){
+    const sach = tatCaSach[i];
+    const gia = Number(sach.gia) || 0;
+    if (tuKhoaChuan !== "" && chuanHoa(sach.ten).indexOf(tuKhoaChuan) === -1) 
+      continue;
+    if (idTheLoai !== "all" && sach.loai != idTheLoai) continue;
+    if (giaTu !== "" && gia < Number(giaTu)) continue;
+    if (giaDen !== "" && gia > Number(giaDen)) continue;
+    ketQua.push(sach);
+  }
+  return ketQua;
+}
+// Tìm trên search
+function timCoBan(tuKhoa) {
+  const ketQua = timSach(tuKhoa, "all", "", "");
+  document.getElementById("tieuDe").textContent =
+    'Kết quả tìm "' + tuKhoa + '" (' + ketQua.length + " sách)";
+  hienThi(ketQua, 1, "Không tìm thấy sách phù hợp.");
+}
+const formTimNangCao = document.getElementById("formTimNangCao");
+formTimNangCao.addEventListener("submit", function (e) {
+  e.preventDefault(); 
+  const giaTu = document.getElementById("tnGiaTu").value;
+  const giaDen = document.getElementById("tnGiaDen").value;
+  const ten = document.getElementById("tnTen").value;
+  const loai = document.getElementById("tnLoai").value;
+  if (giaTu !== "" && giaDen !== "" && Number(giaTu) > Number(giaDen)) {
+    document.getElementById("tnThongBao").textContent = "Giá từ không được lớn hơn giá đến.";
+    return;
+  }
+  const ketQua = timSach(ten, loai, giaTu, giaDen);
+  document.getElementById("tieuDe").textContent =
+    "Kết quả tìm kiếm nâng cao (" + ketQua.length + " sách)";
+  hienThi(ketQua, 1, "Không tìm thấy sách phù hợp.");
+});
+formTimNangCao.addEventListener("reset", function () {
+  document.getElementById("tnThongBao").textContent = "";
+  locTheoTheLoai("all"); // Xoá lọc thì hiện lại tất cả sách
+});
+
+// Đổ thể loại vào ô chọn của tìm nâng cao
+function hienThiSelectTheLoai() {
+  const oChon = document.getElementById("tnLoai");
+  const dsLoai = layDanhSachLoai();
+  oChon.appendChild(new Option("Tất cả thể loại", "all"));
+  for (let i = 0; i < dsLoai.length; i++) {
+    oChon.appendChild(new Option(dsLoai[i].ten, dsLoai[i].id));
+  }
+}
 // ---------- 2. HÀM HỖ TRỢ ----------
 
 // 160000 -> "160.000 đ"
 function dinhDangGia(gia) {
-  return gia.toLocaleString("vi-VN") + " đ";
+  if (gia === null || gia === undefined || gia === "") {
+    return "Chưa cập nhật giá";
+  }
+
+  const giaSo = Number(gia);
+  if (!Number.isFinite(giaSo)) {
+    return "Chưa cập nhật giá";
+  }
+
+  return giaSo.toLocaleString("vi-VN") + " đ";
 }
 
 // Đổi id thể loại (vd "khxh") thành tên thể loại để hiển thị
 function layTenTheLoai(idTheLoai) {
-  for (let i = 0; i < THE_LOAI.length; i++) {
-    if (THE_LOAI[i].id === idTheLoai) {
-      return THE_LOAI[i].ten;
+  const dsLoai = layDanhSachLoai();
+  for (let i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].id === idTheLoai) {
+      return dsLoai[i].ten;
     }
   }
   return "";
 }
-
+// Chuẩn hoá chuỗi
+function chuanHoa(chuoi) {
+  return String(chuoi)
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .trim();
+}
+/*
+normalize("NFD") tách chữ có dấu -> chữ gốc + dấu (â -> a ^)
+replace(/[\u0300-\u036f]/g, "") xoá dấu vừa tách
+replace(/đ/g, "d") xoá dấu chữ đ -> d
+trim() xoá khoảng cách đôi ta
+*/
 // ---------- 3. TẠO THẺ SÁCH ----------
 
 function taoTheSach(sach) {
@@ -69,12 +173,12 @@ function taoTheSach(sach) {
 
   const anh = document.createElement("img");
   anh.className = "anh-sach";
-  anh.src = sach.hinh;
+  anh.src = sach.hinh || "../image/khong-co-anh.svg";
   anh.alt = sach.ten;
   // Nếu không tìm thấy file ảnh thì dùng ảnh mặc định
   anh.onerror = function () {
     anh.onerror = null;
-    anh.src = "images/khong-co-anh.svg";
+    anh.src = "../image/khong-co-anh.svg";
   };
 
   const ten = document.createElement("h3");
@@ -105,7 +209,7 @@ function taoTheSach(sach) {
 // ---------- 4. HIỂN THỊ SÁCH VÀ PHÂN TRANG ----------
 
 // Hiển thị 1 trang của danh sách
-function hienThi(danhSach, trang) {
+function hienThi(danhSach, trang, thongBaoRong) {
   danhSachDangXem = danhSach;
 
   // Tính tổng số trang và giữ số trang trong khoảng hợp lệ
@@ -128,6 +232,7 @@ function hienThi(danhSach, trang) {
     const thongBao = document.createElement("p");
     thongBao.className = "khong-co-sach";
     thongBao.textContent = "Chưa có sách nào.";
+    thongBao.textContent = thongBaoRong || "Chưa có sách nào.";
     khung.appendChild(thongBao);
   }
 
@@ -140,7 +245,6 @@ function hienThi(danhSach, trang) {
   for (let i = batDau; i < ketThuc; i++) {
     khung.appendChild(taoTheSach(danhSach[i]));
   }
-
   hienThiNutPhanTrang(tongTrang);
 }
 
@@ -174,8 +278,11 @@ function hienThiNutPhanTrang(tongTrang) {
     }
     khung.appendChild(nutSo);
   }
-  khung.appendChild(taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang));
+  khung.appendChild(
+    taoNutTrang("▶", trangHienTai + 1, trangHienTai === tongTrang),
+  );
 }
+
 
 // ---------- 5. THỂ LOẠI TRÊN THANH MENU ----------
 
@@ -212,12 +319,23 @@ function taoMucTheLoai(ten, idTheLoai) {
 // Đưa các thể loại trong data.js vào danh sách thả xuống "Thể loại" của menu
 function hienThiMenuTheLoai() {
   const danhSachMenu = document.getElementById("theloai");
+  const dsLoai = layDanhSachLoai();
   danhSachMenu.appendChild(taoMucTheLoai("Tất cả sách", "all"));
-  for (let i = 0; i < THE_LOAI.length; i++) {
-    danhSachMenu.appendChild(taoMucTheLoai(THE_LOAI[i].ten, THE_LOAI[i].id));
+  for (let i = 0; i < dsLoai.length; i++) {
+    danhSachMenu.appendChild(taoMucTheLoai(dsLoai[i].ten, dsLoai[i].id));
   }
 }
 
 // ---------- 6. CHẠY KHI MỞ TRANG ----------
 hienThiMenuTheLoai();
-locTheoTheLoai("all");
+hienThiSelectTheLoai();
+//lấy phần sau dấu ? trên URL, để đọc được giá trị q =
+const thamSo = new URLSearchParams(window.location.search);
+// Đến từ ô tìm kiếm ở trang khác -> hiện kết quả tìm
+if (thamSo.has("q")) {
+  document.getElementById("oTimKiem").value = thamSo.get("q");
+  timCoBan(thamSo.get("q"));
+} else {
+  // Ở trang sản phẩm thì mở bình thường
+  locTheoTheLoai("all");
+}
