@@ -38,11 +38,14 @@ window.addEventListener("pageshow", updateCustomerHeader);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     document.getElementById("userControl").open = false;
+    document.getElementById("cartControl").open = false;
   }
 });
 document.addEventListener("click", (e) => {
   const userControl = document.getElementById("userControl");
   if (!userControl.contains(e.target)) userControl.open = false;
+  const cartControl = document.getElementById("cartControl");
+  if (!e.composedPath().includes(cartControl)) cartControl.open = false;
 });
 
 // Mở biểu mẫu chỉnh sửa với thông tin hiện tại của khách hàng.
@@ -241,6 +244,17 @@ if (registerForm) {
       if (trungEmail) {
         message.textContent = "Email đã được sử dụng.";
         return;
+      }
+      /*^	Bắt đầu chuỗi
+      [^\s@]+	Một hoặc nhiều ký tự bất kỳ, trừ khoảng trắng và @ (phần tên)
+      @	Đúng một dấu @
+      [^\s@]+	Phần tên miền, ví dụ gmail
+      \.	Một dấu chấm thật (viết \. vì . đứng một mình nghĩa là “ký tự bất kỳ”)
+      [^\s@]+	Phần đuôi, ví dụ com
+      $	Kết thúc chuỗi*/
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        message.textContent = "Email không hợp lệ.";
+          return;
       }
       const newUser = {
         id: taoIdUser(users),
