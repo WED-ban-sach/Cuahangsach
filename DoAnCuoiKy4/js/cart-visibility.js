@@ -76,7 +76,7 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
 
   const hoTen = document.getElementById("profile-name").value.trim();
   const email = document.getElementById("profile-email").value.trim();
-  const diaChi = document.getElementById("profile-diachi").value.trim();
+  const diaChi = document.getElementById("profile-diaChi").value.trim();
   const password = document.getElementById("profile-password").value;
   if (!hoTen || !email) {
     message.textContent = "Vui lòng nhập họ tên và email.";
@@ -184,10 +184,10 @@ if (loginForm) {
 } else {
   // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
   document.getElementById("btnLogin").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
   document.getElementById("btnRegister").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
 }
 
@@ -271,10 +271,10 @@ if (registerForm) {
 } else {
   // Chuyển nút đăng nhập/đăng ký sang trang chủ nếu trang hiện tại không có biểu mẫu.
   document.getElementById("btnLogin").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
   document.getElementById("btnRegister").addEventListener("click", () => {
-    window.location.href = "doan.html";
+    window.location.href = "index.html";
   });
 }
 //3 4
