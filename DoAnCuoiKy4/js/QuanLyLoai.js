@@ -83,9 +83,11 @@ var viTriXoa = -1;
 //--TIM KIEM
 var oTimKiemLoai = document.querySelector("#QLY_LOAISP_INPUT_TIMKIEM");
 var locTrangThaiLoai = document.querySelector("#QLY_LOAISP_TRANGTHAI");
+var trangLoai = 1; // trang đang xem của bảng loại
 
 oTimKiemLoai.addEventListener("input", function() {
 
+    trangLoai = 1; // đổi bộ lọc thì về trang 1
     hienThiDanhSachLoai();
 
 });
@@ -93,6 +95,7 @@ oTimKiemLoai.addEventListener("input", function() {
 
 locTrangThaiLoai.addEventListener("input", function() {
 
+    trangLoai = 1; // đổi bộ lọc thì về trang 1
     hienThiDanhSachLoai();
 
 });
@@ -116,8 +119,15 @@ function hienThiDanhSachLoai() {
     } )
  
 
-    for ( let i = 0 ; i < danhSachLoc.length; i++) {
-        var loai = danhSachLoc[i];
+    // chỉ lấy các loại của trang hiện tại (tối đa 4 loại)
+    var tongTrang = tinhTongTrang(danhSachLoc.length);
+    if (trangLoai > tongTrang) {
+        trangLoai = tongTrang;
+    }
+    var danhSachTrang = layDongCuaTrang(danhSachLoc, trangLoai);
+
+    for ( let i = 0 ; i < danhSachTrang.length; i++) {
+        var loai = danhSachTrang[i];
         var soSach = 0;
         let viTriGoc = danhSachLoai.indexOf(loai);
 
@@ -231,6 +241,11 @@ function hienThiDanhSachLoai() {
 
         })
     }
+
+    veKhungPhanTrang("QLY_LOAISP", danhSachLoc.length, trangLoai, "loại", function(trang) {
+        trangLoai = trang;
+        hienThiDanhSachLoai();
+    });
 }
 
 

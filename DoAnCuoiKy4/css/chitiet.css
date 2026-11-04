@@ -21,3 +21,78 @@
 #popupChiTiet p {
   margin: 4px 0;
 }
+
+/* ===== BẤM VÀO CARD ĐỂ XEM CHI TIẾT ===== */
+.the-sach,
+#noibat > div {
+  cursor: pointer;
+}
+
+/* ===== TRANG CHI TIẾT SÁCH (chitiet.html) ===== */
+.quay-lai {
+  display: inline-block;
+  margin-bottom: 14px;
+  color: azure;
+  font-size: 14px;
+  text-decoration: none;
+}
+.quay-lai:hover {
+  text-decoration: underline;
+}
+.chi-tiet {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 10px;
+  color: #1b2430;
+}
+.anh-chi-tiet {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+.ten-chi-tiet {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #1e3a5f;
+}
+.gia-chi-tiet {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #d32f2f;
+}
+.bang-tin {
+  margin-bottom: 16px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.bang-tin th {
+  padding: 6px 28px 6px 0;
+  text-align: left;
+  font-weight: 400;
+  color: #6b7686;
+}
+.bang-tin td {
+  font-weight: 600;
+}
+.mo-ta {
+  padding-top: 14px;
+  border-top: 1px solid #d5dbe6;
+  font-size: 14px;
+  line-height: 1.7;
+}
+#khungLienQuan h2 {
+  margin: 30px 0 16px;
+  font-size: 22px;
+  color: azure;
+}
+@media (max-width: 700px) {
+  .chi-tiet {
+    grid-template-columns: 1fr;
+  }
+}

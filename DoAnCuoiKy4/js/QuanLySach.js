@@ -79,6 +79,69 @@ function taoOThaoTac(cacNut) {
   o.appendChild(khung);
   return o;
 }
+// ---------- PHÂN TRANG (dùng chung cho bảng loại, sách, phiếu nhập) ----------
+var SO_DONG_MOI_TRANG = 4; // mỗi trang tối đa 4 dòng
+
+// Tổng số trang (ít nhất 1 trang)
+function tinhTongTrang(soDong) {
+  var tongTrang = Math.ceil(soDong / SO_DONG_MOI_TRANG);
+  if (tongTrang < 1) {
+    tongTrang = 1;
+  }
+  return tongTrang;
+}
+
+// Cắt danh sách, chỉ lấy các dòng của 1 trang
+function layDongCuaTrang(ds, trang) {
+  var batDau = (trang - 1) * SO_DONG_MOI_TRANG;
+  return ds.slice(batDau, batDau + SO_DONG_MOI_TRANG);
+}
+
+// Vẽ khung phân trang của 1 mục: dòng chữ "Hiển thị x–y trong n ...", nút ‹, các số trang, nút ›
+// idMuc: id của mục (vd "QLY_DANHMUCSP"), tenDoiTuong: "sách", "loại"...
+// veLai(trang): hàm vẽ lại bảng khi bấm sang trang khác
+function veKhungPhanTrang(idMuc, tongDong, trang, tenDoiTuong, veLai) {
+  var tongTrang = tinhTongTrang(tongDong);
+  var thongTin = document.querySelector("#" + idMuc + " #THONGTIN_TRANG");
+  var nutTruoc = document.querySelector("#" + idMuc + " #TRANG_TRUOC");
+  var nutSau = document.querySelector("#" + idMuc + " #TRANG_SAU");
+  var dsSoTrang = document.querySelector("#" + idMuc + " #DANHSACH_TRANG");
+
+  if (tongDong === 0) {
+    thongTin.textContent = "Không có " + tenDoiTuong + " nào";
+  } else {
+    var tu = (trang - 1) * SO_DONG_MOI_TRANG + 1;
+    var den = Math.min(trang * SO_DONG_MOI_TRANG, tongDong);
+    thongTin.textContent = "Hiển thị " + tu + "–" + den + " trong " + tongDong + " " + tenDoiTuong;
+  }
+
+  // nút ‹ và › (gán onclick để mỗi lần vẽ lại không bị gắn trùng sự kiện)
+  nutTruoc.disabled = trang <= 1;
+  nutSau.disabled = trang >= tongTrang;
+  nutTruoc.onclick = function () {
+    veLai(trang - 1);
+  };
+  nutSau.onclick = function () {
+    veLai(trang + 1);
+  };
+
+  // các nút số trang
+  dsSoTrang.innerHTML = "";
+  for (var i = 1; i <= tongTrang; i++) {
+    var nutSo = document.createElement("button");
+    nutSo.textContent = i;
+    nutSo.className = "SO_TRANG";
+    if (i === trang) {
+      nutSo.classList.add("DANG_CHON"); // đánh dấu trang đang xem
+    }
+    nutSo.dataset.trang = i;
+    nutSo.addEventListener("click", function (e) {
+      veLai(Number(e.target.dataset.trang));
+    });
+    dsSoTrang.appendChild(nutSo);
+  }
+}
+
 // Đưa các thể loại trong data.js vào ô chọn (giữ lại mục đầu "tất cả" nếu giuMucDau = true)
 function napTheLoai(oChon, giuMucDau) {
   if (giuMucDau) {
@@ -109,17 +172,20 @@ var oHinhSach = document.getElementById("HINH_SACH_MOI");
 var oMoTaSach = document.getElementById("MOTA_SACH_MOI");
 var dangSuaSach = ""; // "" là đang thêm mới, còn lại là mã sách đang sửa
 
+var trangSach = 1; // trang đang xem của bảng sách
+
 function veBangSach() {
   var ds = layDsSach();
   var tuKhoa = oTimSach.value.trim().toLowerCase();
-  bangSach.innerHTML = "";
+
+  // 1. Lọc: chỉ giữ các sách khớp ô tìm kiếm, loại và trạng thái
+  var dsLoc = [];
   for (var i = 0; i < ds.length; i++) {
     var sach = ds[i];
     var trangThai = "active";
     if (sach.an) {
       trangThai = "locked";
     }
-    // lọc theo ô tìm kiếm, loại và trạng thái
     if (tuKhoa !== "" && (sach.ma + " " + sach.ten).toLowerCase().indexOf(tuKhoa) === -1) {
       continue;
     }
@@ -129,15 +195,28 @@ function veBangSach() {
     if (locTrangThaiSach.value !== "all" && trangThai !== locTrangThaiSach.value) {
       continue;
     }
+    dsLoc.push(sach);
+  }
 
+  // 2. Chỉ lấy các sách của trang hiện tại (tối đa 4 sách)
+  var tongTrang = tinhTongTrang(dsLoc.length);
+  if (trangSach > tongTrang) {
+    trangSach = tongTrang;
+  }
+  var dsTrang = layDongCuaTrang(dsLoc, trangSach);
+
+  // 3. Vẽ các dòng của trang
+  bangSach.innerHTML = "";
+  for (var j = 0; j < dsTrang.length; j++) {
+    var sachTrang = dsTrang[j];
     var hang = document.createElement("tr");
-    hang.dataset.ma = sach.ma;
-    hang.appendChild(taoO(sach.ma));
-    hang.appendChild(taoO(layTenLoai(sach.loai)));
-    hang.appendChild(taoO(sach.ten));
-    hang.appendChild(taoO(laySoLuong(sach.ma)));
+    hang.dataset.ma = sachTrang.ma;
+    hang.appendChild(taoO(sachTrang.ma));
+    hang.appendChild(taoO(layTenLoai(sachTrang.loai)));
+    hang.appendChild(taoO(sachTrang.ten));
+    hang.appendChild(taoO(laySoLuong(sachTrang.ma)));
     var cacNut = [taoNut("Sửa", "BTN_SUA_SP")];
-    if (sach.an) {
+    if (sachTrang.an) {
       hang.appendChild(taoOTrangThai("Đã ẩn", "TRANGTHAI BIKHOA"));
       cacNut.push(taoNut("Hiện", "BTN_HIEN_SP"));
     } else {
@@ -148,6 +227,18 @@ function veBangSach() {
     hang.appendChild(taoOThaoTac(cacNut));
     bangSach.appendChild(hang);
   }
+
+  // 4. Vẽ khung phân trang
+  veKhungPhanTrang("QLY_DANHMUCSP", dsLoc.length, trangSach, "sách", function (trang) {
+    trangSach = trang;
+    veBangSach();
+  });
+}
+
+// Đổi ô tìm kiếm hoặc bộ lọc thì quay về trang 1
+function locSachLai() {
+  trangSach = 1;
+  veBangSach();
 }
 
 // Mở form: không truyền sách = thêm mới, truyền sách = sửa (điền sẵn thông tin hiện tại)
@@ -249,9 +340,9 @@ bangSach.addEventListener("click", function (e) {
   veBangSach();
   veBangGiaBan();
 });
-oTimSach.addEventListener("input", veBangSach);
-locLoaiSach.addEventListener("change", veBangSach);
-locTrangThaiSach.addEventListener("change", veBangSach);
+oTimSach.addEventListener("input", locSachLai);
+locLoaiSach.addEventListener("change", locSachLai);
+locTrangThaiSach.addEventListener("change", locSachLai);
 
 // ---------- 3. MỤC 5: NHẬP SẢN PHẨM ----------
 var bangPhieu = document.getElementById("NHAPSP_TBODY");
@@ -281,17 +372,20 @@ function tinhTongTien(phieu) {
   return tong;
 }
 
+var trangPhieu = 1; // trang đang xem của bảng phiếu nhập
+
 function veBangPhieu() {
   var ds = layDsPhieu();
   var tuKhoa = oTimPhieu.value.trim().toLowerCase();
-  bangPhieu.innerHTML = "";
+
+  // 1. Lọc theo mã phiếu, trạng thái và khoảng ngày (ngày dạng yyyy-mm-dd nên so sánh chuỗi được)
+  var dsLoc = [];
   for (var i = 0; i < ds.length; i++) {
     var phieu = ds[i];
     var trangThai = "locked";
     if (phieu.hoanThanh) {
       trangThai = "active";
     }
-    // lọc theo mã phiếu, trạng thái và khoảng ngày (ngày dạng yyyy-mm-dd nên so sánh chuỗi được)
     if (tuKhoa !== "" && phieu.ma.toLowerCase().indexOf(tuKhoa) === -1) {
       continue;
     }
@@ -304,15 +398,28 @@ function veBangPhieu() {
     if (oDenNgay.value !== "" && phieu.ngay > oDenNgay.value) {
       continue;
     }
+    dsLoc.push(phieu);
+  }
 
+  // 2. Chỉ lấy các phiếu của trang hiện tại (tối đa 4 phiếu)
+  var tongTrang = tinhTongTrang(dsLoc.length);
+  if (trangPhieu > tongTrang) {
+    trangPhieu = tongTrang;
+  }
+  var dsTrang = layDongCuaTrang(dsLoc, trangPhieu);
+
+  // 3. Vẽ các dòng của trang
+  bangPhieu.innerHTML = "";
+  for (var j = 0; j < dsTrang.length; j++) {
+    var phieuTrang = dsTrang[j];
     var hang = document.createElement("tr");
-    hang.dataset.ma = phieu.ma;
-    hang.appendChild(taoO(phieu.ma));
-    hang.appendChild(taoO(phieu.ngay));
-    hang.appendChild(taoO(tinhSoSanPham(phieu)));
-    hang.appendChild(taoO(dinhDangTien(tinhTongTien(phieu))));
+    hang.dataset.ma = phieuTrang.ma;
+    hang.appendChild(taoO(phieuTrang.ma));
+    hang.appendChild(taoO(phieuTrang.ngay));
+    hang.appendChild(taoO(tinhSoSanPham(phieuTrang)));
+    hang.appendChild(taoO(dinhDangTien(tinhTongTien(phieuTrang))));
     var cacNut = [taoNut("Xem", "BTN_XEM_NHAPSP")];
-    if (phieu.hoanThanh) {
+    if (phieuTrang.hoanThanh) {
       hang.appendChild(taoOTrangThai("Hoàn thành", "TRANGTHAI HOANTHANH"));
     } else {
       hang.appendChild(taoOTrangThai("Chưa hoàn thành", "TRANGTHAI CHUAHOANTHANH"));
@@ -322,6 +429,18 @@ function veBangPhieu() {
     hang.appendChild(taoOThaoTac(cacNut));
     bangPhieu.appendChild(hang);
   }
+
+  // 4. Vẽ khung phân trang
+  veKhungPhanTrang("QLY_NHAPSP", dsLoc.length, trangPhieu, "phiếu nhập", function (trang) {
+    trangPhieu = trang;
+    veBangPhieu();
+  });
+}
+
+// Đổi ô tìm kiếm hoặc bộ lọc thì quay về trang 1
+function locPhieuLai() {
+  trangPhieu = 1;
+  veBangPhieu();
 }
 
 // Thêm 1 dòng sản phẩm vào form phiếu (Bài 7: createElement + appendChild)
@@ -513,10 +632,10 @@ bangPhieu.addEventListener("click", function (e) {
     hienThongBaoThanhCong("Thành công ! ", "Phiếu nhập đã hoàn thành!");
   }
 });
-oTimPhieu.addEventListener("input", veBangPhieu);
-locTrangThaiPhieu.addEventListener("change", veBangPhieu);
-oTuNgay.addEventListener("change", veBangPhieu);
-oDenNgay.addEventListener("change", veBangPhieu);
+oTimPhieu.addEventListener("input", locPhieuLai);
+locTrangThaiPhieu.addEventListener("change", locPhieuLai);
+oTuNgay.addEventListener("change", locPhieuLai);
+oDenNgay.addEventListener("change", locPhieuLai);
 
 // ---------- 4. MỤC 6: GIÁ BÁN ----------
 var bangGiaBan = document.getElementById("GIABAN_TBODY");
