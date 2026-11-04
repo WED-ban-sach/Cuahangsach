@@ -105,6 +105,8 @@
 
             })
         }
+
+        phanTrangBang(cacTrang[1]);
     }
 
 

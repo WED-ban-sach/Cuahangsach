@@ -147,6 +147,8 @@ function veBangSach() {
     cacNut.push(taoNut("Xóa", "BTN_XOA_SP"));
     hang.appendChild(taoOThaoTac(cacNut));
     bangSach.appendChild(hang);
+
+    phanTrangBang(cacTrang[3]); 
   }
 }
 
@@ -321,6 +323,9 @@ function veBangPhieu() {
     }
     hang.appendChild(taoOThaoTac(cacNut));
     bangPhieu.appendChild(hang);
+
+
+    phanTrangBang(cacTrang[4]); 
   }
 }
 
@@ -560,6 +565,9 @@ function veBangGiaBan() {
     hang.appendChild(taoO(dinhDangTien(sach.gia)));
     hang.appendChild(taoOThaoTac([taoNut("Sửa % lợi nhuận", "BTN_SUALOINHUAN_GIABAN")]));
     bangGiaBan.appendChild(hang);
+
+    phanTrangBang(cacTrang[5]);
+
   }
 }
 

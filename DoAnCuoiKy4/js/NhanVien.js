@@ -116,6 +116,7 @@ for ( var i = 0; i < tabmenu.length; i++ ) {
 
         if ( namePage == "TRANG_TONGQUAN") {
             document.getElementById("TONGQUAN").style.display = "block";
+            capNhatTongQuan();
         }
 
         else if ( namePage == "TRANG_QLY_NGUOIDUNG") {
@@ -154,7 +155,6 @@ for ( var i = 0; i < tabmenu.length; i++ ) {
         }
     })
 }
-
 
 
 
@@ -397,7 +397,6 @@ btn_sua_loai.forEach(function(nut) {
 
 
 
-
 // ------------------------- quan ly danh muc: xem QuanLySach.js
 
 
@@ -484,3 +483,195 @@ tk_dong.addEventListener("click", function() {
     tk_modal.style.display = "none";
 })
 */
+
+
+
+
+// -------------------------THEM ( CAP NHAT PHAN TONG QUAN )--------------------
+
+
+function chuoiVeNgay(chuoi) {
+  if (!chuoi) return null;
+  var kq;
+  if (chuoi.indexOf("T") !== -1) {
+    var d = new Date(chuoi);
+    return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  }
+  kq = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(chuoi);
+  if (kq) return new Date(+kq[1], +kq[2] - 1, +kq[3]);
+  kq = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(chuoi);
+  if (kq) return new Date(+kq[3], +kq[2] - 1, +kq[1]);
+  return null;
+}
+
+
+function laKhachMoi(chuoiNgayTao, soNgay) {
+  var ngayTao = chuoiVeNgay(chuoiNgayTao);
+  if (ngayTao === null) return false;
+  var now = new Date();
+  var homNay0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var chenhLech = Math.round((homNay0 - ngayTao) / 86400000);
+  return chenhLech >= 0 && chenhLech <= soNgay;
+}
+
+
+
+function capNhatTongQuan() {
+
+  var ngayHienTai = new Date();
+  var homNay = ngayHienTai.getFullYear() + "-"
+    + String(ngayHienTai.getMonth() + 1).padStart(2, "0") + "-"
+    + String(ngayHienTai.getDate()).padStart(2, "0");
+
+
+  var dsDon = layDsDon();
+  var donHomNay = dsDon.filter(function(don) {
+    return (layNgayDon(don) === homNay ) && (layTrangThaiDon(don)!== TEN_TRANG_THAI.huy) ;
+  }).length;
+
+  var TQ_DON_HOMAY = document.getElementById("TQ_DON_HOMNAY");
+  TQ_DON_HOMAY.textContent = donHomNay;
+
+
+
+
+  var dsSach = layDsSach();
+  var dangBan = dsSach.filter(function(sach) {
+    return !sach.an;
+  }).length;
+
+  var TQ_SP_DANGBAN = document.getElementById("TQ_SP_DANGBAN");
+  TQ_SP_DANGBAN.textContent = dangBan;
+
+
+
+
+  // KHACH MOI = tao tai khoan <= 7 ngay
+  var users = layUsers();
+  var khachMoi = users.filter(function(u) {
+    return u.role === "customer" && laKhachMoi(u.createdAt,7);
+  }).length;
+
+  var TQ_KHACH_MOI = document.getElementById("TQ_KHACH_MOI");
+  TQ_KHACH_MOI.textContent = khachMoi;
+
+
+
+
+  var sapHet = dsSach.filter(function(s) {
+    var ton = laySoLuong(s.ma);
+    return ton <= NGUONG_SAPHET;
+  }).length;
+
+  var TQ_SAP_HET = document.getElementById("TQ_SAP_HET");
+  TQ_SAP_HET.textContent = sapHet;
+
+
+  // BANG DON HANG GAN DAY (5 don moi nhat, khong tinh don huy)
+  var tbodyDon = document.getElementById("tbody_Donhangganday");
+  tbodyDon.innerHTML = "";
+  var dsDonMoiNhat = dsDon.slice().reverse().slice(0, 5); // cho don moi naht len dau va chon 5 don
+  if (dsDonMoiNhat.length === 0) {
+    tbodyDon.innerHTML = '<tr><td colspan="4" style="text-align:center">Chưa có đơn hàng</td></tr>';
+  } else {
+    dsDonMoiNhat.forEach(function(don) {
+      var trangThai = layTrangThaiDon(don);
+      var lopCss;
+      
+      if (trangThai === TEN_TRANG_THAI.dagiao) lopCss = "DAXULY";
+      else if (trangThai === TEN_TRANG_THAI.huy) lopCss = "DAHUY";
+      else lopCss = "DANGXULY";
+
+      
+      var tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + don.maDonHang + "</td>"
+        + "<td>" + don.nguoiNhan + "</td>"
+        + "<td>" + don.ngayDat + "</td>"
+        + "<td><span class='TRANGTHAI " + lopCss + "'>" + trangThai + "</span></td>";
+      tbodyDon.appendChild(tr);
+    });
+  }
+}
+
+capNhatTongQuan();
+
+
+
+
+
+
+// =============== PHAN TRANG DON GIAN ===============
+var SO_DONG = 5;   // moi trang hien 5 dong
+
+// Goi ham nay SAU KHI da do du lieu vao tbody
+function phanTrangBang(trang) {
+  var cacDong = trang.querySelectorAll("tbody > tr");     // tat ca dong dang co
+  var tongTrang = Math.ceil(cacDong.length / SO_DONG);
+  if (tongTrang < 1) tongTrang = 1;
+
+  // nho trang hien tai ngay tren phan tu trang (mac dinh la 1)
+  var trangNay = Number(trang.dataset.trang) || 1;
+  if (trangNay > tongTrang) trangNay = tongTrang;
+  trang.dataset.trang = trangNay;
+
+  var batDau = (trangNay - 1) * SO_DONG;
+  var ketThuc = batDau + SO_DONG;
+
+  // dong nao nam trong [batDau, ketThuc) thi hien, con lai an
+  for (var i = 0; i < cacDong.length; i++) {
+    if (i >= batDau && i < ketThuc) {
+      cacDong[i].style.display = "";
+    } else {
+      cacDong[i].style.display = "none";
+    }
+  }
+
+  // dong thong tin
+  var thongTin = trang.querySelector("#THONGTIN_TRANG");
+  if (cacDong.length === 0) {
+    thongTin.textContent = "Không có dữ liệu";
+  } else {
+    thongTin.textContent = "Hiển thị " + (batDau + 1) + "–"
+      + Math.min(ketThuc, cacDong.length) + " trong " + cacDong.length;
+  }
+
+  // cac nut so trang
+  var html = "";
+  for (var s = 1; s <= tongTrang; s++) {
+    var lop = (s === trangNay) ? "SO_TRANG DANG_CHON" : "SO_TRANG";
+    html += '<button class="' + lop + '">' + s + "</button>";
+  }
+  trang.querySelector("#DANHSACH_TRANG").innerHTML = html;
+
+  trang.querySelector("#TRANG_TRUOC").disabled = (trangNay === 1);
+  trang.querySelector("#TRANG_SAU").disabled = (trangNay === tongTrang);
+}
+
+// Gan su kien cho cac trang co phan trang (trang 1 den 7), chi chay 1 lan
+for (var t = 1; t < cacTrang.length; t++) {
+  ganSuKienPhanTrang(cacTrang[t]);
+}
+
+function ganSuKienPhanTrang(trang) {
+  // bam nut truoc / sau / so trang
+  trang.addEventListener("click", function (e) {
+    var nut = e.target;
+    var trangNay = Number(trang.dataset.trang) || 1;
+
+    if (nut.id === "TRANG_TRUOC") {
+      trang.dataset.trang = trangNay - 1;
+    } else if (nut.id === "TRANG_SAU") {
+      trang.dataset.trang = trangNay + 1;
+    } else if (nut.classList.contains("SO_TRANG")) {
+      trang.dataset.trang = Number(nut.textContent);
+    } else {
+      return;
+    }
+    phanTrangBang(trang);
+  });
+
+  // go tim kiem hoac doi o loc -> quay ve trang 1
+  // (true = chay TRUOC ham ve bang cu)
+  trang.addEventListener("input", function () { trang.dataset.trang = 1; }, true);
+  trang.addEventListener("change", function () { trang.dataset.trang = 1; }, true);
+}

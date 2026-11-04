@@ -109,6 +109,8 @@ function veBangDon() {
   if (bangDon.children.length === 0) {
     themDongTrong(bangDon, 7, "Không có đơn hàng phù hợp.");
   }
+
+  phanTrangBang(cacTrang[6]);
 }
 
 function hienChiTietDon(don) {
@@ -216,13 +218,15 @@ function veBangTonKho() {
   if (bangTonKho.children.length === 0) {
     themDongTrong(bangTonKho, 6, "Không có sản phẩm phù hợp.");
   }
+  phanTrangBang(cacTrang[7]);
 }
 
 //Cảnh báo sắp hết hàng ở trang Tổng quan (bảng thứ 2, thẻ thống kê thứ 4)
 function veCanhBaoSapHet() {
   const bang = document.querySelectorAll("#TONGQUAN tbody")[1];
-  const oDem = document.querySelectorAll("#TONGQUAN .THONGTIN_HIENTAI_CHITIET span:last-child")[3];
-  const ds = layDsSach();
+  // const oDem = document.querySelectorAll("#TONGQUAN .THONGTIN_HIENTAI_CHITIET span:last-child")[3];
+  const ds = layDsSach().slice(0,5);
+  
   let dem = 0;
   bang.innerHTML = "";
   for (let i = 0; i < ds.length; i++) {
@@ -236,7 +240,7 @@ function veCanhBaoSapHet() {
       bang.appendChild(hang);
     }
   }
-  oDem.textContent = dem;
+  // oDem.textContent = dem;
 }
 
 //Nhập - xuất - tồn của 1 sản phẩm trong [tuNgay, denNgay]
