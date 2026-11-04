@@ -38,11 +38,14 @@ window.addEventListener("pageshow", updateCustomerHeader);
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     document.getElementById("userControl").open = false;
+    document.getElementById("cartControl").open = false;
   }
 });
 document.addEventListener("click", (e) => {
   const userControl = document.getElementById("userControl");
   if (!userControl.contains(e.target)) userControl.open = false;
+  const cartControl = document.getElementById("cartControl");
+  if (!e.composedPath().includes(cartControl)) cartControl.open = false;
 });
 
 // Mở biểu mẫu chỉnh sửa với thông tin hiện tại của khách hàng.
