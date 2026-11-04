@@ -242,6 +242,17 @@ if (registerForm) {
         message.textContent = "Email đã được sử dụng.";
         return;
       }
+      /*^	Bắt đầu chuỗi
+      [^\s@]+	Một hoặc nhiều ký tự bất kỳ, trừ khoảng trắng và @ (phần tên)
+      @	Đúng một dấu @
+      [^\s@]+	Phần tên miền, ví dụ gmail
+      \.	Một dấu chấm thật (viết \. vì . đứng một mình nghĩa là “ký tự bất kỳ”)
+      [^\s@]+	Phần đuôi, ví dụ com
+      $	Kết thúc chuỗi*/
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        message.textContent = "Email không hợp lệ.";
+          return;
+      }
       const newUser = {
         id: taoIdUser(users),
         username,

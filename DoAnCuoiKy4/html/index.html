@@ -90,7 +90,7 @@
       <h2>Chào mừng trở lại</h2>
       <p class="sub">Đăng nhập để tiếp tục khám phá sách hay.</p>
 
-      <form class="form" id="loginForm">
+      <form class="form" id="loginForm" novalidate>
         <div class="field">
           <label for="login-user">Tên đăng nhập</label>
           <input
@@ -124,7 +124,7 @@
       <h2>Tạo tài khoản</h2>
       <p class="sub">Chỉ mất vài giây để tham gia VNBook.</p>
 
-      <form class="form" id="registerForm">
+      <form class="form" id="registerForm" novalidate>
         <div class="field">
           <label for="hoten">Họ và tên</label>
           <input
@@ -161,7 +161,7 @@
             required
           />
         </div>
-        <p id="registerMessage" class="form-message" role="status" aria-live="polite"></p>
+        <p id="registerMessage" class="login-message" role="status" aria-live="polite"></p>
         <button type="submit" class="submit">Đăng ký</button>
         <p class="switch">
           Đã có tài khoản? <a href="#" data-switch="login">Đăng nhập</a>
