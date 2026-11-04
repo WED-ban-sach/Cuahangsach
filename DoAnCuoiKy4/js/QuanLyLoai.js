@@ -117,7 +117,7 @@ function hienThiDanhSachLoai() {
  
 
     for ( let i = 0 ; i < danhSachLoc.length; i++) {
-        var loai = danhSachLoc[i];
+        let loai = danhSachLoc[i];
         var soSach = 0;
         let viTriGoc = danhSachLoai.indexOf(loai);
 
