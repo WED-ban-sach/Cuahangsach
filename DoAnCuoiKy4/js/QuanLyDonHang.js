@@ -118,7 +118,7 @@ function hienChiTietDon(don) {
   themDongChiTietDon("Mã đơn hàng", don.maDonHang);
   themDongChiTietDon("Ngày đặt", don.ngayDat);
   themDongChiTietDon("Tài khoản", don.username);
-  themDongChiTietDon("Người nhận", don.nguoiNhan + " - " + don.dienThoai);
+  themDongChiTietDon("Người nhận", don.nguoiNhan + (don.dienThoai ? " - " + don.dienThoai : ""));
   themDongChiTietDon("Địa chỉ", don.diaChi);
   themDongChiTietDon("Thanh toán", don.phuongThucThanhToan);
   const dsSp = don.danhSachSanPham || [];

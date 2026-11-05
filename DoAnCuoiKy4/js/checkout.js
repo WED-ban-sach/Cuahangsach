@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let giaoHangDiaChi = "";
       let nguoiNhan = userAcc.hoTen;
-      let sdtNhan = userAcc.sdt || "0393912512";
+      let sdtNhan = userAcc.sdt || "";
 
       if (radioNewAddr && radioNewAddr.checked) {
         const rName = document.getElementById("newReceiverInline").value.trim();
@@ -220,6 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Xóa giỏ hàng hiện tại sau khi đặt thành công
       if (typeof luuGioHang === "function") {
         luuGioHang([]); // lưu giỏ rỗng và tự gọi capNhatSoLuongGioHang() => badge về 0
+      }
+      if (typeof hienThiGioHangPanel === "function") {
+        hienThiGioHangPanel(); // vẽ lại khung giỏ hàng cho hết sản phẩm cũ
       }
     });
   }
