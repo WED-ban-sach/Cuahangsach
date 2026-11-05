@@ -14,10 +14,19 @@ function timViTri(ds, ma) {
   }
   return -1;
 }
+// Danh sách loại do admin quản lý (khoá "danhSachLoai", có thêm/sửa/ẩn ở mục Quản lý loại), chưa có thì dùng THE_LOAI
+function layDsLoaiAdmin() {
+  var chuoi = localStorage.getItem("danhSachLoai");
+  if (chuoi === null) {
+    return THE_LOAI;
+  }
+  return JSON.parse(chuoi);
+}
 function layTenLoai(idLoai) {
-  for (var i = 0; i < THE_LOAI.length; i++) {
-    if (THE_LOAI[i].id === idLoai) {
-      return THE_LOAI[i].ten;
+  var dsLoai = layDsLoaiAdmin();
+  for (var i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].id === idLoai) {
+      return dsLoai[i].ten;
     }
   }
   return "";
@@ -25,7 +34,8 @@ function layTenLoai(idLoai) {
 function dinhDangTien(so) {
   return Number(so).toLocaleString("vi-VN") + " đ";
 }
-// Giá vốn = giá nhập của phiếu đã hoàn thành gần nhất (phiếu nằm sau là phiếu mới hơn)
+// Giá vốn = giá nhập của phiếu đã hoàn thành gần nhất (phiếu nằm sau là phiếu mới hơn).
+// Sách chưa có phiếu nhập nào thì dùng giá vốn ban đầu (giaVon) của sách trong data.js
 function layGiaVon(maSach) {
   var dsPhieu = layDsPhieu();
   var giaVon = 0;
@@ -35,6 +45,13 @@ function layGiaVon(maSach) {
         if (dsPhieu[i].dong[j].ma === maSach) {
           giaVon = dsPhieu[i].dong[j].gia;
         }
+      }
+    }
+  }
+  if (giaVon === 0) {
+    for (var k = 0; k < DU_LIEU_MAU.length; k++) {
+      if (DU_LIEU_MAU[k].ma === maSach && DU_LIEU_MAU[k].giaVon) {
+        giaVon = DU_LIEU_MAU[k].giaVon;
       }
     }
   }
@@ -79,8 +96,12 @@ function taoOThaoTac(cacNut) {
   o.appendChild(khung);
   return o;
 }
-// Đưa các thể loại trong data.js vào ô chọn (giữ lại mục đầu "tất cả" nếu giuMucDau = true)
+// Đưa các loại vào ô chọn.
+// giuMucDau = true: ô lọc (giữ mục "tất cả", liệt kê mọi loại).
+// giuMucDau = false: ô chọn loại cho sách (chỉ các loại đang hoạt động, bỏ loại đã ẩn)
 function napTheLoai(oChon, giuMucDau) {
+  var dsLoai = layDsLoaiAdmin();
+  var giaTriCu = oChon.value; // nhớ lựa chọn hiện tại để nạp lại xong vẫn giữ
   if (giuMucDau) {
     while (oChon.options.length > 1) {
       oChon.remove(1);
@@ -88,12 +109,32 @@ function napTheLoai(oChon, giuMucDau) {
   } else {
     oChon.innerHTML = "";
   }
-  for (var i = 0; i < THE_LOAI.length; i++) {
+  for (var i = 0; i < dsLoai.length; i++) {
+    if (!giuMucDau && dsLoai[i].trangThai === "locked") {
+      continue;
+    }
     var muc = document.createElement("option");
-    muc.value = THE_LOAI[i].id;
-    muc.textContent = THE_LOAI[i].ten;
+    muc.value = dsLoai[i].id;
+    muc.textContent = dsLoai[i].ten;
     oChon.appendChild(muc);
   }
+  if (giaTriCu !== "") {
+    oChon.value = giaTriCu;
+  }
+  // Lựa chọn cũ không còn (loại vừa bị ẩn, xóa hoặc đổi mã) thì về mục đầu, tránh ô chọn bị trống
+  if (oChon.selectedIndex === -1) {
+    oChon.selectedIndex = 0;
+  }
+}
+
+// Gọi khi loại sản phẩm thay đổi (thêm, sửa, ẩn, xóa): nạp lại các ô chọn loại và vẽ lại bảng
+function capNhatOChonLoai() {
+  napTheLoai(locLoaiSach, true);
+  napTheLoai(locLoaiGiaBan, true);
+  napTheLoai(oLoaiSach, false);
+  napTheLoai(oLoaiLoiNhuan, false);
+  veBangSach();
+  veBangGiaBan();
 }
 
 // ---------- 2. MỤC 4: DANH MỤC SẢN PHẨM ----------
@@ -208,7 +249,10 @@ formSach.querySelector(".ND_DONGY").addEventListener("click", function () {
   } else {
     var sach = ds[timViTri(ds, dangSuaSach)];
     sach.ten = ten;
-    sach.loai = oLoaiSach.value;
+    // Sách thuộc loại đã ẩn thì ô chọn trống: không chọn loại khác thì giữ nguyên loại cũ
+    if (oLoaiSach.value !== "") {
+      sach.loai = oLoaiSach.value;
+    }
     sach.hinh = oHinhSach.value.trim();
     sach.moTa = oMoTaSach.value.trim();
   }

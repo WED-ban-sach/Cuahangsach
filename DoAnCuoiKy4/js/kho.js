@@ -100,6 +100,11 @@ if (localStorage.getItem("dsPhieuNhap") === null) {
   }
   luuDsPhieu([
     { ma: "PN001", ngay: "2026-10-01", dong: dongNhap, hoanThanh: true },
+    { ma: "PN002", ngay: "2026-11-01", hoanThanh: true, dong: [{ ma: "NV01", gia: 100000, sl: 50 }] },
+    { ma: "PN003", ngay: "2026-11-02", hoanThanh: true, dong: [{ ma: "NV02", gia: 120000, sl: 30 }, { ma: "VH01", gia: 30000, sl: 40 }] },
+    { ma: "PN004", ngay: "2026-11-03", hoanThanh: true, dong: [{ ma: "DS01", gia: 60000, sl: 60 }] },
+    { ma: "PN005", ngay: "2026-11-04", hoanThanh: false, dong: [{ ma: "XH02", gia: 90000, sl: 25 }] },
+    { ma: "PN006", ngay: "2026-11-05", hoanThanh: false, dong: [{ ma: "TN01", gia: 60000, sl: 35 }, { ma: "GK01", gia: 12000, sl: 100 }] },
   ]);
 }
 

@@ -32,14 +32,24 @@ function layDanhSach() {
   if (chuoi !== null) {
     tatCaSach = JSON.parse(chuoi);
   }
-  // Bỏ các sách admin đã ẩn
+  // Bỏ các sách admin đã ẩn và các sách thuộc loại đã bị ẩn
+  const dsLoaiHienThi = layDanhSachLoai();
   const sachDangBan = [];
   for (let i = 0; i < tatCaSach.length; i++) {
-    if (!tatCaSach[i].an) {
+    if (!tatCaSach[i].an && coLoaiHienThi(dsLoaiHienThi, tatCaSach[i].loai)) {
       sachDangBan.push(tatCaSach[i]);
     }
   }
   return sachDangBan;
+}
+// Kiểm tra loại có nằm trong danh sách loại đang hiển thị không
+function coLoaiHienThi(dsLoai, idLoai) {
+  for (let i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].id === idLoai) {
+      return true;
+    }
+  }
+  return false;
 }
 // Lấy thể loại sách, bỏ qua sách ẩn
 function layDanhSachLoai() {
