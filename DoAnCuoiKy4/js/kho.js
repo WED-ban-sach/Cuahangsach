@@ -100,11 +100,19 @@ if (localStorage.getItem("dsPhieuNhap") === null) {
   }
   luuDsPhieu([
     { ma: "PN001", ngay: "2026-10-01", dong: dongNhap, hoanThanh: true },
+    { ma: "PN002", ngay: "2026-11-01", hoanThanh: true, dong: [{ ma: "NV01", gia: 100000, sl: 50 }] },
+    { ma: "PN003", ngay: "2026-11-02", hoanThanh: true, dong: [{ ma: "NV02", gia: 120000, sl: 30 }, { ma: "VH01", gia: 30000, sl: 40 }] },
+    { ma: "PN004", ngay: "2026-11-03", hoanThanh: true, dong: [{ ma: "DS01", gia: 60000, sl: 60 }] },
+    { ma: "PN005", ngay: "2026-11-04", hoanThanh: false, dong: [{ ma: "XH02", gia: 90000, sl: 25 }] },
+    { ma: "PN006", ngay: "2026-11-05", hoanThanh: false, dong: [{ ma: "TN01", gia: 60000, sl: 35 }, { ma: "GK01", gia: 12000, sl: 100 }] },
   ]);
 }
 
 // NGÀY THÁNG
-// ngayDat lưu dạng "14:30:05 28/10/2026" -> đổi về "2026-10-28" để so sánh chuỗi được
+// ngayDat lưu dạng "14:30:00 25/10/2026" -> đổi về "25/10/2026" để so sánh chuỗi được
+/*Ví dụ: don.ngayDat = "14:30:00 25/10/2026"
+kq[1] = "25" (ngày), kq[2] = "10" (tháng), kq[3] = "2026" (năm)
+Kết quả: "2026-10-25"*/
 function layNgayDon(don) {
   const kq = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(don.ngayDat || "");
   if (kq === null) {

@@ -9,6 +9,22 @@ var CHON_TEN = ".ten-sach, p"; // phần tử chứa tên sách bên trong card
 
 // ---------- HÀM DÙNG CHUNG ----------
 
+// Danh sách id các loại đang hiển thị (loại bị ẩn thì sách của loại đó cũng không bán)
+function ctLayIdLoaiHienThi() {
+  var dsLoai = THE_LOAI;
+  var chuoi = localStorage.getItem("danhSachLoai");
+  if (chuoi !== null) {
+    dsLoai = JSON.parse(chuoi);
+  }
+  var ketQua = [];
+  for (var i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].trangThai !== "locked") {
+      ketQua.push(dsLoai[i].id);
+    }
+  }
+  return ketQua;
+}
+
 // Danh sách sách đang bán: lấy từ admin (khoá "dsSach"), bỏ các sách đã ẩn
 function ctLayDanhSach() {
   var tatCaSach = DU_LIEU_MAU;
@@ -16,9 +32,10 @@ function ctLayDanhSach() {
   if (chuoi !== null) {
     tatCaSach = JSON.parse(chuoi);
   }
+  var idLoaiHienThi = ctLayIdLoaiHienThi();
   var sachDangBan = [];
   for (var i = 0; i < tatCaSach.length; i++) {
-    if (!tatCaSach[i].an) {
+    if (!tatCaSach[i].an && idLoaiHienThi.indexOf(tatCaSach[i].loai) !== -1) {
       sachDangBan.push(tatCaSach[i]);
     }
   }
