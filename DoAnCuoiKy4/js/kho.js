@@ -104,7 +104,10 @@ if (localStorage.getItem("dsPhieuNhap") === null) {
 }
 
 // NGÀY THÁNG
-// ngayDat lưu dạng "14:30:05 28/10/2026" -> đổi về "2026-10-28" để so sánh chuỗi được
+// ngayDat lưu dạng "14:30:00 25/10/2026" -> đổi về "25/10/2026" để so sánh chuỗi được
+/*Ví dụ: don.ngayDat = "14:30:00 25/10/2026"
+kq[1] = "25" (ngày), kq[2] = "10" (tháng), kq[3] = "2026" (năm)
+Kết quả: "2026-10-25"*/
 function layNgayDon(don) {
   const kq = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(don.ngayDat || "");
   if (kq === null) {
