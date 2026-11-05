@@ -51,16 +51,6 @@ function luuCurrent(user) {
   else localStorage.removeItem(KEY_CURRENT);
 }
 
-// Mã hóa ký tự HTML đặc biệt trước khi hiển thị nội dung động.
-function esc(value) {
-  return String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  })[character]);
-}
 
 // Khởi tạo dữ liệu mẫu trước khi dùng các chức năng xác thực.
 seedUsers();
