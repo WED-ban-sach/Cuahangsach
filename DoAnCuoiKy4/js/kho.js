@@ -69,7 +69,7 @@ function taoDonMau(maDon, username, ngayDat, trangThai, phuongThuc, dsSp) {
     maDonHang: maDon,
     username: khach.username,
     nguoiNhan: khach.hoTen,
-    dienThoai: khach.sdt || "0393912512", // users.js chưa có sđt -> giống mặc định ở checkout.js
+    dienThoai: khach.sdt || "", // users.js chưa có sđt thì để trống
     diaChi: khach.diaChi,
     phuongThucThanhToan: phuongThuc,
     danhSachSanPham: dsSp,

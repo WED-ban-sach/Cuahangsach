@@ -54,7 +54,7 @@ function hienThiLichSuDonHang() {
             <span class="order-total">${formatTien(d.tongTien)}</span>
           </summary>
           <div class="order-detail">
-            <p><strong>Người nhận:</strong> ${d.nguoiNhan} — ${d.dienThoai}</p>
+            <p><strong>Người nhận:</strong> ${d.nguoiNhan}${d.dienThoai ? " — " + d.dienThoai : ""}</p>
             <p><strong>Địa chỉ:</strong> ${d.diaChi}</p>
             <p><strong>Thanh toán:</strong> ${TEN_THANH_TOAN[d.phuongThucThanhToan] || d.phuongThucThanhToan}</p>
             <ul>${sanPham}</ul>

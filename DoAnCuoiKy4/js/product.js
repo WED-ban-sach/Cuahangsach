@@ -7,7 +7,7 @@
 //    nhóm giỏ hàng gắn sự kiện click vào các nút này.
 //  - hienThi(danhSach, trang): hiển thị một danh sách sách bất kỳ có phân trang
 //    (dùng cho kết quả tìm kiếm).
-//  - layDanhSach(): lấy tất cả sách. themSanPham(sach): thêm sách mới (dùng cho trang admin).
+//  - layDanhSach(): lấy tất cả sách đang bán.
 
 const SO_SACH_MOI_TRANG = 15; // số sách trên 1 trang
 let trangHienTai = 1; // trang đang xem
@@ -15,19 +15,10 @@ let danhSachDangXem = []; // danh sách đang hiển thị (tất cả sách ho�
 
 // ---------- 1. DỮ LIỆU ----------
 
-// Sách do admin thêm được lưu trong localStorage với tên "sachThemMoi"
-function laySachThemMoi() {
-  const chuoi = localStorage.getItem("sachThemMoi");
-  if (chuoi === null) {
-    return [];
-  }
-  return JSON.parse(chuoi);
-}
-
-// Tất cả sách = sách trong data.js + sách thêm mới
+// Sách đang bán: lấy từ khoá "dsSach", bỏ sách ẩn và sách thuộc loại đã ẩn
 function layDanhSach() {
   // Nếu admin đã quản lý sách (khoá "dsSach") thì dùng danh sách đó, chưa có thì dùng data.js
-  let tatCaSach = DU_LIEU_MAU.concat(laySachThemMoi());
+  let tatCaSach = DU_LIEU_MAU;
   const chuoi = localStorage.getItem("dsSach");
   if (chuoi !== null) {
     tatCaSach = JSON.parse(chuoi);
@@ -64,21 +55,6 @@ function layDanhSachLoai() {
   }
   return ketQua;
 }
-// Thêm một sách mới. Trả về false nếu mã sách đã tồn tại
-function themSanPham(sachMoi) {
-  const tatCaSach = layDanhSach();
-  for (let i = 0; i < tatCaSach.length; i++) {
-    if (tatCaSach[i].ma === sachMoi.ma) {
-      alert("Mã sản phẩm đã tồn tại!");
-      return false;
-    }
-  }
-  const sachThemMoi = laySachThemMoi();
-  sachThemMoi.push(sachMoi);
-  localStorage.setItem("sachThemMoi", JSON.stringify(sachThemMoi));
-  return true;
-}
-
 // Lọc sách theo nhiều tiêu chí cùng lúc
 function timSach(tuKhoa, idTheLoai, giaTu, giaDen) {
   const tatCaSach = layDanhSach();
