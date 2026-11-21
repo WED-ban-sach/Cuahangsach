@@ -114,7 +114,6 @@
         <p class="switch">
           Chưa có tài khoản? <a href="#" data-switch="register">Đăng ký ngay</a>
         </p>
-        <a href="admin.html" class="switch">Chuyển qua admin</a>
       </form>
     </aside>
 
@@ -161,6 +160,16 @@
             required
           />
         </div>
+        <div class="field">
+          <label for="reg-phone">Số điện thoại</label>
+          <input
+            id="reg-phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="0901234567"
+            required
+          />
+        </div>
         <p id="registerMessage" class="login-message" role="status" aria-live="polite"></p>
         <button type="submit" class="submit">Đăng ký</button>
         <p class="switch">
@@ -189,6 +198,15 @@
         <div class="field">
           <label for="profile-email">Email</label>
           <input id="profile-email" type="email" required />
+        </div>
+        <div class="field">
+          <label for="profile-phone">Số điện thoại</label>
+          <input
+            id="profile-phone"
+            type="tel"
+            inputmode="numeric"
+            placeholder="0901234567"
+          />
         </div>
         <div class="field">
           <label for="profile-diaChi">Địa chỉ</label>

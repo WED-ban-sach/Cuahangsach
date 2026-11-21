@@ -4,7 +4,19 @@ const KEY_CURRENT = "currentUser";
 // Nạp tài khoản mẫu vào localStorage khi chưa có danh sách tài khoản.
 function seedUsers() {
   const users = layUsers();
-  if (users.length > 0) return users;
+  if (users.length > 0) {
+    // Dữ liệu cũ trong localStorage chưa có sđt: bổ sung sđt từ tài khoản mẫu (chỉ điền khi đang trống)
+    let doiDuLieu = false;
+    for (const user of users) {
+      const mau = SEED_USERS.find((seed) => seed.username === user.username);
+      if (mau && mau.sdt && !user.sdt) {
+        user.sdt = mau.sdt;
+        doiDuLieu = true;
+      }
+    }
+    if (doiDuLieu) luuUsers(users);
+    return users;
+  }
 
   luuUsers(SEED_USERS);
   return SEED_USERS;

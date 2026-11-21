@@ -536,8 +536,16 @@ function capNhatTongQuan() {
 
 
   var dsSach = layDsSach();
+  // loại đã ẩn thì sách của loại đó cũng không còn bán
+  var dsLoaiAn = [];
+  var dsLoaiLuu = JSON.parse(localStorage.getItem("danhSachLoai") || "[]");
+  for (var k = 0; k < dsLoaiLuu.length; k++) {
+    if (dsLoaiLuu[k].trangThai === "locked") {
+      dsLoaiAn.push(dsLoaiLuu[k].id);
+    }
+  }
   var dangBan = dsSach.filter(function(sach) {
-    return !sach.an;
+    return !sach.an && dsLoaiAn.indexOf(sach.loai) === -1;
   }).length;
 
   var TQ_SP_DANGBAN = document.getElementById("TQ_SP_DANGBAN");
