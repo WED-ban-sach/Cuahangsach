@@ -31,6 +31,16 @@ function layTenLoai(idLoai) {
   }
   return "";
 }
+// Loại của sách đang bị ẩn (trạng thái "locked" ở mục Quản lý loại) thì sách đó cũng coi như bị ẩn
+function loaiBiAn(idLoai) {
+  var dsLoai = layDsLoaiAdmin();
+  for (var i = 0; i < dsLoai.length; i++) {
+    if (dsLoai[i].id === idLoai) {
+      return dsLoai[i].trangThai === "locked";
+    }
+  }
+  return false;
+}
 function dinhDangTien(so) {
   return Number(so).toLocaleString("vi-VN") + " đ";
 }
@@ -156,8 +166,9 @@ function veBangSach() {
   bangSach.innerHTML = "";
   for (var i = 0; i < ds.length; i++) {
     var sach = ds[i];
+    var anTheoLoai = loaiBiAn(sach.loai);
     var trangThai = "active";
-    if (sach.an) {
+    if (sach.an || anTheoLoai) {
       trangThai = "locked";
     }
     // lọc theo ô tìm kiếm, loại và trạng thái
@@ -178,7 +189,10 @@ function veBangSach() {
     hang.appendChild(taoO(sach.ten));
     hang.appendChild(taoO(laySoLuong(sach.ma)));
     var cacNut = [taoNut("Sửa", "BTN_SUA_SP")];
-    if (sach.an) {
+    if (anTheoLoai) {
+      // Loại đang ẩn: sách ẩn theo loại, muốn hiện lại thì phải hiện loại (không có nút Hiện ở đây)
+      hang.appendChild(taoOTrangThai("Ẩn (loại đã ẩn)", "TRANGTHAI BIKHOA"));
+    } else if (sach.an) {
       hang.appendChild(taoOTrangThai("Đã ẩn", "TRANGTHAI BIKHOA"));
       cacNut.push(taoNut("Hiện", "BTN_HIEN_SP"));
     } else {
@@ -194,6 +208,54 @@ function veBangSach() {
 }
 
 // Mở form: không truyền sách = thêm mới, truyền sách = sửa (điền sẵn thông tin hiện tại)
+// Nạp ô chọn loại của form sách: các loại đang hoạt động, và chọn đúng loại hiện tại của sách.
+// Nếu loại của sách đang bị ẩn thì vẫn thêm loại đó vào (ghi chú "đã ẩn") để ô chọn hiện đúng loại.
+function napLoaiChoFormSach(idLoaiDangChon) {
+  oLoaiSach.value = "";
+  napTheLoai(oLoaiSach, false);
+  if (idLoaiDangChon === undefined) {
+    oLoaiSach.selectedIndex = 0;
+    return;
+  }
+  oLoaiSach.value = idLoaiDangChon;
+  if (oLoaiSach.value !== idLoaiDangChon) {
+    var muc = document.createElement("option");
+    muc.value = idLoaiDangChon;
+    var ten = layTenLoai(idLoaiDangChon);
+    muc.textContent = ten !== "" ? ten + " (đã ẩn)" : idLoaiDangChon + " (không còn)";
+    oLoaiSach.appendChild(muc);
+    oLoaiSach.value = idLoaiDangChon;
+  }
+}
+
+// Xem trước hình bìa theo đường dẫn đang nhập
+var anhXemTruoc = document.getElementById("HINH_SACH_XEMTRUOC");
+var chuKhongCoAnh = document.getElementById("HINH_SACH_LOI");
+function capNhatXemTruocHinh() {
+  if (anhXemTruoc === null) {
+    return;
+  }
+  var duongDan = oHinhSach.value.trim();
+  chuKhongCoAnh.style.display = "none";
+  if (duongDan === "") {
+    anhXemTruoc.removeAttribute("src");
+    anhXemTruoc.style.display = "none";
+    return;
+  }
+  anhXemTruoc.style.display = "block";
+  anhXemTruoc.src = duongDan;
+}
+if (anhXemTruoc !== null) {
+  anhXemTruoc.addEventListener("error", function () {
+    // đường dẫn sai / không tải được ảnh
+    if (oHinhSach.value.trim() !== "") {
+      anhXemTruoc.style.display = "none";
+      chuKhongCoAnh.style.display = "block";
+    }
+  });
+  oHinhSach.addEventListener("input", capNhatXemTruocHinh);
+}
+
 function moFormSach(sach) {
   var tieuDe = document.getElementById("DANHMUC_FORM_TIEUDE");
   document.getElementById("DANHMUC_THONGBAO").textContent = "";
@@ -203,6 +265,7 @@ function moFormSach(sach) {
     oMaSach.disabled = false;
     oMaSach.value = "";
     oTenSach.value = "";
+    napLoaiChoFormSach();
     oHinhSach.value = "";
     oMoTaSach.value = "";
   } else {
@@ -211,10 +274,11 @@ function moFormSach(sach) {
     oMaSach.disabled = true; // không cho đổi mã
     oMaSach.value = sach.ma;
     oTenSach.value = sach.ten;
-    oLoaiSach.value = sach.loai;
-    oHinhSach.value = sach.hinh;
+    napLoaiChoFormSach(sach.loai);
+    oHinhSach.value = sach.hinh || "";
     oMoTaSach.value = sach.moTa || "";
   }
+  capNhatXemTruocHinh();
   formSach.style.display = "flex";
 }
 
@@ -239,6 +303,10 @@ formSach.querySelector(".ND_DONGY").addEventListener("click", function () {
     thongBao.textContent = "Vui lòng nhập tên sách.";
     return;
   }
+  if (oLoaiSach.value === "") {
+    thongBao.textContent = "Vui lòng chọn loại sách (chưa có loại nào đang hoạt động).";
+    return;
+  }
   if (laThemMoi) {
     if (timViTri(ds, ma) !== -1) {
       thongBao.textContent = "Mã sách đã tồn tại.";
@@ -249,7 +317,7 @@ formSach.querySelector(".ND_DONGY").addEventListener("click", function () {
   } else {
     var sach = ds[timViTri(ds, dangSuaSach)];
     sach.ten = ten;
-    // Sách thuộc loại đã ẩn thì ô chọn trống: không chọn loại khác thì giữ nguyên loại cũ
+    // ô chọn luôn có loại hiện tại của sách (kể cả loại đã ẩn) nên lấy thẳng giá trị đang chọn
     if (oLoaiSach.value !== "") {
       sach.loai = oLoaiSach.value;
     }

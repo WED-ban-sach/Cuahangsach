@@ -1,3 +1,24 @@
+// Kiểm tra sdt dùng chung
+const LOI_SDT =
+  "Số điện thoại không hợp lệ (10 chữ số, bắt đầu bằng 03, 05, 07, 08 hoặc 09).";
+
+// Bỏ khoảng trắng, dấu chấm, gạch ngang mà người dùng có thể gõ kèm (0901 234 567)
+function chuanHoaSdt(giaTri) {
+  return String(giaTri || "").replace(/[\s.-]/g, "");
+}
+
+// Số điện thoại VN: 10 chữ số, bắt đầu bằng 03, 05, 07, 08 hoặc 09
+function sdtHopLe(sdt) {
+  return /^0[35789]\d{8}$/.test(sdt);
+}
+
+// Có tài khoản KHÁC (khác vị trí viTriBoQua) đang dùng số này không. Đăng ký thì truyền -1.
+function trungSdtVoiNguoiKhac(users, sdt, viTriBoQua) {
+  return users.some(
+    (user, viTri) => viTri !== viTriBoQua && chuanHoaSdt(user.sdt) === sdt,
+  );
+}
+
 // Cập nhật nút đăng nhập, giỏ hàng và thông tin tài khoản theo trạng thái khách hàng.
 function updateCustomerHeader() {
   const current = layCurrent();
@@ -61,6 +82,8 @@ document.getElementById("btnEditProfile").addEventListener("click", () => {
     (account && account.hoTen) || current.hoTen || "";
   document.getElementById("profile-email").value =
     (account && account.email) || current.email || "";
+  document.getElementById("profile-phone").value =
+    (account && account.sdt) || current.sdt || "";
   document.getElementById("profile-diaChi").value =
     (account && account.diaChi) || current.diaChi || "";
   document.getElementById("profile-password").value = "";
@@ -73,6 +96,7 @@ document.getElementById("btnEditProfile").addEventListener("click", () => {
 document.getElementById("profileForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const message = document.getElementById("profileMessage");
+  message.textContent = "";
   const current = layCurrent();
   if (!current || current.role !== "customer") {
     message.textContent = "Vui lòng đăng nhập lại để sửa thông tin.";
@@ -82,9 +106,14 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
   const hoTen = document.getElementById("profile-name").value.trim();
   const email = document.getElementById("profile-email").value.trim();
   const diaChi = document.getElementById("profile-diaChi").value.trim();
+  const sdt = chuanHoaSdt(document.getElementById("profile-phone").value);
   const password = document.getElementById("profile-password").value;
-  if (!hoTen || !email) {
-    message.textContent = "Vui lòng nhập họ tên và email.";
+  if (!hoTen || !email || !sdt) {
+    message.textContent = "Vui lòng nhập họ tên, email và số điện thoại.";
+    return;
+  }
+  if (!sdtHopLe(sdt)) {
+    message.textContent = LOI_SDT;
     return;
   }
 
@@ -97,17 +126,23 @@ document.getElementById("profileForm").addEventListener("submit", (e) => {
       message.textContent = "Không tìm thấy tài khoản. Vui lòng đăng nhập lại.";
       return;
     }
+    // Số điện thoại không được trùng với tài khoản khác (trùng với chính mình thì được)
+    if (trungSdtVoiNguoiKhac(users, sdt, userIndex)) {
+      message.textContent = "Số điện thoại đã được sử dụng.";
+      return;
+    }
 
     users[userIndex] = {
       ...users[userIndex],
       hoTen,
       email,
+      sdt,
       diaChi,
       ...(password ? { password } : {}),
     };
     luuUsers(users);
 
-    const updatedCurrent = { ...current, hoTen, email, diaChi };
+    const updatedCurrent = { ...current, hoTen, email, sdt, diaChi };
     luuCurrent(updatedCurrent);
     window.dispatchEvent(new Event("authchange"));
     closeAll();
@@ -172,6 +207,7 @@ if (loginForm) {
         username: user.username,
         hoTen: user.hoTen,
         email: user.email,
+        sdt: user.sdt || "",
         diaChi: user.diaChi || "",
         role: user.role,
       });
@@ -221,8 +257,10 @@ if (registerForm) {
     const username = document.getElementById("reg-user").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("reg-pass").value;
+    const phoneInput = document.getElementById("reg-phone");
+    const sdt = phoneInput ? chuanHoaSdt(phoneInput.value) : "";
 
-      if (!username || !hoTen || !email || !password) {
+      if (!username || !hoTen || !email || !password || !sdt) {
         message.textContent = "Vui lòng nhập đầy đủ thông tin.";
         return;
       }
@@ -256,12 +294,21 @@ if (registerForm) {
         message.textContent = "Email không hợp lệ.";
           return;
       }
+      if (!sdtHopLe(sdt)) {
+        message.textContent = LOI_SDT;
+        return;
+      }
+      if (trungSdtVoiNguoiKhac(users, sdt, -1)) {
+        message.textContent = "Số điện thoại đã được sử dụng.";
+        return;
+      }
       const newUser = {
         id: taoIdUser(users),
         username,
         password,
         hoTen,
         email,
+        sdt,
         role: "customer",
         diaChi: "",
         locked: false,
@@ -269,7 +316,7 @@ if (registerForm) {
       };
       try {
         luuUsers([...users, newUser]);
-        luuCurrent({ username, hoTen, email, diaChi: "", role: "customer" });
+        luuCurrent({ username, hoTen, email, sdt, diaChi: "", role: "customer" });
       } catch (error) {
         console.error("Không thể lưu tài khoản mới.", error);
         message.textContent = "Không thể đăng ký. Vui lòng thử lại.";

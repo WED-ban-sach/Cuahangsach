@@ -76,16 +76,24 @@ xacNhanXoa_huy.addEventListener("click", function() {
 })
 
 xacNhanXoa_dongY.addEventListener("click", function() {
-    
-    // Loại còn sách thì không cho xóa (xóa thì các sách của loại này sẽ mất loại)
-    var soSachCuaLoai = demSachCuaLoai(danhSachLoai[viTriXoa].id);
-    if (soSachCuaLoai > 0) {
+
+    var loaiXoa = danhSachLoai[viTriXoa];
+    if (loaiXoa === undefined) {
         xacNhanXoa.style.display = "none";
-        hienThongBao("Lỗi ! ", "Loại này còn " + soSachCuaLoai + " sách, hãy chuyển hoặc xóa các sách đó trước!");
         return;
     }
 
+    // Kiểm tra lại lúc bấm Đồng ý: loại còn sách thì KHÔNG xóa, để không làm mất / xóa theo sách của loại đó
+    var soSachCuaLoai = demSachCuaLoai(loaiXoa.id);
+    if (soSachCuaLoai > 0) {
+        xacNhanXoa.style.display = "none";
+        hienThongBao("Lỗi ! ", "Loại này còn " + soSachCuaLoai + " sách, hãy chuyển hoặc xóa các sách đó trước (hoặc dùng nút Ẩn)!");
+        return;
+    }
+
+    // Chỉ xóa loại, danh sách sách (dsSach) không bị đụng tới
     danhSachLoai.splice(viTriXoa, 1);
+    viTriXoa = -1;
     hienThiDanhSachLoai();
     luuDsSachLoai();
 
@@ -226,6 +234,12 @@ function hienThiDanhSachLoai() {
 
         var btn_xoa = tr.querySelector(".BTN_XOA_LOAI");
         btn_xoa.addEventListener("click", function() {
+            // Loại còn sách thì báo lỗi ngay, không hỏi xác nhận xóa
+            var soSachConLai = demSachCuaLoai(loai.id);
+            if (soSachConLai > 0) {
+                hienThongBao("Lỗi ! ", "Loại này còn " + soSachConLai + " sách, hãy chuyển hoặc xóa các sách đó trước (hoặc dùng nút Ẩn)!");
+                return;
+            }
             viTriXoa = viTriGoc;
             hienThongBaoXacNhan("XÓA LOẠI SẢN PHẨM", "Bạn có chắc chắc muốn xóa?");
             

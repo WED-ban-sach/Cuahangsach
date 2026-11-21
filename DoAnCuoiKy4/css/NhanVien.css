@@ -839,6 +839,29 @@ body {
   text-align: center;
 }
 
+/* Xem trước hình sách trong form thêm / sửa sách */
+#HINH_SACH_XEMTRUOC {
+  display: none;
+  max-width: 120px;
+  max-height: 160px;
+  margin: 10px auto 0;
+  object-fit: contain;
+  border: 1px solid #cbd3dd;
+  border-radius: 5px;
+}
+
+#HINH_SACH_LOI {
+  display: none;
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: #d33;
+}
+
+#QLY_DANHMUC_THEM .HOPTHOAI_ND {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
 #SUA_CAC_TRUONG .THEM_LOAI_TRUONG {
   margin-bottom: 15px;
 }
